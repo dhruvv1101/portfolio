@@ -6,6 +6,7 @@ import { Skills } from "@/components/Skills";
 import { Projects } from "@/components/Projects";
 import { Experience } from "@/components/Experience";
 import { Contact } from "@/components/Contact";
+import { CodingProfiles } from "@/components/CodingProfiles";
 import { useToast } from "@/hooks/use-toast";
 
 export default function Home() {
@@ -38,6 +39,7 @@ export default function Home() {
         <About />
         <Skills />
         <Projects />
+        <CodingProfiles />
         <Experience />
         <Contact />
       </main>
