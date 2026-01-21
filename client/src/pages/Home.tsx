@@ -6,7 +6,6 @@ import { Skills } from "@/components/Skills";
 import { Projects } from "@/components/Projects";
 import { Experience } from "@/components/Experience";
 import { Contact } from "@/components/Contact";
-import { CustomCursor } from "@/components/CustomCursor";
 import { useToast } from "@/hooks/use-toast";
 
 export default function Home() {
@@ -32,7 +31,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden selection:bg-primary/30">
-      <CustomCursor />
       <Navigation />
       
       <main>
