@@ -38,7 +38,7 @@ export function Contact() {
 
           <div className="space-y-6">
             <a 
-              href="mailto:dhruv.verma@example.com"
+              href="mailto:dhruv83170@gmail.com"
               className="flex items-center gap-4 text-foreground hover:text-primary transition-colors p-4 rounded-xl hover:bg-white/5"
             >
               <div className="bg-primary/10 p-3 rounded-full text-primary">
@@ -46,12 +46,12 @@ export function Contact() {
               </div>
               <div>
                 <p className="font-semibold">Email</p>
-                <p className="text-muted-foreground">dhruv.verma@example.com</p>
+                <p className="text-muted-foreground">dhruv83170@gmail.com</p>
               </div>
             </a>
 
             <a 
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/dhruv-verma-34a927282/"
               target="_blank"
               rel="noreferrer"
               className="flex items-center gap-4 text-foreground hover:text-primary transition-colors p-4 rounded-xl hover:bg-white/5"
@@ -61,12 +61,12 @@ export function Contact() {
               </div>
               <div>
                 <p className="font-semibold">LinkedIn</p>
-                <p className="text-muted-foreground">Connect professionally</p>
+                <p className="text-muted-foreground">dhruv-verma-34a927282</p>
               </div>
             </a>
 
             <a 
-              href="https://github.com"
+              href="https://github.com/dhruvv1101"
               target="_blank"
               rel="noreferrer"
               className="flex items-center gap-4 text-foreground hover:text-primary transition-colors p-4 rounded-xl hover:bg-white/5"
@@ -76,7 +76,7 @@ export function Contact() {
               </div>
               <div>
                 <p className="font-semibold">GitHub</p>
-                <p className="text-muted-foreground">Explore my repositories</p>
+                <p className="text-muted-foreground">dhruvv1101</p>
               </div>
             </a>
           </div>
