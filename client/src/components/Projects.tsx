@@ -4,25 +4,22 @@ import { motion } from "framer-motion";
 
 const projects = [
   {
-    title: "Neural Network Accelerator",
-    description: "Designed a hardware accelerator for efficient inference of deep neural networks using Verilog. Optimized for low power consumption.",
-    tags: ["Verilog", "VLSI", "Python", "Computer Arch"],
-    github: "#",
+    id: "chessflow",
+    title: "ChessFlow",
+    description: "ChessFlow is an intelligent chess analysis platform designed to help players understand positional mistakes, tactical patterns, and game flow. The project focuses on transforming raw gameplay data into meaningful insights for skill improvement.",
+    tags: ["Python", "Data Analysis", "Game Logic", "Algorithms"],
+    github: "https://github.com/dhruv-verma/chessflow",
     link: "#",
+    isFeatured: true,
   },
   {
-    title: "Smart Grid Analytics",
-    description: "ML-based system to predict power load demands and optimize distribution. Achieved 94% prediction accuracy on test datasets.",
-    tags: ["Python", "Scikit-learn", "Pandas", "IoT"],
-    github: "#",
+    id: "study-buddy",
+    title: "Study Buddy",
+    description: "Study Buddy is a productivity-focused application aimed at helping students organize study sessions, track progress, and maintain consistency through structured planning and intelligent reminders.",
+    tags: ["JavaScript", "Frontend Development", "Productivity Tools"],
+    github: "https://github.com/dhruv-verma/study-buddy",
     link: "#",
-  },
-  {
-    title: "Autonomous Drone Pathing",
-    description: "Developed path planning algorithms for quadcopters using computer vision for obstacle avoidance in simulated environments.",
-    tags: ["C++", "ROS", "OpenCV", "Robotics"],
-    github: "#",
-    link: "#",
+    isFeatured: false,
   },
 ];
 
