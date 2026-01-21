@@ -1,0 +1,114 @@
+You are a senior frontend engineer and an editorial UI/UX designer inspired by Vogue magazine layouts.
+
+Build a modern, dark-themed, interactive personal portfolio website for a B.Tech Electrical & Electronics Engineering student, styled like a high-end Vogue magazine editorial.
+
+IMPORTANT CONSTRAINTS:
+- Use ONLY HTML, CSS, and vanilla JavaScript (no frameworks, no libraries)
+- Use CSS variables for colors, spacing, and typography
+- Clean, modular, well-commented code
+- Fully responsive (mobile-first, desktop-optimized)
+- Smooth 60 FPS animations with luxury pacing (slow, elegant)
+- SEO-friendly, semantic HTML
+- Minimalist, premium, editorial — NOT flashy
+
+DESIGN PHILOSOPHY (VERY IMPORTANT):
+- The website should feel like flipping through a Vogue magazine
+- Strong typography hierarchy
+- Large editorial headlines, refined subheadings
+- Generous negative space
+- Layout-driven elegance instead of heavy colors
+- Calm, confident, sophisticated visuals
+
+COLOR PALETTE:
+- Dark espresso / charcoal backgrounds
+- Warm beige / off-white text
+- Muted coffee-brown or soft gold accents
+- No neon colors
+- No bright gradients
+- Background gradients should feel subtle and paper-like
+
+TYPOGRAPHY:
+- Use a serif-style font for headings (editorial feel)
+- Use a clean sans-serif font for body text
+- Hero name should be large, bold, and magazine-cover-like
+- Section titles styled like editorial features (e.g., “FEATURED • PROJECTS”)
+
+SECTIONS / STRUCTURE:
+
+1. HERO SECTION (MAGAZINE COVER)
+- Full-screen layout
+- Name: Dhruv Verma (very large, center-aligned)
+- Tagline: "Engineer | Data Science | AI/ML | VLSI | Problem Solver"
+- Animated typing effect for roles (slow and elegant)
+- Floating background particles that feel like dust/ink, not tech particles
+- Minimal navigation (subtle, refined)
+
+2. ABOUT ME (EDITORIAL ARTICLE)
+- Looks like a magazine feature article
+- Narrow text width for readability
+- Professional bio
+- Education: B.Tech Electrical & Electronics Engineering (2023–2027), ABV-IIITM Gwalior
+- Interests: AI/ML, Data Science, VLSI, DSA, Research
+- Subtle hover or reveal animation
+
+3. SKILLS (EDITORIAL GRID)
+- Grid layout inspired by magazine columns
+- Categories:
+  • Programming: C++, Python
+  • AI/ML: NumPy, Pandas, ML basics
+  • Core EEE: Digital Communication, Signal Processing, Verilog
+  • Tools: Git, Linux
+- Skill cards should glow softly on hover (very subtle)
+
+4. PROJECTS (FEATURE STORIES)
+- Each project presented like a magazine feature
+- One highlighted project (larger layout)
+- Others as smaller editorial cards
+- Each project includes:
+  • Title
+  • Short description
+  • Tech stack
+  • GitHub link styled like a magazine callout
+- Hover tilt + glow, extremely subtle
+
+5. EXPERIENCE / TRAINING (EDITORIAL TIMELINE)
+- Vertical timeline styled like a magazine layout
+- Include:
+  • Vocational Training at HAL Korwa
+  • Academic projects
+- Clean typography, thin accent lines
+
+6. CONTACT (MINIMAL FOOTER STYLE)
+- Email
+- GitHub
+- LinkedIn
+- Minimal contact form UI (no backend)
+- Looks like the final page of a magazine
+
+INTERACTIVE FEATURES:
+- Custom animated cursor (desktop only, soft and elegant)
+- Mouse pointer trail effect using very light particles
+- Background gradient that slowly shifts over time
+- Smooth scroll navigation like page turns
+- Subtle parallax effect
+- Keyboard Easter eggs:
+  • Press "V" → switch to editorial print-style mode
+  • Press "D" → switch to darker espresso mode
+
+FILES & STRUCTURE:
+- index.html
+- style.css
+- script.js
+- assets/ folder if needed
+
+ADDITIONAL REQUIREMENTS:
+- Add comments explaining major sections
+- Ensure code is easy to customize
+- Include README.md explaining:
+  • Design concept
+  • Features
+  • How to customize
+  • How to deploy on Replit or GitHub Pages
+
+FINAL GOAL:
+Deliver a fully working portfolio that feels like a Vogue magazine editorial — elegant, calm, intelligent, and premium — suitable for engineering recruiters, research profiles, and high-quality internships.
