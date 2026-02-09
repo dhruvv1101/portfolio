@@ -8,7 +8,7 @@ const skillCategories = [
   },
   {
     title: "AI / ML",
-    skills: ["NumPy", "Pandas", "Scikit-learn", "TensorFlow", "PyTorch"],
+    skills: ["NumPy", "Pandas", "Scikit-learn", "TensorFlow", "PyTorch","Streamlit","Sqlite"],
   },
   {
     title: "Core EEE & VLSI",
@@ -16,7 +16,7 @@ const skillCategories = [
   },
   {
     title: "Tools & Platforms",
-    skills: ["Git", "GitHub", "Linux/Unix", "VS Code", "Jupyter"],
+    skills: ["Git", "GitHub", "Linux/Unix", "VS Code", "Jupyter","Anaconda"],
   },
 ];
 
