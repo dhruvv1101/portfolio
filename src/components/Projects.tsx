@@ -16,7 +16,7 @@ const projects = [
     id: "study-buddy",
     title: "Study Buddy",
     description: "Study Buddy is a productivity-focused application aimed at helping students organize study sessions, track progress, and maintain consistency through structured planning and intelligent reminders.",
-    tags: ["JavaScript", "Frontend Development", "Agentic ai","Google API","Scheduler"],
+    tags: ["Python", "Streamlit", "Agentic ai","Google API","Scheduler"],
     github: "https://github.com/dhruvv1101",
     link: "#",
     isFeatured: false,
