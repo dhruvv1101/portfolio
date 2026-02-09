@@ -1,5 +1,5 @@
 import { Section } from "./Section";
-import { SiLeetcode, SiCodeforces } from "react-icons/si";
+import { SiLeetcode, SiCodeforces,SiCodechef } from "react-icons/si";
 import { ExternalLink } from "lucide-react";
 
 export function CodingProfiles() {
@@ -18,6 +18,14 @@ export function CodingProfiles() {
       color: "text-[#1F8ACB]",
       label: "Dhruv83170",
     },
+    {
+      name: "CodeChef",
+      url: "https://www.codechef.com/users/msl_overflow",
+      icon: SiCodechef,
+      color: "text-[#5B4638]", // CodeChef brown tone
+      label: "msl_overflow",
+    },
+    
   ];
 
   return (
