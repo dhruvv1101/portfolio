@@ -2,8 +2,7 @@ import { Section } from "./Section";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useContactSubmit } from "@/hooks/use-contact";
-import { Github, Linkedin, Mail, Send, Loader2 } from "lucide-react";
+import { Github, Linkedin, Mail, Send } from "lucide-react";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -17,8 +16,6 @@ const contactSchema = z.object({
 type ContactFormData = z.infer<typeof contactSchema>;
 
 export function Contact() {
-  const mutation = useContactSubmit();
-
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
@@ -27,12 +24,6 @@ export function Contact() {
       message: "",
     },
   });
-
-  function onSubmit(data: ContactFormData) {
-    mutation.mutate(data, {
-      onSuccess: () => form.reset(),
-    });
-  }
 
   return (
     <Section id="contact" className="bg-muted/30">
@@ -80,9 +71,19 @@ export function Contact() {
         <div className="glass-card p-8 rounded-3xl">
           <Form {...form}>
             <form
-              onSubmit={form.handleSubmit(onSubmit)}
+              name="contact"
+              method="POST"
+              data-netlify="true"
+              data-netlify-honeypot="bot-field"
               className="space-y-6"
             >
+              <input type="hidden" name="form-name" value="contact" />
+              <p className="hidden">
+                <label>
+                  Don’t fill this out: <input name="bot-field" />
+                </label>
+              </p>
+
               <FormField
                 control={form.control}
                 name="name"
@@ -90,7 +91,7 @@ export function Contact() {
                   <FormItem>
                     <FormLabel>Name</FormLabel>
                     <FormControl>
-                      <Input {...field} placeholder="Your name" />
+                      <Input {...field} name="name" placeholder="Your name" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -104,7 +105,7 @@ export function Contact() {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input {...field} placeholder="your@email.com" />
+                      <Input {...field} name="email" placeholder="your@email.com" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -120,6 +121,7 @@ export function Contact() {
                     <FormControl>
                       <Textarea
                         {...field}
+                        name="message"
                         placeholder="What's on your mind?"
                         className="min-h-[150px]"
                       />
@@ -131,18 +133,10 @@ export function Contact() {
 
               <button
                 type="submit"
-                disabled={mutation.isPending}
-                className="w-full py-4 rounded-xl font-semibold bg-primary text-primary-foreground hover:bg-primary/90 transition flex items-center justify-center gap-2 disabled:opacity-50"
+                className="w-full py-4 rounded-xl font-semibold bg-primary text-primary-foreground hover:bg-primary/90 transition flex items-center justify-center gap-2"
               >
-                {mutation.isPending ? (
-                  <>
-                    <Loader2 className="w-5 h-5 animate-spin" /> Sending...
-                  </>
-                ) : (
-                  <>
-                    <Send className="w-5 h-5" /> Send Message
-                  </>
-                )}
+                <Send className="w-5 h-5" />
+                Send Message
               </button>
             </form>
           </Form>
