@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
 interface SectionProps {
@@ -29,11 +29,31 @@ export function Section({
   intro,
   variant = "default",
 }: SectionProps) {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const [isReading, setIsReading] = useState(false);
+
+  useEffect(() => {
+    const element = sectionRef.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsReading(entry.isIntersecting);
+      },
+      { threshold: 0.55 }
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section 
+      ref={sectionRef}
       id={id} 
       className={cn(
-        "relative overflow-hidden border-t border-border/80 px-4 py-20 md:py-28",
+        "aging-paper relative overflow-hidden border-t border-border/80 px-4 py-20 md:py-28",
+        isReading && "is-reading",
         variant === "muted" && "bg-muted/40",
         className
       )}
