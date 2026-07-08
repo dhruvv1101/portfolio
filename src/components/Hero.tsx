@@ -12,6 +12,12 @@ const coverMeta = [
   "Issue 01",
 ];
 
+const backgroundLines = [
+  "portfolio showcase / projects / research / open source / systems / design / engineering",
+  "portfolio showcase / projects / research / open source / systems / design / engineering",
+  "portfolio showcase / projects / research / open source / systems / design / engineering",
+];
+
 export function Hero({ onNavigate }: HeroProps) {
   const heroRef = useRef<HTMLElement | null>(null);
   const [isReading, setIsReading] = useState(false);
@@ -33,6 +39,12 @@ export function Hero({ onNavigate }: HeroProps) {
 
   return (
     <section ref={heroRef} className={`aging-paper relative overflow-hidden px-4 pb-16 pt-28 md:pb-24 md:pt-32 ${isReading ? "is-reading" : ""}`}>
+      <div aria-hidden="true" className="section-background-text">
+        {backgroundLines.map((line, index) => (
+          <span key={`${line}-${index}`}>{line}</span>
+        ))}
+      </div>
+
       <div className="pointer-events-none absolute inset-0">
         <motion.div
           aria-hidden="true"
@@ -72,16 +84,16 @@ export function Hero({ onNavigate }: HeroProps) {
 
               <div className="space-y-4">
                 <p className="max-w-lg text-sm uppercase tracking-[0.38em] text-primary/85">
-                  Student engineer, systems thinker, and the person who likes the backend part too.
+                  Showcase portfolio / work so far / systems, product, and engineering notes.
                 </p>
                 <h1 className="max-w-4xl text-6xl font-semibold leading-[0.92] md:text-8xl">
-                  A print-minded portfolio for someone building across silicon, models, and product systems.
+                  Dhruv Verma presents a running record of the work, projects, and technical ground covered so far.
                 </h1>
               </div>
 
               <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
-                I’m drawn to work that spans layers cleanly, from VLSI and machine learning to the backend systems
-                that make products feel reliable in the real world.
+                This showcase pulls together what I have built, explored, and improved till now, across VLSI,
+                machine learning, backend systems, browser tooling, and competition work.
               </p>
             </div>
 

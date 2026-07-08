@@ -166,6 +166,39 @@
     z-index: 1;
   }
 
+  .section-background-text {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 1.25rem;
+    overflow: hidden;
+    padding: 1.5rem 1rem;
+  }
+
+  .section-background-text span {
+    font-family: var(--font-mono);
+    font-size: clamp(0.8rem, 1vw + 0.55rem, 1.15rem);
+    font-weight: 400;
+    letter-spacing: 0.34em;
+    line-height: 1.7;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: rgba(99, 75, 48, 0.075);
+    transform: rotate(-2deg) translateX(-3%);
+  }
+
+  .section-background-text span:nth-child(even) {
+    transform: rotate(1.2deg) translateX(-1%);
+  }
+
+  .darker-mode .section-background-text span {
+    color: rgba(235, 219, 194, 0.06);
+  }
+
   .aging-paper.is-reading::before {
     animation: paper-age-cycle 25s linear infinite;
   }

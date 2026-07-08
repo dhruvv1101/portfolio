@@ -14,6 +14,7 @@ interface SectionProps {
   title?: string;
   intro?: string;
   variant?: "default" | "muted";
+  backgroundText?: string;
 }
 
 export function Section({
@@ -28,6 +29,7 @@ export function Section({
   title,
   intro,
   variant = "default",
+  backgroundText,
 }: SectionProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
   const [isReading, setIsReading] = useState(false);
@@ -58,6 +60,14 @@ export function Section({
         className
       )}
     >
+      {backgroundText && (
+        <div aria-hidden="true" className="section-background-text">
+          <span>{backgroundText}</span>
+          <span>{backgroundText}</span>
+          <span>{backgroundText}</span>
+          <span>{backgroundText}</span>
+        </div>
+      )}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
