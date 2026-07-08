@@ -5,25 +5,35 @@ interface TypewriterBackdropProps {
 }
 
 export function TypewriterBackdrop({ text }: TypewriterBackdropProps) {
-  const content = Array.from({ length: 20 }, () => text).join(" / ");
-  const characters = Array.from(content);
-  const duration = `${Math.max(18, characters.length * 0.018)}s`;
+  const tokens = text
+    .split("/")
+    .map((part) => part.trim())
+    .filter(Boolean);
+
+  const lines = Array.from({ length: 10 }, (_, index) => {
+    const current = tokens[index % tokens.length] ?? "notes";
+    const next = tokens[(index + 1) % tokens.length] ?? "work";
+    const later = tokens[(index + 2) % tokens.length] ?? "systems";
+
+    return `${current} / ${next} / ${later} / ${current} in progress`;
+  });
 
   return (
-    <div
-      aria-hidden="true"
-      className="typewriter-backdrop"
-      style={{ "--typewriter-duration": duration } as CSSProperties}
-    >
+    <div aria-hidden="true" className="typewriter-backdrop">
       <div className="typewriter-backdrop__sheet">
-        {characters.map((character, index) => (
-          <span
-            key={`${character}-${index}`}
-            className="typewriter-backdrop__char"
-            style={{ "--char-index": index } as CSSProperties}
+        {lines.map((line, index) => (
+          <p
+            key={`${line}-${index}`}
+            className="typewriter-backdrop__line"
+            style={
+              {
+                "--line-length": `${line.length}`,
+                "--line-delay": `${index * 0.65}s`,
+              } as CSSProperties
+            }
           >
-            {character === " " ? "\u00A0" : character}
-          </span>
+            {line}
+          </p>
         ))}
       </div>
     </div>

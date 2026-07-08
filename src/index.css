@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600&family=Cormorant+Garamond:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -34,6 +34,7 @@
   --font-body: "Libre Baskerville", serif;
   --font-display: "Cormorant Garamond", serif;
   --font-mono: "IBM Plex Mono", "SFMono-Regular", ui-monospace, monospace;
+  --font-script: "Caveat", cursive;
 }
 
 .darker-mode {
@@ -176,24 +177,24 @@
   }
 
   .typewriter-backdrop__sheet {
-    display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
-    gap: 0.4rem 0.28rem;
-    font-family: var(--font-mono);
-    font-size: clamp(0.8rem, 1vw + 0.55rem, 1.15rem);
-    font-weight: 400;
-    letter-spacing: 0.14em;
-    line-height: 1.55;
-    text-transform: uppercase;
+    display: grid;
+    gap: 0.5rem;
+    font-family: var(--font-script);
+    font-size: clamp(0.66rem, 0.5vw + 0.55rem, 0.9rem);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    line-height: 1.35;
     color: rgba(99, 75, 48, 0.075);
     transform: rotate(-1.4deg) translateX(-1%);
   }
 
-  .typewriter-backdrop__char {
+  .typewriter-backdrop__line {
+    width: 0;
+    overflow: hidden;
+    white-space: nowrap;
     opacity: 0;
-    animation: typewriter-char var(--typewriter-duration, 22s) steps(1, end) infinite;
-    animation-delay: calc(var(--char-index) * 18ms);
+    animation: typewriter-line 14s steps(var(--line-length), end) infinite;
+    animation-delay: var(--line-delay, 0s);
   }
 
   .darker-mode .typewriter-backdrop__sheet {
@@ -263,22 +264,32 @@
   }
 }
 
-@keyframes typewriter-char {
+@keyframes typewriter-line {
   0% {
     opacity: 0;
+    width: 0;
   }
-  2%,
-  92% {
+  6% {
+    opacity: 0.8;
+  }
+  62% {
+    opacity: 0.8;
+    width: calc(var(--line-length) * 1ch);
+  }
+  88% {
     opacity: 1;
+    width: calc(var(--line-length) * 1ch);
   }
   100% {
     opacity: 0;
+    width: 0;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .typewriter-backdrop__char {
+  .typewriter-backdrop__line {
     animation: none;
     opacity: 0.38;
+    width: auto;
   }
 }
