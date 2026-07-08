@@ -2,7 +2,7 @@ import { Section } from "./Section";
 
 const currentlyInto = [
   "AI hardware acceleration",
-  "commerce backend systems",
+  "Commerce Backend Systems",
   "clean product-facing interfaces",
 ];
 

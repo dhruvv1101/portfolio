@@ -12,10 +12,10 @@ import { useToast } from "@/hooks/use-toast";
 
 const sections = [
   { id: "about", name: "More On Me" },
-  { id: "skills", name: "What I Work With" },
   { id: "projects", name: "Selected Work" },
-  { id: "coding", name: "On The Internet" },
   { id: "experience", name: "Things I've Built" },
+  { id: "skills", name: "What I Work With" },
+  { id: "coding", name: "On the Internet" },
   { id: "contact", name: "Let's Talk" },
 ];
 

@@ -30,7 +30,7 @@ export function CodingProfiles() {
   return (
     <Section
       id="coding"
-      label="05 / On The Internet"
+      label="05 / On the Internet"
       title="Competitive coding, side tabs, and public trails."
       kicker="The kind of links that say something about how I think when nobody is dressing the work up."
       intro="profiles / practice / public signal"
