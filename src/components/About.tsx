@@ -1,66 +1,60 @@
 import { Section } from "./Section";
-import { GraduationCap, Brain, Laptop } from "lucide-react";
+
+const currentlyInto = [
+  "AI hardware acceleration",
+  "commerce backend systems",
+  "clean product-facing interfaces",
+];
 
 export function About() {
   return (
-    <Section id="about" className="bg-muted/30">
-      <div className="grid md:grid-cols-2 gap-12 items-center">
-        <div>
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">
-            About Me
-          </h2>
-          <div className="space-y-4 text-lg text-muted-foreground leading-relaxed">
-            <p>
-              I am a pre-final year student at <span className="text-primary font-semibold">ABV-IIITM Gwalior</span>,
-              pursuing a B.Tech in Electrical and Electronics Engineering (2023-2027).
-            </p>
-            <p>
-              My journey lies at the intersection of core electronics and modern computing. 
-              I thrive on solving complex problems, whether it's optimizing a VLSI circuit 
-              or designing an efficient ML algorithm.
-            </p>
-            <p>
-              When I'm not coding or soldering, you can find me exploring the latest research 
-              in AI hardware acceleration or contributing to open-source projects.
-            </p>
-          </div>
+    <Section
+      id="about"
+      label="01 / More On Me"
+      title="The backstory, without the LinkedIn voice."
+      kicker="I study electrical and electronics engineering, but I’m just as interested in what happens when hardware, data, and product systems have to work together."
+      intro="ABV-IIITM Gwalior / 2023 - 2027"
+      folio="Notes"
+      variant="muted"
+    >
+      <div className="grid gap-10 md:grid-cols-[1.05fr_0.95fr]">
+        <div className="space-y-6 text-lg leading-relaxed text-muted-foreground">
+          <p>
+            I’m a final year student at <span className="text-foreground">ABV-IIITM Gwalior</span>. My lane
+            started with circuits and systems, but it widened fast into machine learning, backend logic, and the kind
+            of software that supports real operations instead of just looking good in demos.
+          </p>
+          <p>
+            I like work that has texture to it: production constraints, integrations, async workflows, and enough
+            ambiguity that you need both technical depth and product judgment to make clean decisions.
+          </p>
+          <p>
+            That is why my projects swing between VLSI, ML tooling, and backend-heavy flows like CSAT journeys,
+            invoice sync, and platform integrations. Same curiosity, different surfaces.
+          </p>
         </div>
 
-        <div className="grid gap-6">
-          <div className="glass-card p-6 rounded-2xl flex items-start gap-4 hover:border-primary/50 transition-colors duration-300">
-            <div className="p-3 rounded-lg bg-primary/10 text-primary">
-              <GraduationCap className="w-6 h-6" />
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold text-foreground mb-1">Education</h3>
-              <p className="text-primary font-medium">B.Tech in EEE</p>
-              <p className="text-sm text-muted-foreground">ABV-IIITM Gwalior (2023 - 2027)</p>
-            </div>
+        <div className="editorial-card grid gap-6 px-6 py-7">
+          <div className="flex items-center justify-between border-b border-border/80 pb-4">
+            <p className="folio-tag">Currently Into</p>
+            <span className="text-sm text-muted-foreground">a.k.a. what keeps stealing my tabs</span>
           </div>
 
-          <div className="glass-card p-6 rounded-2xl flex items-start gap-4 hover:border-primary/50 transition-colors duration-300">
-            <div className="p-3 rounded-lg bg-primary/10 text-primary">
-              <Brain className="w-6 h-6" />
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold text-foreground mb-1">Interests</h3>
-              <p className="text-muted-foreground">
-                Artificial Intelligence, Machine Learning, VLSI Design, Research & Development
-              </p>
-            </div>
+          <div className="space-y-4">
+            {currentlyInto.map((item, index) => (
+              <div key={item} className="flex items-start gap-4 border-b border-border/70 pb-4 last:border-b-0 last:pb-0">
+                <span className="font-mono text-[0.68rem] uppercase tracking-[0.28em] text-primary/80">
+                  {(index + 1).toString().padStart(2, "0")}
+                </span>
+                <p className="text-lg text-foreground">{item}</p>
+              </div>
+            ))}
           </div>
 
-          <div className="glass-card p-6 rounded-2xl flex items-start gap-4 hover:border-primary/50 transition-colors duration-300">
-            <div className="p-3 rounded-lg bg-primary/10 text-primary">
-              <Laptop className="w-6 h-6" />
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold text-foreground mb-1">Goals</h3>
-              <p className="text-muted-foreground">
-                Building scalable, intelligent systems that solve real-world hardware challenges.
-              </p>
-            </div>
-          </div>
+          <p className="border-t border-border/80 pt-5 text-sm leading-relaxed text-muted-foreground">
+            The fun part for me is switching layers without losing the thread, from circuit-level thinking to ML logic
+            to the backend services that make a user-facing flow actually survive.
+          </p>
         </div>
       </div>
     </Section>
