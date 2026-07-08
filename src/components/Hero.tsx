@@ -8,7 +8,7 @@ interface HeroProps {
 }
 
 const coverMeta = [
-  "VLSI / ML / backend systems",
+  "VLSI / ML / Backend Systems",
   "Gwalior, India",
   "Issue 01",
 ];
@@ -80,12 +80,12 @@ export function Hero({ onNavigate }: HeroProps) {
                   Showcase portfolio / work so far / systems, product, and engineering notes.
                 </p>
                 <h1 className="max-w-4xl text-6xl font-semibold leading-[0.92] md:text-8xl">
-                  Dhruv Verma presents a running record of the work, projects, and technical ground covered so far.
+                  I use this portfolio as a running record of the work, projects, and technical ground I’ve covered so far.
                 </h1>
               </div>
 
               <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
-                This showcase pulls together what I have built, explored, and improved till now, across VLSI,
+                I use this showcase to bring together what I have built, explored, and improved so far across VLSI,
                 machine learning, backend systems, browser tooling, and competition work.
               </p>
             </div>
@@ -100,7 +100,7 @@ export function Hero({ onNavigate }: HeroProps) {
               </button>
 
               <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
-                Built to feel thoughtful, tactile, and personal, with just enough structure to show how I think about
+                I wanted this to feel thoughtful, tactile, and personal, with enough structure to show how I think about
                 systems, design, and engineering work.
               </p>
             </div>

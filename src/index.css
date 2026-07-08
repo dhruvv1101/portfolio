@@ -201,15 +201,6 @@
     display: inline-block;
   }
 
-  .typewriter-backdrop__word--caps {
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-  }
-
-  .typewriter-backdrop__word--large {
-    font-size: 1.18em;
-  }
-
   .darker-mode .typewriter-backdrop__sheet {
     color: rgba(122, 82, 42, 0.14);
   }
