@@ -1,6 +1,7 @@
 import { Briefcase } from "lucide-react";
 import { Section } from "./Section";
 import curefitLogo from "@/assets/logos/curefit-logo.png";
+import gssocLogo from "@/assets/logos/gssoc-logo.png";
 import halLogo from "@/assets/logos/hal-logo.png";
 
 const experiences = [

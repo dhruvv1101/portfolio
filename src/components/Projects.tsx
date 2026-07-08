@@ -2,6 +2,8 @@ import { Github } from "lucide-react";
 import { useState } from "react";
 import { Section } from "./Section";
 import chessflowBishop from "@/assets/logos/chessflow-bishop.png";
+import intentlensLogo from "@/assets/logos/intentlens-logo.png";
+import kaggleLogo from "@/assets/logos/kaggle-logo.png";
 
 const projects = [
   {
