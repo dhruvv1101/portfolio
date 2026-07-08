@@ -1,5 +1,6 @@
 import { Briefcase } from "lucide-react";
 import { Section } from "./Section";
+import gssocLogo from "@/assets/logos/gssoc-logo.png";
 
 const experiences = [
   {
@@ -34,6 +35,7 @@ const experiences = [
       "Helped students navigate unfamiliar codebases without losing momentum.",
     ],
     stack: ["mentorship", "reviews", "architecture guidance"],
+    logo: gssocLogo,
   },
   {
     role: "Vocational Trainee",
@@ -71,6 +73,11 @@ export function Experience() {
               <p className="folio-tag mb-4">{(index + 1).toString().padStart(2, "0")} / Entry</p>
               <h3 className="text-3xl font-semibold md:text-4xl">{experience.role}</h3>
               <p className="mt-3 flex items-center gap-2 text-primary">
+                {experience.logo && (
+                  <span className="flex h-9 w-9 items-center justify-center border border-border/80 bg-background/80 p-1">
+                    <img src={experience.logo} alt="" className="h-full w-full object-contain" />
+                  </span>
+                )}
                 <Briefcase className="h-4 w-4" />
                 {experience.org}
               </p>
