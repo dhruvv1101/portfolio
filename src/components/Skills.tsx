@@ -26,6 +26,7 @@ export function Skills() {
       kicker="Some of it is model tooling. Some of it is core electronics. Some of it is just the backend plumbing you need when real systems touch each other."
       intro="craft / stack / platforms"
       folio="Toolkit"
+      backgroundText="stack / python / java / typescript / verilog / ml / systems / shopify / uniware / limechat"
     >
       <div className="grid gap-8 lg:grid-cols-[1fr_0.8fr]">
         <div className="grid gap-6 md:grid-cols-3">

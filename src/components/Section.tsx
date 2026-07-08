@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
+import { TypewriterBackdrop } from "./TypewriterBackdrop";
 
 interface SectionProps {
   children: ReactNode;
@@ -14,6 +15,7 @@ interface SectionProps {
   title?: string;
   intro?: string;
   variant?: "default" | "muted";
+  backgroundText?: string;
 }
 
 export function Section({
@@ -28,6 +30,7 @@ export function Section({
   title,
   intro,
   variant = "default",
+  backgroundText,
 }: SectionProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
   const [isReading, setIsReading] = useState(false);
@@ -58,6 +61,7 @@ export function Section({
         className
       )}
     >
+      {backgroundText && <TypewriterBackdrop text={backgroundText} />}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}

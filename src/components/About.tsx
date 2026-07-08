@@ -16,6 +16,7 @@ export function About() {
       intro="ABV-IIITM Gwalior / 2023 - 2027"
       folio="Notes"
       variant="muted"
+      backgroundText="about / circuits / systems / machine learning / backend / product thinking / abv iiitm / final year"
     >
       <div className="grid gap-10 md:grid-cols-[1.05fr_0.95fr]">
         <div className="space-y-6 text-lg leading-relaxed text-muted-foreground">

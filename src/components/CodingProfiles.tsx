@@ -36,6 +36,7 @@ export function CodingProfiles() {
       intro="profiles / practice / public signal"
       folio="Links"
       variant="muted"
+      backgroundText="public trails / leetcode / codeforces / codechef / problem solving / practice / ranking / consistency"
     >
       <div className="grid gap-6 md:grid-cols-3">
         {profiles.map((profile, index) => (

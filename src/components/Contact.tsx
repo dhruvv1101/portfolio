@@ -54,6 +54,7 @@ export function Contact() {
       kicker="I’m open to internships, research-heavy builds, backend/product systems work, and conversations that are actually specific."
       intro="contact / collab / opportunities"
       folio="Close"
+      backgroundText="contact / collaboration / internships / research / backend systems / product builds / opportunities"
     >
       <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="editorial-card px-6 py-7">

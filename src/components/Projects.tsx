@@ -57,6 +57,7 @@ export function Projects() {
       kicker="Click a project and it takes over the main spread. The layout stays magazine-like, but now it actually reacts."
       intro="projects / experiments / systems"
       folio="Features"
+      backgroundText="projects / chessflow / study buddy / intentlens / kaggle / analysis / extension / machine learning"
     >
       <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-start">
         <article className="editorial-card self-start grid gap-8 px-6 py-7 md:grid-cols-[0.8fr_1.2fr]">

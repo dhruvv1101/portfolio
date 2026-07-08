@@ -59,6 +59,7 @@ export function Experience() {
       folio="Timeline"
       variant="muted"
       contentClassName="max-w-6xl"
+      backgroundText="experience / curefit / csat / invoice sync / shopify / uniware / backend flows / production systems"
     >
       <div className="space-y-8">
         {experiences.map((experience, index) => (
