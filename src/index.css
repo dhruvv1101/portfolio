@@ -130,8 +130,34 @@
     z-index: 0;
     opacity: 0;
     background:
-      radial-gradient(circle at top right, rgba(172, 137, 92, 0.12), transparent 30%),
-      linear-gradient(180deg, rgba(166, 127, 84, 0.1), rgba(126, 92, 58, 0.16));
+      radial-gradient(circle at 12% 18%, rgba(132, 93, 49, 0.22), transparent 24%),
+      radial-gradient(circle at 86% 16%, rgba(84, 49, 23, 0.18), transparent 18%),
+      radial-gradient(circle at 88% 78%, rgba(112, 76, 38, 0.22), transparent 24%),
+      radial-gradient(circle at 16% 86%, rgba(68, 41, 19, 0.18), transparent 18%),
+      linear-gradient(180deg, rgba(191, 152, 101, 0.14), rgba(112, 82, 49, 0.28));
+    mix-blend-mode: multiply;
+  }
+
+  .aging-paper::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    background:
+      linear-gradient(90deg, rgba(57, 32, 14, 0.28), transparent 8%, transparent 92%, rgba(57, 32, 14, 0.32)),
+      linear-gradient(180deg, rgba(52, 31, 15, 0.24), transparent 10%, transparent 88%, rgba(52, 31, 15, 0.3)),
+      radial-gradient(circle at 50% 48%, rgba(118, 96, 61, 0.08) 0%, rgba(118, 96, 61, 0.08) 1.2%, transparent 1.3%),
+      radial-gradient(circle at 22% 62%, rgba(84, 59, 31, 0.18), transparent 8%),
+      radial-gradient(circle at 74% 34%, rgba(84, 59, 31, 0.14), transparent 7%);
+    background-size:
+      100% 100%,
+      100% 100%,
+      18px 18px,
+      100% 100%,
+      100% 100%;
+    mix-blend-mode: multiply;
   }
 
   .aging-paper > * {
@@ -141,6 +167,10 @@
 
   .aging-paper.is-reading::before {
     animation: paper-age-cycle 25s linear infinite;
+  }
+
+  .aging-paper.is-reading::after {
+    animation: paper-burn-cycle 25s linear infinite;
   }
 }
 
@@ -171,14 +201,29 @@
 @keyframes paper-age-cycle {
   0% {
     opacity: 0;
-    filter: saturate(1);
+    filter: saturate(1) sepia(0);
   }
-  85% {
-    opacity: 0.8;
-    filter: saturate(0.88) sepia(0.12);
+  70% {
+    opacity: 0.82;
+    filter: saturate(0.92) sepia(0.2);
   }
   100% {
     opacity: 0;
-    filter: saturate(1);
+    filter: saturate(1) sepia(0);
+  }
+}
+
+@keyframes paper-burn-cycle {
+  0% {
+    opacity: 0;
+    filter: blur(0px);
+  }
+  78% {
+    opacity: 0.66;
+    filter: blur(0.2px);
+  }
+  100% {
+    opacity: 0;
+    filter: blur(0px);
   }
 }
