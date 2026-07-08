@@ -37,6 +37,7 @@ const experiences = [
       "Helped students navigate unfamiliar codebases without losing momentum.",
     ],
     stack: ["mentorship", "reviews", "architecture guidance"],
+    logo: gssocLogo,
   },
   {
     role: "Vocational Trainee",

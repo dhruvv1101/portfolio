@@ -34,6 +34,7 @@ const projects = [
       "IntentLens explores how a browser extension can surface intent, context, and useful cues directly in the browsing flow instead of forcing users to keep switching tabs and mental modes.",
     tags: ["Browser extension", "JavaScript", "UX", "Context-aware tooling"],
     github: "https://github.com/dhruvv1101",
+    logo: intentlensLogo,
   },
   {
     id: "kaggle-health-risk",
@@ -44,6 +45,7 @@ const projects = [
       "I approached the problem with feature engineering first, then a blend of CatBoost, pseudo-labeled CatBoost, and LightGBM. The pipeline adds ratio features, interaction features, categorical crosses, and class-weight tuning around the competition metric. My current best local balanced accuracy reached 0.94994.",
     tags: ["Kaggle", "CatBoost", "LightGBM", "Feature engineering", "Balanced accuracy"],
     github: "https://www.kaggle.com/competitions/playground-series-s6e7/data",
+    logo: kaggleLogo,
   },
 ];
 
