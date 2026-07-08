@@ -184,7 +184,7 @@
     font-weight: 500;
     letter-spacing: 0.08em;
     line-height: 1.35;
-    color: rgba(99, 75, 48, 0.075);
+    color: rgba(112, 78, 42, 0.068);
     transform: rotate(-1.4deg) translateX(-1%);
   }
 
@@ -198,7 +198,7 @@
   }
 
   .darker-mode .typewriter-backdrop__sheet {
-    color: rgba(235, 219, 194, 0.06);
+    color: rgba(146, 108, 66, 0.085);
   }
 
   .aging-paper.is-reading::before {
