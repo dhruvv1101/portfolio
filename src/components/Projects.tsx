@@ -1,8 +1,7 @@
 import { Github } from "lucide-react";
 import { useState } from "react";
 import { Section } from "./Section";
-import intentlensLogo from "@/assets/logos/intentlens-logo.png";
-import kaggleLogo from "@/assets/logos/kaggle-logo.png";
+import chessflowBishop from "@/assets/logos/chessflow-bishop.png";
 
 const projects = [
   {
@@ -14,6 +13,7 @@ const projects = [
       "Built to turn raw gameplay into something more readable, ChessFlow focuses on helping players understand why a game drifted, not just where the engine says they blundered.",
     tags: ["Python", "Analysis tooling", "Algorithms", "UX for learning"],
     github: "https://github.com/dhruvv1101",
+    logo: chessflowBishop,
   },
   {
     id: "study-buddy",

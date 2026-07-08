@@ -1,6 +1,7 @@
 import { Briefcase } from "lucide-react";
 import { Section } from "./Section";
-import gssocLogo from "@/assets/logos/gssoc-logo.png";
+import curefitLogo from "@/assets/logos/curefit-logo.png";
+import halLogo from "@/assets/logos/hal-logo.png";
 
 const experiences = [
   {
@@ -24,6 +25,7 @@ const experiences = [
       "APIs",
       "async flows",
     ],
+    logo: curefitLogo,
   },
   {
     role: "Open Source Mentor",
@@ -47,6 +49,7 @@ const experiences = [
       "Learned how reliability and legacy maintenance shape engineering decisions in hardware environments.",
     ],
     stack: ["avionics", "electronics", "systems exposure"],
+    logo: halLogo,
   },
 ];
 
