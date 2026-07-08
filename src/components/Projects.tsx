@@ -58,8 +58,8 @@ export function Projects() {
       intro="projects / experiments / systems"
       folio="Features"
     >
-      <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
-        <article className="editorial-card grid gap-8 px-6 py-7 md:grid-cols-[0.8fr_1.2fr]">
+      <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-start">
+        <article className="editorial-card self-start grid gap-8 px-6 py-7 md:grid-cols-[0.8fr_1.2fr]">
           <div className="space-y-5 border-b border-border/70 pb-6 md:border-b-0 md:border-r md:pb-0 md:pr-6">
             <p className="folio-tag">Feature Story</p>
             <h3 className="text-4xl font-semibold md:text-5xl">{activeProject.title}</h3>
