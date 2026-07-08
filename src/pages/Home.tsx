@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Navigation } from "@/components/Navigation";
 import { Hero } from "@/components/Hero";
@@ -23,12 +23,8 @@ export default function Home() {
   const { toast } = useToast();
   const reduceMotion = useReducedMotion();
   const [isPageTurning, setIsPageTurning] = useState(false);
-  const timeoutsRef = useRef<number[]>([]);
-
-  const sectionMap = useMemo(
-    () => Object.fromEntries(sections.map((section) => [section.id, section.name])),
-    []
-  );
+  const pendingTargetIdRef = useRef<string | null>(null);
+  const isNavigatingRef = useRef(false);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -50,44 +46,42 @@ export default function Home() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [toast]);
 
-  useEffect(
-    () => () => {
-      timeoutsRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
-    },
-    []
-  );
-
   const navigateToSection = (id: string) => {
     const target = document.getElementById(id);
     if (!target) return;
 
-    if (reduceMotion) {
+    if (
+      reduceMotion ||
+      isNavigatingRef.current ||
+      (typeof window !== "undefined" && !window.matchMedia("(min-width: 768px)").matches)
+    ) {
       target.scrollIntoView({ behavior: "smooth", block: "start" });
       return;
     }
 
-    timeoutsRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
-    timeoutsRef.current = [];
+    isNavigatingRef.current = true;
+    pendingTargetIdRef.current = id;
     setIsPageTurning(true);
+  };
 
-    timeoutsRef.current.push(
-      window.setTimeout(() => {
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 220)
-    );
+  const handleCoverComplete = () => {
+    const id = pendingTargetIdRef.current;
+    if (!id) return;
 
-    timeoutsRef.current.push(
-      window.setTimeout(() => {
-        setIsPageTurning(false);
-      }, 760)
-    );
+    pendingTargetIdRef.current = null;
+    document.getElementById(id)?.scrollIntoView({ behavior: "auto", block: "start" });
+    setIsPageTurning(false);
+  };
+
+  const handleRevealComplete = () => {
+    isNavigatingRef.current = false;
   };
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-background text-foreground paper-grain">
       <Navigation links={sections} onNavigate={navigateToSection} />
 
-      <AnimatePresence>
+      <AnimatePresence onExitComplete={handleRevealComplete}>
         {isPageTurning && (
           <motion.div
             aria-hidden="true"
@@ -95,6 +89,7 @@ export default function Home() {
             animate={{ x: "0%", rotate: -2, skewY: -1 }}
             exit={{ x: "-12%", opacity: 0.2 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            onAnimationComplete={handleCoverComplete}
             className="pointer-events-none fixed inset-y-0 right-0 z-[60] hidden w-[68vw] origin-right page-turn-gradient shadow-[-36px_0_80px_rgba(57,45,34,0.24)] md:block"
             style={{ transformStyle: "preserve-3d" }}
           >
@@ -121,7 +116,7 @@ export default function Home() {
             Built with React, Tailwind, and a better sense of pacing.
           </p>
           <p className="hidden text-sm text-muted-foreground md:block">
-            {Object.keys(sectionMap).length.toString().padStart(2, "0")} sections
+            {sections.length.toString().padStart(2, "0")} sections
           </p>
         </div>
       </footer>

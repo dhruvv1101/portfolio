@@ -11,6 +11,7 @@ export function Navigation({ links, onNavigate }: NavigationProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeId, setActiveId] = useState(links[0]?.id ?? "");
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -72,11 +73,17 @@ export function Navigation({ links, onNavigate }: NavigationProps) {
           <div className="hidden items-center gap-3 md:flex">
             {links.map((link, index) => {
               const isActive = activeId === link.id;
+              const distance = hoveredIndex === null ? 99 : Math.abs(hoveredIndex - index);
+              const scale = hoveredIndex === null ? 1 : distance === 0 ? 1.14 : distance === 1 ? 1.08 : 1.02;
 
               return (
-                <button
+                <motion.button
                   key={link.id}
                   onClick={() => handleNavigate(link.id)}
+                  onHoverStart={() => setHoveredIndex(index)}
+                  onHoverEnd={() => setHoveredIndex(null)}
+                  animate={{ scale, y: hoveredIndex === index ? -4 : 0 }}
+                  transition={{ type: "spring", stiffness: 360, damping: 24, mass: 0.5 }}
                   className={`rounded-full border px-4 py-2 text-sm transition-all ${
                     isActive
                       ? "border-primary/40 bg-primary/10 text-foreground"
@@ -87,7 +94,7 @@ export function Navigation({ links, onNavigate }: NavigationProps) {
                     {(index + 1).toString().padStart(2, "0")}
                   </span>
                   {link.name}
-                </button>
+                </motion.button>
               );
             })}
           </div>
