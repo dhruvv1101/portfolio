@@ -184,7 +184,7 @@
     font-weight: 500;
     letter-spacing: 0.08em;
     line-height: 1.35;
-    color: rgba(99, 75, 48, 0.075);
+    color: rgba(92, 58, 26, 0.108);
     transform: rotate(-1.4deg) translateX(-1%);
   }
 
@@ -197,8 +197,21 @@
     animation-delay: var(--line-delay, 0s);
   }
 
+  .typewriter-backdrop__word {
+    display: inline-block;
+  }
+
+  .typewriter-backdrop__word--caps {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  .typewriter-backdrop__word--large {
+    font-size: 1.18em;
+  }
+
   .darker-mode .typewriter-backdrop__sheet {
-    color: rgba(235, 219, 194, 0.06);
+    color: rgba(122, 82, 42, 0.14);
   }
 
   .aging-paper.is-reading::before {
