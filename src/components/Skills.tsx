@@ -1,60 +1,67 @@
 import { Section } from "./Section";
-import { motion } from "framer-motion";
 
-const skillCategories = [
+const craftAreas = [
   {
-    title: "Programming",
-    skills: ["C++", "Python", "JavaScript", "SQL", "MATLAB"],
+    title: "Languages",
+    items: ["C++", "Python", "Java", "TypeScript", "SQL", "MATLAB"],
   },
   {
     title: "AI / ML",
-    skills: ["NumPy", "Pandas", "Scikit-learn", "TensorFlow", "PyTorch","Streamlit","Sqlite"],
+    items: ["NumPy", "Pandas", "Scikit-learn", "PyTorch", "TensorFlow", "Streamlit"],
   },
   {
-    title: "Core EEE & VLSI",
-    skills: ["Verilog", "SystemVerilog", "Signal Processing", "Circuit Design", "Embedded Systems"],
-  },
-  {
-    title: "Tools & Platforms",
-    skills: ["Git", "GitHub", "Linux/Unix", "VS Code", "Jupyter","Anaconda"],
+    title: "Core Systems",
+    items: ["Verilog", "SystemVerilog", "Signal Processing", "Embedded Systems", "Circuit Design"],
   },
 ];
 
+const platforms = ["Shopify", "Uniware", "LimeChat", "GitHub", "Linux / Unix", "Jupyter", "VS Code", "Anaconda"];
+
 export function Skills() {
   return (
-    <Section id="skills">
-      <div className="text-center mb-16">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">Technical Arsenal</h2>
-        <p className="text-muted-foreground max-w-2xl mx-auto">
-          A collection of tools and technologies I use to bring ideas to life.
-        </p>
-      </div>
+    <Section
+      id="skills"
+      label="04 / What I Work With"
+      title="The stack is mixed on purpose."
+      kicker="Some of it is model tooling. Some of it is core electronics. Some of it is just the backend plumbing you need when real systems touch each other."
+      intro="craft / stack / platforms"
+      folio="Toolkit"
+    >
+      <div className="grid gap-8 lg:grid-cols-[1fr_0.8fr]">
+        <div className="grid gap-6 md:grid-cols-3">
+          {craftAreas.map((group, index) => (
+            <article key={group.title} className="editorial-card px-5 py-6">
+              <p className="folio-tag mb-4">{(index + 1).toString().padStart(2, "0")} / {group.title}</p>
+              <div className="space-y-3">
+                {group.items.map((item) => (
+                  <div key={item} className="border-b border-border/70 pb-3 text-foreground last:border-b-0 last:pb-0">
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {skillCategories.map((category, idx) => (
-          <motion.div
-            key={category.title}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: idx * 0.1 }}
-            viewport={{ once: true }}
-            className="glass-card p-6 rounded-2xl hover:bg-white/5 transition-all duration-300 group"
-          >
-            <h3 className="text-xl font-semibold text-primary mb-6 pb-2 border-b border-white/10 group-hover:border-primary/30 transition-colors">
-              {category.title}
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {category.skills.map((skill) => (
-                <span
-                  key={skill}
-                  className="px-3 py-1 text-sm rounded-full bg-secondary/30 text-secondary-foreground border border-white/5 hover:border-primary/50 hover:bg-primary/20 transition-colors cursor-default"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </motion.div>
-        ))}
+        <article className="editorial-card px-6 py-7">
+          <div className="mb-6 border-b border-border/70 pb-4">
+            <p className="folio-tag">Platforms I've Worked Around</p>
+            <h3 className="mt-3 text-3xl font-semibold">The tools behind the actual work.</h3>
+          </div>
+
+          <div className="flex flex-wrap gap-3">
+            {platforms.map((platform) => (
+              <span key={platform} className="border border-border/80 px-4 py-3 text-sm text-foreground/85">
+                {platform}
+              </span>
+            ))}
+          </div>
+
+          <p className="mt-6 leading-relaxed text-muted-foreground">
+            This is the layer where product systems and engineering habits meet. Not glamorous, but it is where a lot
+            of useful work actually happens.
+          </p>
+        </article>
       </div>
     </Section>
   );

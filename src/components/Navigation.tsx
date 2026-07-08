@@ -1,34 +1,50 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
-const links = [
-  { name: "About", href: "#about" },
-  { name: "Skills", href: "#skills" },
-  { name: "Projects", href: "#projects" },
-  { name: "Coding", href: "#coding" },
-  { name: "Experience", href: "#experience" },
-  { name: "Contact", href: "#contact" },
-];
+interface NavigationProps {
+  links: Array<{ id: string; name: string }>;
+  onNavigate: (id: string) => void;
+}
 
-export function Navigation() {
+export function Navigation({ links, onNavigate }: NavigationProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeId, setActiveId] = useState(links[0]?.id ?? "");
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      setScrolled(window.scrollY > 48);
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
-  const scrollToSection = (href: string) => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleSection = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((first, second) => second.intersectionRatio - first.intersectionRatio)[0];
+
+        if (visibleSection?.target.id) {
+          setActiveId(visibleSection.target.id);
+        }
+      },
+      { threshold: [0.25, 0.5, 0.75], rootMargin: "-10% 0px -40% 0px" }
+    );
+
+    links.forEach((link) => {
+      const element = document.getElementById(link.id);
+      if (element) observer.observe(element);
+    });
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      observer.disconnect();
+    };
+  }, [links]);
+
+  const handleNavigate = (id: string) => {
     setMobileMenuOpen(false);
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
+    onNavigate(id);
   };
 
   return (
@@ -36,65 +52,70 @@ export function Navigation() {
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed left-0 right-0 top-0 z-50 transition-all duration-300 ${
           scrolled || mobileMenuOpen
-            ? "bg-background/80 backdrop-blur-lg border-b border-white/5 py-4"
-            : "bg-transparent py-6"
+            ? "border-b border-border/70 bg-background/92 backdrop-blur-md"
+            : "bg-transparent"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-          <a 
-            href="#" 
-            className="text-2xl font-display font-bold text-primary tracking-tighter hover:text-primary/80 transition-colors"
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-6">
+          <button
+            onClick={() => handleNavigate("about")}
+            className="text-left text-3xl font-display font-semibold leading-none text-foreground transition-colors hover:text-primary"
           >
-            DV<span className="text-foreground">.</span>
-          </a>
+            DV.
+            <span className="mt-1 block font-mono text-[0.62rem] uppercase tracking-[0.34em] text-muted-foreground">
+              personal issue
+            </span>
+          </button>
 
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-8">
-            {links.map((link) => (
-              <button
-                key={link.name}
-                onClick={() => scrollToSection(link.href)}
-                className="text-sm font-medium text-foreground/80 hover:text-primary transition-colors relative group"
-              >
-                {link.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
-              </button>
-            ))}
+          <div className="hidden items-center gap-3 md:flex">
+            {links.map((link, index) => {
+              const isActive = activeId === link.id;
+
+              return (
+                <button
+                  key={link.id}
+                  onClick={() => handleNavigate(link.id)}
+                  className={`rounded-full border px-4 py-2 text-sm transition-all ${
+                    isActive
+                      ? "border-primary/40 bg-primary/10 text-foreground"
+                      : "border-transparent text-muted-foreground hover:border-border/80 hover:text-foreground"
+                  }`}
+                >
+                  <span className="mr-2 font-mono text-[0.62rem] uppercase tracking-[0.24em] text-primary/75">
+                    {(index + 1).toString().padStart(2, "0")}
+                  </span>
+                  {link.name}
+                </button>
+              );
+            })}
           </div>
 
-          {/* Mobile Toggle */}
-          <button 
-            className="md:hidden text-foreground"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
+          <button className="text-foreground md:hidden" onClick={() => setMobileMenuOpen((open) => !open)}>
             {mobileMenuOpen ? <X /> : <Menu />}
           </button>
         </div>
       </motion.nav>
 
-      {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "100vh" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="fixed inset-0 bg-background z-40 md:hidden pt-24 px-6"
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            className="fixed inset-x-4 top-24 z-40 border border-border/80 bg-card/95 p-6 shadow-[0_20px_40px_rgba(40,32,24,0.12)] md:hidden"
           >
-            <div className="flex flex-col gap-6 items-center">
-              {links.map((link, i) => (
-                <motion.button
-                  key={link.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  onClick={() => scrollToSection(link.href)}
-                  className="text-2xl font-display font-medium text-foreground hover:text-primary"
+            <div className="flex flex-col gap-3">
+              {links.map((link, index) => (
+                <button
+                  key={link.id}
+                  onClick={() => handleNavigate(link.id)}
+                  className="flex items-center justify-between border-b border-border/70 pb-3 text-left last:border-b-0 last:pb-0"
                 >
-                  {link.name}
-                </motion.button>
+                  <span className="text-lg text-foreground">{link.name}</span>
+                  <span className="folio-tag">{(index + 1).toString().padStart(2, "0")}</span>
+                </button>
               ))}
             </div>
           </motion.div>

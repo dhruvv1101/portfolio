@@ -1,11 +1,11 @@
-import { Section } from "./Section";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { Github, Linkedin, Mail, Send } from "lucide-react";
-import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Section } from "./Section";
 
 const contactSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -14,6 +14,27 @@ const contactSchema = z.object({
 });
 
 type ContactFormData = z.infer<typeof contactSchema>;
+
+const channels = [
+  {
+    label: "Mail",
+    value: "dhruv83170@gmail.com",
+    href: "mailto:dhruv83170@gmail.com",
+    icon: Mail,
+  },
+  {
+    label: "LinkedIn",
+    value: "dhruv-verma-34a927282",
+    href: "https://www.linkedin.com/in/dhruv-verma-34a927282/",
+    icon: Linkedin,
+  },
+  {
+    label: "GitHub",
+    value: "dhruvv1101",
+    href: "https://github.com/dhruvv1101",
+    icon: Github,
+  },
+];
 
 export function Contact() {
   const form = useForm<ContactFormData>({
@@ -26,49 +47,37 @@ export function Contact() {
   });
 
   return (
-    <Section id="contact" className="bg-muted/30">
-      <div className="grid lg:grid-cols-2 gap-16 max-w-5xl mx-auto">
-        <div>
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">
-            Let's Connect
-          </h2>
-          <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-            I'm always open to discussing new projects, research collaborations,
-            or opportunities in VLSI and AI.
-          </p>
-
-          <div className="space-y-6">
-            <a
-              href="mailto:dhruv83170@gmail.com"
-              className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 transition"
-            >
-              <Mail className="w-6 h-6 text-primary" />
-              <span>dhruv83170@gmail.com</span>
-            </a>
-
-            <a
-              href="https://www.linkedin.com/in/dhruv-verma-34a927282/"
-              target="_blank"
-              rel="noreferrer"
-              className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 transition"
-            >
-              <Linkedin className="w-6 h-6 text-primary" />
-              <span>LinkedIn</span>
-            </a>
-
-            <a
-              href="https://github.com/dhruvv1101"
-              target="_blank"
-              rel="noreferrer"
-              className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 transition"
-            >
-              <Github className="w-6 h-6 text-primary" />
-              <span>GitHub</span>
-            </a>
+    <Section
+      id="contact"
+      label="06 / Let's Talk"
+      title="If the work feels aligned, reach out."
+      kicker="I’m open to internships, research-heavy builds, backend/product systems work, and conversations that are actually specific."
+      intro="contact / collab / opportunities"
+      folio="Close"
+    >
+      <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="editorial-card px-6 py-7">
+          <p className="folio-tag mb-6">Channels</p>
+          <div className="space-y-5">
+            {channels.map((channel) => (
+              <a
+                key={channel.label}
+                href={channel.href}
+                target={channel.href.startsWith("http") ? "_blank" : undefined}
+                rel={channel.href.startsWith("http") ? "noreferrer" : undefined}
+                className="flex items-start gap-4 border-b border-border/70 pb-5 last:border-b-0 last:pb-0"
+              >
+                <channel.icon className="mt-1 h-5 w-5 text-primary" />
+                <div>
+                  <p className="text-sm uppercase tracking-[0.24em] text-muted-foreground">{channel.label}</p>
+                  <p className="mt-2 text-lg text-foreground">{channel.value}</p>
+                </div>
+              </a>
+            ))}
           </div>
         </div>
 
-        <div className="glass-card p-8 rounded-3xl">
+        <div className="editorial-card px-6 py-7">
           <Form {...form}>
             <form
               name="contact"
@@ -84,14 +93,23 @@ export function Contact() {
                 </label>
               </p>
 
+              <div className="border-b border-border/70 pb-4">
+                <p className="folio-tag">Send a note</p>
+              </div>
+
               <FormField
                 control={form.control}
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Name</FormLabel>
+                    <FormLabel className="text-muted-foreground">Name</FormLabel>
                     <FormControl>
-                      <Input {...field} name="name" placeholder="Your name" />
+                      <Input
+                        {...field}
+                        name="name"
+                        placeholder="Your name"
+                        className="rounded-none border-border/80 bg-background/70 px-4 py-6"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -103,9 +121,14 @@ export function Contact() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel className="text-muted-foreground">Email</FormLabel>
                     <FormControl>
-                      <Input {...field} name="email" placeholder="your@email.com" />
+                      <Input
+                        {...field}
+                        name="email"
+                        placeholder="your@email.com"
+                        className="rounded-none border-border/80 bg-background/70 px-4 py-6"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -117,13 +140,13 @@ export function Contact() {
                 name="message"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Message</FormLabel>
+                    <FormLabel className="text-muted-foreground">Message</FormLabel>
                     <FormControl>
                       <Textarea
                         {...field}
                         name="message"
-                        placeholder="What's on your mind?"
-                        className="min-h-[150px]"
+                        placeholder="What are we building, fixing, or figuring out?"
+                        className="min-h-[170px] rounded-none border-border/80 bg-background/70 px-4 py-4"
                       />
                     </FormControl>
                     <FormMessage />
@@ -133,9 +156,9 @@ export function Contact() {
 
               <button
                 type="submit"
-                className="w-full py-4 rounded-xl font-semibold bg-primary text-primary-foreground hover:bg-primary/90 transition flex items-center justify-center gap-2"
+                className="inline-flex w-full items-center justify-center gap-3 border border-foreground bg-foreground px-6 py-4 text-sm uppercase tracking-[0.25em] text-background transition hover:bg-primary hover:text-primary-foreground"
               >
-                <Send className="w-5 h-5" />
+                <Send className="h-4 w-4" />
                 Send Message
               </button>
             </form>

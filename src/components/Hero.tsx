@@ -1,131 +1,87 @@
 import { motion } from "framer-motion";
-import { ArrowDown } from "lucide-react";
-import { useEffect, useState } from "react";
+import { ArrowRight } from "lucide-react";
 
-const roles = ["Engineer", "Data Science", "AI/ML", "VLSI", "Problem Solver"];
+interface HeroProps {
+  onNavigate: (id: string) => void;
+}
 
-export function Hero() {
-  const [currentRole, setCurrentRole] = useState(0);
-  const [displayText, setDisplayText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
+const coverMeta = [
+  "VLSI / ML / backend systems",
+  "Gwalior, India",
+  "Issue 01",
+];
 
-  // Typing effect logic
-  useEffect(() => {
-    const role = roles[currentRole];
-    const timeout = setTimeout(() => {
-      if (!isDeleting) {
-        setDisplayText(role.substring(0, displayText.length + 1));
-        if (displayText === role) {
-          setTimeout(() => setIsDeleting(true), 2000); // Wait before deleting
-        }
-      } else {
-        setDisplayText(role.substring(0, displayText.length - 1));
-        if (displayText === "") {
-          setIsDeleting(false);
-          setCurrentRole((prev) => (prev + 1) % roles.length);
-        }
-      }
-    }, isDeleting ? 50 : 150);
-
-    return () => clearTimeout(timeout);
-  }, [displayText, isDeleting, currentRole]);
-
+export function Hero({ onNavigate }: HeroProps) {
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden mesh-gradient pt-20">
-      {/* Abstract Background Particles */}
-      <div className="absolute inset-0 pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full bg-primary/10 blur-xl"
-            initial={{
-              x: Math.random() * window.innerWidth,
-              y: Math.random() * window.innerHeight,
-              scale: Math.random() * 0.5 + 0.5,
-            }}
-            animate={{
-              y: [null, Math.random() * -100],
-              x: [null, (Math.random() - 0.5) * 50],
-            }}
-            transition={{
-              duration: Math.random() * 10 + 10,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-            style={{
-              width: Math.random() * 300 + 50,
-              height: Math.random() * 300 + 50,
-            }}
-          />
-        ))}
-      </div>
-
-      <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-primary font-medium tracking-wide mb-4 text-lg md:text-xl"
-        >
-          Hello, I'm
-        </motion.p>
-        
-        <motion.h1
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="text-5xl md:text-7xl lg:text-8xl font-display font-bold text-foreground mb-6 tracking-tight text-glow"
-        >
-          Dhruv Verma
-        </motion.h1>
-
+    <section className="relative overflow-hidden px-4 pb-16 pt-28 md:pb-24 md:pt-32">
+      <div className="mx-auto max-w-7xl">
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="h-12 md:h-16 flex items-center justify-center gap-2 text-2xl md:text-4xl text-muted-foreground font-light"
-        >
-          <span className="text-primary">{displayText}</span>
-          <motion.span
-            animate={{ opacity: [1, 0] }}
-            transition={{ duration: 0.5, repeat: Infinity }}
-            className="w-1 h-8 md:h-10 bg-primary block"
-          />
-        </motion.div>
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-          className="mt-8 text-foreground/60 max-w-2xl mx-auto leading-relaxed"
-        >
-          Passionate about bridging the gap between hardware and intelligence.
-          Specializing in VLSI design and Machine Learning applications.
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1 }}
-          className="mt-12"
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="editorial-card cover-shadow grid gap-12 overflow-hidden px-6 py-8 md:grid-cols-[1.15fr_0.85fr] md:px-10 md:py-12"
         >
-          <a
-            href="#projects"
-            className="inline-block px-8 py-4 rounded-full bg-primary text-primary-foreground font-semibold shadow-lg shadow-primary/20 hover:shadow-primary/40 hover:-translate-y-1 transition-all duration-300"
-          >
-            View My Work
-          </a>
+          <div className="flex flex-col justify-between gap-10">
+            <div className="space-y-6">
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="border border-border/80 px-3 py-2 font-mono text-[0.68rem] uppercase tracking-[0.3em] text-muted-foreground">
+                  Dhruv Verma
+                </span>
+                <span className="section-rule hidden flex-1 md:block" />
+              </div>
+
+              <div className="space-y-4">
+                <p className="max-w-lg text-sm uppercase tracking-[0.38em] text-primary/85">
+                  Student engineer, systems thinker, and the person who likes the backend part too.
+                </p>
+                <h1 className="max-w-4xl text-6xl font-semibold leading-[0.92] md:text-8xl">
+                  A print-minded portfolio for someone building across silicon, models, and product systems.
+                </h1>
+              </div>
+
+              <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
+                I like hard problems with real-world edges: VLSI, ML, commerce flows, and the backend glue that
+                keeps them from falling apart.
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+              <button
+                onClick={() => onNavigate("projects")}
+                className="inline-flex items-center gap-3 border border-foreground bg-foreground px-6 py-4 text-sm uppercase tracking-[0.25em] text-background transition hover:bg-primary hover:text-primary-foreground"
+              >
+                Open Selected Work
+                <ArrowRight className="h-4 w-4" />
+              </button>
+
+              <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
+                Not trying to look like a startup site. More like a personal issue of a magazine that happens to know
+                its way around chips, models, and APIs.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-col justify-between border-t border-border/80 pt-6 md:border-l md:border-t-0 md:pl-8 md:pt-0">
+            <div className="space-y-5">
+              <p className="folio-tag">Cover Notes</p>
+              <div className="grid gap-4 text-sm text-muted-foreground">
+                {coverMeta.map((item, index) => (
+                  <div key={item} className="flex items-center gap-4 border-b border-border/70 pb-4">
+                    <span className="font-mono text-[0.68rem] uppercase tracking-[0.28em] text-primary/80">
+                      {(index + 1).toString().padStart(2, "0")}
+                    </span>
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <blockquote className="mt-10 border-l border-primary/50 pl-5 text-2xl font-display italic leading-tight text-foreground md:text-3xl">
+              “I’m most interested in the part where research taste and production reality finally meet.”
+            </blockquote>
+          </div>
         </motion.div>
       </div>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, y: [0, 10, 0] }}
-        transition={{ delay: 1.5, duration: 2, repeat: Infinity }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-foreground/40"
-      >
-        <ArrowDown className="w-6 h-6" />
-      </motion.div>
     </section>
   );
 }

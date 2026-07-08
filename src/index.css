@@ -1,92 +1,144 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  /* Warm Coffee Palette */
-  /* Base Background: Deep Espresso #1a1512 */
-  --background: 24 18% 9%;
-  
-  /* Text: Steamed Milk / Beige #ede0d4 */
-  --foreground: 30 40% 92%;
+  --background: 38 29% 94%;
+  --foreground: 18 14% 14%;
 
-  /* Primary: Mocha #b08968 */
-  --primary: 28 35% 65%;
-  --primary-foreground: 24 18% 9%;
+  --card: 36 24% 96%;
+  --card-foreground: 18 14% 14%;
+  --popover: 36 24% 96%;
+  --popover-foreground: 18 14% 14%;
 
-  /* Secondary: Roasted Bean #7f5539 */
-  --secondary: 25 38% 36%;
-  --secondary-foreground: 30 40% 92%;
+  --primary: 32 33% 45%;
+  --primary-foreground: 38 29% 94%;
+  --secondary: 32 18% 87%;
+  --secondary-foreground: 18 14% 14%;
+  --muted: 32 20% 90%;
+  --muted-foreground: 22 10% 39%;
+  --accent: 40 31% 72%;
+  --accent-foreground: 18 14% 14%;
 
-  /* Muted: Dark Roast #2c2520 */
-  --muted: 24 15% 15%;
-  --muted-foreground: 28 20% 60%;
+  --destructive: 0 70% 44%;
+  --destructive-foreground: 38 29% 94%;
 
-  /* Accent: Caramel #ddb892 */
-  --accent: 30 46% 72%;
-  --accent-foreground: 24 18% 9%;
+  --border: 28 14% 80%;
+  --input: 30 18% 90%;
+  --ring: 32 33% 45%;
 
-  --destructive: 0 62% 30%;
-  --destructive-foreground: 30 40% 92%;
+  --radius: 0;
 
-  --border: 24 15% 20%;
-  --input: 24 15% 20%;
-  --ring: 28 35% 65%;
-
-  --radius: 0.75rem;
-
-  --font-body: 'Inter', sans-serif;
-  --font-display: 'Outfit', sans-serif;
+  --font-body: "Libre Baskerville", serif;
+  --font-display: "Cormorant Garamond", serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", ui-monospace, monospace;
 }
 
-/* Darker Chocolate Mode (Easter Egg) */
 .darker-mode {
-  --background: 0 0% 5%;
-  --foreground: 30 20% 80%;
-  --primary: 25 60% 45%; 
-  /* More intense colors */
+  --background: 16 16% 9%;
+  --foreground: 38 24% 91%;
+  --card: 18 14% 12%;
+  --card-foreground: 38 24% 91%;
+  --popover: 18 14% 12%;
+  --popover-foreground: 38 24% 91%;
+  --primary: 35 42% 63%;
+  --primary-foreground: 18 16% 8%;
+  --secondary: 18 13% 20%;
+  --secondary-foreground: 38 24% 91%;
+  --muted: 17 13% 16%;
+  --muted-foreground: 34 12% 64%;
+  --accent: 35 27% 52%;
+  --accent-foreground: 18 16% 8%;
+  --border: 24 10% 26%;
+  --input: 24 10% 22%;
+  --ring: 35 42% 63%;
 }
 
 @layer base {
   * {
     @apply border-border;
   }
-  body {
-    @apply bg-background text-foreground selection:bg-primary/30 selection:text-primary-foreground;
-    font-family: var(--font-body);
-  }
-  
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-display);
-    @apply tracking-tight;
+
+  html {
+    scroll-behavior: smooth;
   }
 
-  /* Custom Scrollbar */
+  body {
+    @apply bg-background text-foreground selection:bg-primary/15 selection:text-foreground;
+    font-family: var(--font-body);
+    background-image:
+      linear-gradient(to bottom, hsla(var(--primary), 0.04), transparent 25%),
+      radial-gradient(circle at top left, hsla(var(--accent), 0.12), transparent 28%);
+    min-height: 100vh;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    @apply tracking-tight text-foreground;
+  }
+
+  a,
+  button,
+  input,
+  textarea,
+  select {
+    @apply outline-none ring-offset-0;
+  }
+
   ::-webkit-scrollbar {
     width: 10px;
   }
+
   ::-webkit-scrollbar-track {
     @apply bg-background;
   }
+
   ::-webkit-scrollbar-thumb {
-    @apply bg-primary/20 rounded-full hover:bg-primary/40 transition-colors;
+    @apply rounded-full bg-primary/25 hover:bg-primary/45;
+  }
+}
+
+@layer components {
+  .editorial-card {
+    @apply border border-border/80 bg-card/85 shadow-[0_10px_30px_rgba(46,36,27,0.07)];
+  }
+
+  .section-rule {
+    @apply h-px bg-border/80;
+  }
+
+  .folio-tag {
+    @apply font-mono text-[0.68rem] uppercase tracking-[0.3em] text-muted-foreground;
   }
 }
 
 @layer utilities {
-  .text-glow {
-    text-shadow: 0 0 20px hsla(var(--primary), 0.5);
+  .paper-grain {
+    background-image:
+      linear-gradient(to right, hsla(var(--foreground), 0.02) 1px, transparent 1px),
+      linear-gradient(to bottom, hsla(var(--foreground), 0.02) 1px, transparent 1px);
+    background-size: 22px 22px;
   }
-  
-  .glass-card {
-    @apply bg-background/40 backdrop-blur-md border border-white/5 shadow-xl;
+
+  .cover-shadow {
+    box-shadow:
+      0 30px 70px rgba(43, 33, 25, 0.12),
+      inset 0 0 0 1px rgba(80, 62, 46, 0.08);
   }
-  
-  .mesh-gradient {
-    background-image: radial-gradient(at 0% 0%, hsla(var(--primary), 0.15) 0px, transparent 50%),
-                      radial-gradient(at 100% 100%, hsla(var(--secondary), 0.15) 0px, transparent 50%);
+
+  .ink-muted {
+    color: hsl(var(--muted-foreground) / 0.92);
+  }
+
+  .page-turn-gradient {
+    background:
+      linear-gradient(90deg, rgba(255, 255, 255, 0.88), rgba(245, 239, 230, 0.98) 35%, rgba(226, 214, 196, 0.92));
   }
 }
-
