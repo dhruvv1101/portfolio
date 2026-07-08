@@ -5,28 +5,28 @@
 @tailwind utilities;
 
 :root {
-  --background: 46 66% 85%;
+  --background: 39 45% 88%;
   --foreground: 356 77% 22%;
 
-  --card: 47 69% 90%;
+  --card: 40 50% 91%;
   --card-foreground: 356 77% 22%;
-  --popover: 47 69% 90%;
+  --popover: 40 50% 91%;
   --popover-foreground: 356 77% 22%;
 
   --primary: 357 63% 42%;
-  --primary-foreground: 46 66% 85%;
-  --secondary: 338 84% 81%;
+  --primary-foreground: 39 45% 88%;
+  --secondary: 339 67% 80%;
   --secondary-foreground: 356 77% 22%;
-  --muted: 36 60% 54%;
+  --muted: 39 24% 66%;
   --muted-foreground: 357 47% 33%;
-  --accent: 36 64% 54%;
+  --accent: 31 54% 61%;
   --accent-foreground: 356 77% 22%;
 
   --destructive: 0 70% 44%;
-  --destructive-foreground: 46 66% 85%;
+  --destructive-foreground: 39 45% 88%;
 
-  --border: 20 49% 68%;
-  --input: 45 68% 88%;
+  --border: 28 29% 74%;
+  --input: 39 42% 89%;
   --ring: 357 63% 42%;
 
   --radius: 0;
@@ -39,22 +39,22 @@
 
 .darker-mode {
   --background: 353 77% 18%;
-  --foreground: 46 66% 85%;
+  --foreground: 39 45% 88%;
   --card: 353 68% 23%;
-  --card-foreground: 46 66% 85%;
+  --card-foreground: 39 45% 88%;
   --popover: 353 68% 23%;
-  --popover-foreground: 46 66% 85%;
-  --primary: 36 64% 54%;
+  --popover-foreground: 39 45% 88%;
+  --primary: 31 54% 61%;
   --primary-foreground: 353 77% 18%;
   --secondary: 357 48% 28%;
-  --secondary-foreground: 46 66% 85%;
-  --muted: 339 49% 56%;
-  --muted-foreground: 42 44% 76%;
-  --accent: 338 84% 81%;
+  --secondary-foreground: 39 45% 88%;
+  --muted: 24 18% 44%;
+  --muted-foreground: 36 31% 78%;
+  --accent: 339 67% 80%;
   --accent-foreground: 353 77% 18%;
   --border: 355 52% 30%;
   --input: 355 52% 24%;
-  --ring: 36 64% 54%;
+  --ring: 31 54% 61%;
 }
 
 @layer base {
