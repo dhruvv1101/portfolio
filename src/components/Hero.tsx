@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 interface HeroProps {
   onNavigate: (id: string) => void;
@@ -12,8 +13,26 @@ const coverMeta = [
 ];
 
 export function Hero({ onNavigate }: HeroProps) {
+  const heroRef = useRef<HTMLElement | null>(null);
+  const [isReading, setIsReading] = useState(false);
+
+  useEffect(() => {
+    const element = heroRef.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsReading(entry.isIntersecting);
+      },
+      { threshold: 0.55 }
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="relative overflow-hidden px-4 pb-16 pt-28 md:pb-24 md:pt-32">
+    <section ref={heroRef} className={`aging-paper relative overflow-hidden px-4 pb-16 pt-28 md:pb-24 md:pt-32 ${isReading ? "is-reading" : ""}`}>
       <div className="pointer-events-none absolute inset-0">
         <motion.div
           aria-hidden="true"
