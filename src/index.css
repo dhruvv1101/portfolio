@@ -166,36 +166,37 @@
     z-index: 1;
   }
 
-  .section-background-text {
+  .typewriter-backdrop {
     position: absolute;
     inset: 0;
     z-index: 0;
     pointer-events: none;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    gap: 1.25rem;
     overflow: hidden;
-    padding: 1.5rem 1rem;
+    padding: 1rem;
   }
 
-  .section-background-text span {
+  .typewriter-backdrop__sheet {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 0.4rem 0.28rem;
     font-family: var(--font-mono);
     font-size: clamp(0.8rem, 1vw + 0.55rem, 1.15rem);
     font-weight: 400;
-    letter-spacing: 0.34em;
-    line-height: 1.7;
+    letter-spacing: 0.14em;
+    line-height: 1.55;
     text-transform: uppercase;
-    white-space: nowrap;
     color: rgba(99, 75, 48, 0.075);
-    transform: rotate(-2deg) translateX(-3%);
+    transform: rotate(-1.4deg) translateX(-1%);
   }
 
-  .section-background-text span:nth-child(even) {
-    transform: rotate(1.2deg) translateX(-1%);
+  .typewriter-backdrop__char {
+    opacity: 0;
+    animation: typewriter-char var(--typewriter-duration, 22s) steps(1, end) infinite;
+    animation-delay: calc(var(--char-index) * 18ms);
   }
 
-  .darker-mode .section-background-text span {
+  .darker-mode .typewriter-backdrop__sheet {
     color: rgba(235, 219, 194, 0.06);
   }
 
@@ -259,5 +260,25 @@
   100% {
     opacity: 0;
     filter: blur(0px);
+  }
+}
+
+@keyframes typewriter-char {
+  0% {
+    opacity: 0;
+  }
+  2%,
+  92% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typewriter-backdrop__char {
+    animation: none;
+    opacity: 0.38;
   }
 }

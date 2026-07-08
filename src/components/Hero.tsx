@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { TypewriterBackdrop } from "./TypewriterBackdrop";
 
 interface HeroProps {
   onNavigate: (id: string) => void;
@@ -12,11 +13,7 @@ const coverMeta = [
   "Issue 01",
 ];
 
-const backgroundLines = [
-  "portfolio showcase / projects / research / open source / systems / design / engineering",
-  "portfolio showcase / projects / research / open source / systems / design / engineering",
-  "portfolio showcase / projects / research / open source / systems / design / engineering",
-];
+const backgroundText = "portfolio showcase / projects / research / open source / systems / design / engineering";
 
 export function Hero({ onNavigate }: HeroProps) {
   const heroRef = useRef<HTMLElement | null>(null);
@@ -39,11 +36,7 @@ export function Hero({ onNavigate }: HeroProps) {
 
   return (
     <section ref={heroRef} className={`aging-paper relative overflow-hidden px-4 pb-16 pt-28 md:pb-24 md:pt-32 ${isReading ? "is-reading" : ""}`}>
-      <div aria-hidden="true" className="section-background-text">
-        {backgroundLines.map((line, index) => (
-          <span key={`${line}-${index}`}>{line}</span>
-        ))}
-      </div>
+      <TypewriterBackdrop text={backgroundText} />
 
       <div className="pointer-events-none absolute inset-0">
         <motion.div

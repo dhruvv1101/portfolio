@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
+import { TypewriterBackdrop } from "./TypewriterBackdrop";
 
 interface SectionProps {
   children: ReactNode;
@@ -60,14 +61,7 @@ export function Section({
         className
       )}
     >
-      {backgroundText && (
-        <div aria-hidden="true" className="section-background-text">
-          <span>{backgroundText}</span>
-          <span>{backgroundText}</span>
-          <span>{backgroundText}</span>
-          <span>{backgroundText}</span>
-        </div>
-      )}
+      {backgroundText && <TypewriterBackdrop text={backgroundText} />}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
