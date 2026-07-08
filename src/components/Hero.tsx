@@ -14,6 +14,27 @@ const coverMeta = [
 export function Hero({ onNavigate }: HeroProps) {
   return (
     <section className="relative overflow-hidden px-4 pb-16 pt-28 md:pb-24 md:pt-32">
+      <div className="pointer-events-none absolute inset-0">
+        <motion.div
+          aria-hidden="true"
+          className="absolute left-[8%] top-24 h-48 w-48 rounded-full bg-primary/10 blur-3xl"
+          animate={{ x: [0, 18, -8, 0], y: [0, 20, 10, 0], scale: [1, 1.08, 0.96, 1] }}
+          transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          aria-hidden="true"
+          className="absolute right-[12%] top-40 h-56 w-56 rounded-full bg-accent/12 blur-3xl"
+          animate={{ x: [0, -16, 12, 0], y: [0, -18, 8, 0], scale: [1, 0.94, 1.06, 1] }}
+          transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          aria-hidden="true"
+          className="absolute bottom-10 left-1/3 h-40 w-40 rounded-full bg-primary/8 blur-3xl"
+          animate={{ x: [0, 14, -10, 0], y: [0, -12, 10, 0] }}
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </div>
+
       <div className="mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -40,8 +61,8 @@ export function Hero({ onNavigate }: HeroProps) {
               </div>
 
               <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
-                I like hard problems with real-world edges: VLSI, ML, commerce flows, and the backend glue that
-                keeps them from falling apart.
+                I’m drawn to work that spans layers cleanly, from VLSI and machine learning to the backend systems
+                that make products feel reliable in the real world.
               </p>
             </div>
 
@@ -55,8 +76,8 @@ export function Hero({ onNavigate }: HeroProps) {
               </button>
 
               <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
-                Not trying to look like a startup site. More like a personal issue of a magazine that happens to know
-                its way around chips, models, and APIs.
+                Built to feel thoughtful, tactile, and personal, with just enough structure to show how I think about
+                systems, design, and engineering work.
               </p>
             </div>
           </div>
