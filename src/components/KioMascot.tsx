@@ -24,16 +24,6 @@ const createFourPointStar = (outerRadius: number, innerRadius: number) => {
   return shape;
 };
 
-const createKidneyEyeShape = () => {
-  const shape = new THREE.Shape();
-  shape.moveTo(-0.36, -0.02);
-  shape.bezierCurveTo(-0.28, 0.16, -0.04, 0.22, 0.22, 0.16);
-  shape.bezierCurveTo(0.38, 0.1, 0.42, -0.02, 0.34, -0.12);
-  shape.bezierCurveTo(0.12, -0.18, -0.16, -0.17, -0.36, -0.02);
-  shape.closePath();
-  return shape;
-};
-
 const createSmileCurve = () =>
   new THREE.CatmullRomCurve3([
     new THREE.Vector3(-0.42, 0.12, 0),
@@ -226,26 +216,20 @@ export function KioMascot() {
     eyeGroup.position.set(0, 0.48, 1.37);
     mascot.add(eyeGroup);
 
-    const eyeWhiteGeometry = new THREE.ExtrudeGeometry(createKidneyEyeShape(), {
-      depth: 0.04,
-      bevelEnabled: false,
-    });
-    eyeWhiteGeometry.center();
-
-    const leftEyeWhite = new THREE.Mesh(eyeWhiteGeometry, white);
-    leftEyeWhite.position.set(-0.44, 0.04, 0);
-    leftEyeWhite.scale.set(1.02, 1.02, 0.34);
-    leftEyeWhite.rotation.z = -0.03;
+    const leftEyeWhite = new THREE.Mesh(new THREE.SphereGeometry(0.27, 22, 18), white);
+    leftEyeWhite.position.set(-0.43, 0.04, 0);
+    leftEyeWhite.scale.set(1.28, 0.9, 0.34);
+    leftEyeWhite.rotation.z = -0.08;
     eyeGroup.add(leftEyeWhite);
 
     const rightEyeWhite = leftEyeWhite.clone();
-    rightEyeWhite.position.x = 0.44;
-    rightEyeWhite.rotation.z = 0.03;
+    rightEyeWhite.position.x = 0.43;
+    rightEyeWhite.rotation.z = 0.08;
     eyeGroup.add(rightEyeWhite);
 
     const leftPupil = new THREE.Mesh(new THREE.SphereGeometry(0.085, 18, 16), pupil);
     leftPupil.position.set(-0.42, 0.03, 0.14);
-    leftPupil.scale.set(0.9, 1.2, 0.72);
+    leftPupil.scale.set(0.94, 1.22, 0.72);
     eyeGroup.add(leftPupil);
 
     const rightPupil = leftPupil.clone();
