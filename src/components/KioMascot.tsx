@@ -3,6 +3,27 @@ import * as THREE from "three";
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 
+const createFourPointStar = (outerRadius: number, innerRadius: number) => {
+  const shape = new THREE.Shape();
+  const points = 8;
+
+  for (let index = 0; index < points; index += 1) {
+    const radius = index % 2 === 0 ? outerRadius : innerRadius;
+    const angle = -Math.PI / 2 + (index * Math.PI) / 4;
+    const x = Math.cos(angle) * radius;
+    const y = Math.sin(angle) * radius;
+
+    if (index === 0) {
+      shape.moveTo(x, y);
+    } else {
+      shape.lineTo(x, y);
+    }
+  }
+
+  shape.closePath();
+  return shape;
+};
+
 export function KioMascot() {
   const mountRef = useRef<HTMLDivElement | null>(null);
 
@@ -146,6 +167,31 @@ export function KioMascot() {
     mouthGroup.add(tongue);
 
     const whiskerMaterial = new THREE.MeshStandardMaterial({ color: "#f4efe2", roughness: 0.9, metalness: 0 });
+    const furMaterial = new THREE.MeshStandardMaterial({ color: "#2f2a2d", roughness: 0.72, metalness: 0.02 });
+
+    const leftCheekFur = new THREE.Group();
+    leftCheekFur.position.set(-1.12, -0.18, 0.54);
+    mascot.add(leftCheekFur);
+
+    [
+      { y: 0.26, rotZ: 1.05, size: 0.34 },
+      { y: 0.02, rotZ: 1.24, size: 0.38 },
+      { y: -0.24, rotZ: 1.44, size: 0.3 },
+    ].forEach(({ y, rotZ, size }) => {
+      const tuft = new THREE.Mesh(new THREE.ConeGeometry(size, 0.92, 3), furMaterial);
+      tuft.position.set(0, y, 0);
+      tuft.rotation.z = rotZ;
+      tuft.rotation.x = -0.28;
+      leftCheekFur.add(tuft);
+    });
+
+    const rightCheekFur = leftCheekFur.clone();
+    rightCheekFur.position.x = 1.12;
+    rightCheekFur.children.forEach((child) => {
+      child.rotation.z *= -1;
+    });
+    mascot.add(rightCheekFur);
+
     const whiskers = new THREE.Group();
     whiskers.position.set(0, -0.05, 1.16);
     mascot.add(whiskers);
@@ -186,52 +232,17 @@ export function KioMascot() {
     rightPupil.position.x = 0.44;
     eyeGroup.add(rightPupil);
 
-    const eyelidMaterial = new THREE.MeshStandardMaterial({ color: "#2f2a2d", roughness: 0.58, metalness: 0.04 });
-    const leftUpperLid = new THREE.Mesh(new THREE.SphereGeometry(0.26, 20, 18), eyelidMaterial);
-    leftUpperLid.position.set(-0.44, 0.14, 0.09);
-    leftUpperLid.scale.set(1.56, 0.48, 0.2);
-    leftUpperLid.rotation.z = -0.2;
-    eyeGroup.add(leftUpperLid);
-
-    const rightUpperLid = leftUpperLid.clone();
-    rightUpperLid.position.x = 0.44;
-    rightUpperLid.rotation.z = 0.2;
-    eyeGroup.add(rightUpperLid);
-
-    const leftLowerLid = new THREE.Mesh(new THREE.SphereGeometry(0.22, 20, 18), cream);
-    leftLowerLid.position.set(-0.44, -0.14, 0.08);
-    leftLowerLid.scale.set(1.46, 0.3, 0.18);
-    leftLowerLid.rotation.z = -0.12;
-    eyeGroup.add(leftLowerLid);
-
-    const rightLowerLid = leftLowerLid.clone();
-    rightLowerLid.position.x = 0.44;
-    rightLowerLid.rotation.z = 0.12;
-    eyeGroup.add(rightLowerLid);
-
     const foreheadMarkMaterial = new THREE.MeshStandardMaterial({ color: "#efe6cf", roughness: 0.72, metalness: 0.02 });
-    const foreheadMark = new THREE.Group();
-    foreheadMark.position.set(0, 0.95, 1.28);
+    const foreheadMark = new THREE.Mesh(
+      new THREE.ExtrudeGeometry(createFourPointStar(0.12, 0.045), {
+        depth: 0.03,
+        bevelEnabled: false,
+      }),
+      foreheadMarkMaterial
+    );
+    foreheadMark.geometry.center();
+    foreheadMark.position.set(0, 1.02, 1.3);
     mascot.add(foreheadMark);
-
-    const starVertical = new THREE.Mesh(new THREE.CapsuleGeometry(0.03, 0.16, 3, 10), foreheadMarkMaterial);
-    starVertical.position.set(0, 0.14, 0);
-    foreheadMark.add(starVertical);
-
-    const starHorizontal = new THREE.Mesh(new THREE.CapsuleGeometry(0.03, 0.14, 3, 10), foreheadMarkMaterial);
-    starHorizontal.position.set(0, 0.14, 0);
-    starHorizontal.rotation.z = Math.PI / 2;
-    foreheadMark.add(starHorizontal);
-
-    const lowerMarkLeft = new THREE.Mesh(new THREE.CapsuleGeometry(0.04, 0.2, 3, 10), foreheadMarkMaterial);
-    lowerMarkLeft.position.set(-0.07, -0.02, 0);
-    lowerMarkLeft.rotation.z = -0.52;
-    foreheadMark.add(lowerMarkLeft);
-
-    const lowerMarkRight = lowerMarkLeft.clone();
-    lowerMarkRight.position.x = 0.07;
-    lowerMarkRight.rotation.z = 0.52;
-    foreheadMark.add(lowerMarkRight);
 
     const tuftLeft = new THREE.Mesh(new THREE.ConeGeometry(0.28, 0.84, 4), ink);
     tuftLeft.position.set(-1.22, -0.24, 0.55);
@@ -244,9 +255,14 @@ export function KioMascot() {
     tuftRight.rotation.z = -0.92;
     mascot.add(tuftRight);
 
-    const body = new THREE.Mesh(new THREE.CylinderGeometry(0.84, 0.98, 1.55, 24), cloth);
+    const cape = new THREE.Mesh(new THREE.CylinderGeometry(1.08, 0.72, 1.74, 24, 1, true), cloth);
+    cape.position.set(0, -2.02, -0.18);
+    cape.scale.set(0.9, 1, 0.74);
+    mascot.add(cape);
+
+    const body = new THREE.Mesh(new THREE.CylinderGeometry(0.74, 0.82, 1.48, 24), cloth);
     body.position.set(0, -2.08, 0.08);
-    body.scale.set(0.86, 1, 0.62);
+    body.scale.set(0.82, 1, 0.54);
     mascot.add(body);
 
     const chest = new THREE.Mesh(new THREE.SphereGeometry(0.46, 20, 18), cream);
@@ -254,10 +270,20 @@ export function KioMascot() {
     chest.scale.set(1.1, 1.2, 0.62);
     mascot.add(chest);
 
-    const scarf = new THREE.Mesh(new THREE.TorusGeometry(0.46, 0.08, 12, 28), cloth);
-    scarf.position.set(0, -1.38, 0.2);
-    scarf.rotation.x = Math.PI / 2.25;
-    mascot.add(scarf);
+    const collarLeft = new THREE.Mesh(new THREE.ConeGeometry(0.32, 0.64, 3), cloth);
+    collarLeft.position.set(-0.26, -1.5, 0.82);
+    collarLeft.rotation.z = 0.28;
+    collarLeft.rotation.x = Math.PI;
+    mascot.add(collarLeft);
+
+    const collarRight = collarLeft.clone();
+    collarRight.position.x = 0.26;
+    collarRight.rotation.z = -0.28;
+    mascot.add(collarRight);
+
+    const capeKnot = new THREE.Mesh(new THREE.SphereGeometry(0.11, 16, 16), cloth);
+    capeKnot.position.set(0, -1.44, 0.86);
+    mascot.add(capeKnot);
 
     const noteMaterial = new THREE.MeshBasicMaterial({ color: "#f2e5c4", transparent: true, opacity: 0.15 });
     const note = new THREE.Mesh(new THREE.PlaneGeometry(1.35, 0.52), noteMaterial);
@@ -338,8 +364,8 @@ export function KioMascot() {
       }
 
       const blink = time < blinkUntil ? 0.08 : 1;
-      const eyeHeight = expressionMode === "laugh" ? 0.46 : expressionMode === "mischief" ? 0.78 : 0.95;
-      const pupilHeight = expressionMode === "laugh" ? 0.56 : expressionMode === "mischief" ? 1.18 : 1.48;
+      const eyeHeight = expressionMode === "laugh" ? 0.62 : expressionMode === "mischief" ? 0.88 : 1.02;
+      const pupilHeight = expressionMode === "laugh" ? 0.82 : expressionMode === "mischief" ? 1.26 : 1.48;
 
       leftEyeWhite.scale.y = eyeHeight * blink;
       rightEyeWhite.scale.y = eyeHeight * blink;
@@ -352,11 +378,6 @@ export function KioMascot() {
       rightPupil.position.x = 0.44 + pupilOffsetX;
       leftPupil.position.y = 0.02 + pupilOffsetY;
       rightPupil.position.y = 0.02 + pupilOffsetY;
-
-      leftUpperLid.position.y = expressionMode === "mischief" ? 0.1 : expressionMode === "laugh" ? 0.07 : 0.14;
-      rightUpperLid.position.y = leftUpperLid.position.y;
-      leftUpperLid.rotation.z = expressionMode === "mischief" ? -0.32 : expressionMode === "laugh" ? -0.12 : -0.2;
-      rightUpperLid.rotation.z = expressionMode === "mischief" ? 0.32 : expressionMode === "laugh" ? 0.12 : 0.2;
 
       smileMouth.visible = expressionMode !== "laugh";
       openMouth.visible = expressionMode === "laugh";
@@ -404,7 +425,7 @@ export function KioMascot() {
         pupil,
         foreheadMarkMaterial,
         whiskerMaterial,
-        eyelidMaterial,
+        furMaterial,
         noteMaterial,
         openMouth.material as THREE.Material,
       ].forEach((material) => material.dispose());
