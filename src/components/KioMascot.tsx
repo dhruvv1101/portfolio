@@ -94,42 +94,56 @@ export function KioMascot() {
     mascot.add(rightEarInner);
 
     const muzzle = new THREE.Group();
-    muzzle.position.set(0, -0.12, 1.12);
+    muzzle.position.set(0, -0.14, 1.18);
     mascot.add(muzzle);
 
-    const leftCheek = new THREE.Mesh(new THREE.SphereGeometry(0.72, 32, 28), cream);
-    leftCheek.position.set(-0.45, -0.1, 0);
-    leftCheek.scale.set(1.1, 0.86, 0.84);
+    const leftCheek = new THREE.Mesh(new THREE.SphereGeometry(0.62, 32, 28), cream);
+    leftCheek.position.set(-0.47, -0.14, 0.03);
+    leftCheek.scale.set(1.18, 0.92, 0.86);
     muzzle.add(leftCheek);
 
     const rightCheek = leftCheek.clone();
     rightCheek.position.x = 0.45;
     muzzle.add(rightCheek);
 
-    const chin = new THREE.Mesh(new THREE.SphereGeometry(0.74, 32, 28), cream);
-    chin.position.set(0, -0.34, -0.1);
-    chin.scale.set(1.36, 0.62, 0.82);
+    const chin = new THREE.Mesh(new THREE.SphereGeometry(0.58, 32, 28), cream);
+    chin.position.set(0, -0.4, -0.08);
+    chin.scale.set(1.22, 0.7, 0.76);
     muzzle.add(chin);
 
-    const noseMesh = new THREE.Mesh(new THREE.SphereGeometry(0.16, 18, 18), nose);
-    noseMesh.position.set(0, 0.11, 0.56);
-    noseMesh.scale.set(1, 0.84, 1);
+    const noseMesh = new THREE.Mesh(new THREE.SphereGeometry(0.18, 18, 18), nose);
+    noseMesh.position.set(0, 0.08, 0.62);
+    noseMesh.scale.set(1.05, 0.88, 1);
     muzzle.add(noseMesh);
 
     const mouthLine = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, 0.34, 12), nose);
-    mouthLine.position.set(0, -0.12, 0.5);
+    mouthLine.position.set(0, -0.12, 0.56);
     mouthLine.rotation.z = Math.PI / 2;
     muzzle.add(mouthLine);
 
-    const lip = new THREE.Mesh(new THREE.TorusGeometry(0.46, 0.05, 10, 24, Math.PI), nose);
-    lip.position.set(0, -0.2, 0.46);
-    lip.rotation.z = Math.PI;
-    muzzle.add(lip);
+    const mouthGroup = new THREE.Group();
+    mouthGroup.position.set(0, -0.18, 0.52);
+    muzzle.add(mouthGroup);
+
+    const smileMouth = new THREE.Mesh(new THREE.TorusGeometry(0.48, 0.05, 10, 28, Math.PI), nose);
+    smileMouth.rotation.z = Math.PI;
+    mouthGroup.add(smileMouth);
+
+    const openMouth = new THREE.Mesh(
+      new THREE.SphereGeometry(0.3, 18, 16, 0, Math.PI * 2, 0, Math.PI),
+      new THREE.MeshStandardMaterial({ color: "#7c1d1d", roughness: 0.72, metalness: 0.02 })
+    );
+    openMouth.position.set(0, -0.02, -0.02);
+    openMouth.rotation.x = Math.PI;
+    openMouth.scale.set(1.4, 1.1, 0.62);
+    openMouth.visible = false;
+    mouthGroup.add(openMouth);
 
     const tongue = new THREE.Mesh(new THREE.SphereGeometry(0.18, 16, 16), pink);
-    tongue.position.set(0, -0.28, 0.42);
+    tongue.position.set(0, -0.16, 0.06);
     tongue.scale.set(1.3, 0.62, 0.4);
-    muzzle.add(tongue);
+    tongue.visible = false;
+    mouthGroup.add(tongue);
 
     const whiskerMaterial = new THREE.MeshStandardMaterial({ color: "#f4efe2", roughness: 0.9, metalness: 0 });
     const whiskers = new THREE.Group();
@@ -149,26 +163,62 @@ export function KioMascot() {
     });
 
     const eyeGroup = new THREE.Group();
-    eyeGroup.position.set(0, 0.34, 1.15);
+    eyeGroup.position.set(0, 0.52, 1.43);
     mascot.add(eyeGroup);
 
-    const leftEyeWhite = new THREE.Mesh(new THREE.SphereGeometry(0.28, 18, 16), white);
-    leftEyeWhite.position.set(-0.42, 0.03, 0);
-    leftEyeWhite.scale.set(1.18, 0.95, 0.56);
+    const leftEyeWhite = new THREE.Mesh(new THREE.SphereGeometry(0.28, 24, 20), white);
+    leftEyeWhite.position.set(-0.44, 0.02, 0);
+    leftEyeWhite.scale.set(1.5, 1.05, 0.42);
+    leftEyeWhite.rotation.z = -0.18;
     eyeGroup.add(leftEyeWhite);
 
     const rightEyeWhite = leftEyeWhite.clone();
-    rightEyeWhite.position.x = 0.42;
+    rightEyeWhite.position.x = 0.44;
+    rightEyeWhite.rotation.z = 0.18;
     eyeGroup.add(rightEyeWhite);
 
-    const leftPupil = new THREE.Mesh(new THREE.SphereGeometry(0.09, 16, 14), pupil);
-    leftPupil.position.set(-0.42, 0.02, 0.14);
-    leftPupil.scale.set(1, 1.25, 0.8);
+    const leftPupil = new THREE.Mesh(new THREE.SphereGeometry(0.085, 18, 16), pupil);
+    leftPupil.position.set(-0.44, 0.02, 0.14);
+    leftPupil.scale.set(1, 1.48, 0.72);
     eyeGroup.add(leftPupil);
 
     const rightPupil = leftPupil.clone();
-    rightPupil.position.x = 0.42;
+    rightPupil.position.x = 0.44;
     eyeGroup.add(rightPupil);
+
+    const eyelidMaterial = new THREE.MeshStandardMaterial({ color: "#2f2a2d", roughness: 0.58, metalness: 0.04 });
+    const leftUpperLid = new THREE.Mesh(new THREE.SphereGeometry(0.26, 20, 18), eyelidMaterial);
+    leftUpperLid.position.set(-0.44, 0.14, 0.09);
+    leftUpperLid.scale.set(1.56, 0.48, 0.2);
+    leftUpperLid.rotation.z = -0.2;
+    eyeGroup.add(leftUpperLid);
+
+    const rightUpperLid = leftUpperLid.clone();
+    rightUpperLid.position.x = 0.44;
+    rightUpperLid.rotation.z = 0.2;
+    eyeGroup.add(rightUpperLid);
+
+    const leftLowerLid = new THREE.Mesh(new THREE.SphereGeometry(0.22, 20, 18), cream);
+    leftLowerLid.position.set(-0.44, -0.14, 0.08);
+    leftLowerLid.scale.set(1.46, 0.3, 0.18);
+    leftLowerLid.rotation.z = -0.12;
+    eyeGroup.add(leftLowerLid);
+
+    const rightLowerLid = leftLowerLid.clone();
+    rightLowerLid.position.x = 0.44;
+    rightLowerLid.rotation.z = 0.12;
+    eyeGroup.add(rightLowerLid);
+
+    const browMaterial = new THREE.MeshStandardMaterial({ color: "#f7edd7", roughness: 0.8, metalness: 0.01 });
+    const leftBrow = new THREE.Mesh(new THREE.CapsuleGeometry(0.05, 0.42, 4, 12), browMaterial);
+    leftBrow.position.set(-0.42, 0.38, 0.02);
+    leftBrow.rotation.z = -0.52;
+    eyeGroup.add(leftBrow);
+
+    const rightBrow = leftBrow.clone();
+    rightBrow.position.x = 0.42;
+    rightBrow.rotation.z = 0.52;
+    eyeGroup.add(rightBrow);
 
     const browMarkMaterial = new THREE.MeshStandardMaterial({ color: "#efe6cf", roughness: 0.72, metalness: 0.02 });
     const browMark = new THREE.Mesh(new THREE.TorusGeometry(0.17, 0.04, 8, 20, Math.PI), browMarkMaterial);
@@ -207,10 +257,8 @@ export function KioMascot() {
     scarf.rotation.x = Math.PI / 2.25;
     mascot.add(scarf);
 
-    const note = new THREE.Mesh(
-      new THREE.PlaneGeometry(1.35, 0.52),
-      new THREE.MeshBasicMaterial({ color: "#f2e5c4", transparent: true, opacity: 0.15 })
-    );
+    const noteMaterial = new THREE.MeshBasicMaterial({ color: "#f2e5c4", transparent: true, opacity: 0.15 });
+    const note = new THREE.Mesh(new THREE.PlaneGeometry(1.35, 0.52), noteMaterial);
     note.position.set(0, -2.78, -0.1);
     root.add(note);
 
@@ -219,6 +267,8 @@ export function KioMascot() {
     let jumpUntil = 0;
     let blinkUntil = 0;
     let nextBlinkAt = performance.now() + 1700;
+    let expressionUntil = 0;
+    let expressionMode: "calm" | "mischief" | "laugh" | "surprised" = "calm";
     let frame = 0;
 
     const resize = () => {
@@ -247,6 +297,8 @@ export function KioMascot() {
     const onClick = () => {
       jumpUntil = performance.now() + 900;
       blinkUntil = performance.now() + 180;
+      expressionMode = "laugh";
+      expressionUntil = performance.now() + 1000;
     };
 
     const animate = (time: number) => {
@@ -271,18 +323,54 @@ export function KioMascot() {
         nextBlinkAt = time + 2200 + Math.random() * 2400;
       }
 
-      const blink = time < blinkUntil ? 0.12 : 1;
-      leftEyeWhite.scale.y = 0.95 * blink;
-      rightEyeWhite.scale.y = 0.95 * blink;
-      leftPupil.scale.y = 1.25 * blink;
-      rightPupil.scale.y = 1.25 * blink;
+      if (time > expressionUntil) {
+        if (hover) {
+          expressionMode = "mischief";
+          expressionUntil = time + 300;
+        } else {
+          const phase = Math.floor(time / 2600) % 3;
+          expressionMode = phase === 0 ? "calm" : phase === 1 ? "surprised" : "calm";
+          expressionUntil = time + 300;
+        }
+      }
+
+      const blink = time < blinkUntil ? 0.08 : 1;
+      const eyeHeight = expressionMode === "laugh" ? 0.34 : expressionMode === "mischief" ? 0.76 : expressionMode === "surprised" ? 1.18 : 0.95;
+      const pupilHeight = expressionMode === "laugh" ? 0.2 : expressionMode === "surprised" ? 1.72 : expressionMode === "mischief" ? 1.2 : 1.48;
+
+      leftEyeWhite.scale.y = eyeHeight * blink;
+      rightEyeWhite.scale.y = eyeHeight * blink;
+      leftPupil.scale.y = pupilHeight * blink;
+      rightPupil.scale.y = pupilHeight * blink;
 
       const pupilOffsetX = hover ? clamp(pointer.x * 0.06, -0.06, 0.06) : 0;
       const pupilOffsetY = hover ? clamp(pointer.y * 0.04, -0.04, 0.04) : 0;
-      leftPupil.position.x = -0.42 + pupilOffsetX;
-      rightPupil.position.x = 0.42 + pupilOffsetX;
-      leftPupil.position.y = 0.02 + pupilOffsetY;
-      rightPupil.position.y = 0.02 + pupilOffsetY;
+      leftPupil.position.x = -0.44 + pupilOffsetX;
+      rightPupil.position.x = 0.44 + pupilOffsetX;
+      leftPupil.position.y = 0.02 + pupilOffsetY + (expressionMode === "surprised" ? -0.02 : 0);
+      rightPupil.position.y = 0.02 + pupilOffsetY + (expressionMode === "surprised" ? -0.02 : 0);
+
+      leftUpperLid.position.y = expressionMode === "mischief" ? 0.1 : expressionMode === "laugh" ? 0.05 : 0.14;
+      rightUpperLid.position.y = leftUpperLid.position.y;
+      leftUpperLid.rotation.z = expressionMode === "surprised" ? -0.08 : expressionMode === "mischief" ? -0.32 : -0.2;
+      rightUpperLid.rotation.z = expressionMode === "surprised" ? 0.08 : expressionMode === "mischief" ? 0.32 : 0.2;
+      leftBrow.position.y = expressionMode === "surprised" ? 0.48 : expressionMode === "laugh" ? 0.32 : 0.38;
+      rightBrow.position.y = leftBrow.position.y;
+      leftBrow.rotation.z = expressionMode === "mischief" ? -0.72 : expressionMode === "surprised" ? -0.28 : -0.52;
+      rightBrow.rotation.z = expressionMode === "mischief" ? 0.72 : expressionMode === "surprised" ? 0.28 : 0.52;
+
+      smileMouth.visible = expressionMode !== "laugh" && expressionMode !== "surprised";
+      openMouth.visible = expressionMode === "laugh" || expressionMode === "surprised";
+      tongue.visible = expressionMode === "laugh";
+      mouthGroup.scale.y = expressionMode === "surprised" ? 1.55 : expressionMode === "laugh" ? 1.2 : expressionMode === "mischief" ? 0.84 : 1;
+      mouthGroup.scale.x = expressionMode === "mischief" ? 0.92 : 1;
+      mouthGroup.position.y = expressionMode === "surprised" ? -0.22 : -0.18;
+      openMouth.scale.set(
+        expressionMode === "surprised" ? 1.2 : 1.4,
+        expressionMode === "surprised" ? 1.5 : 1.1,
+        0.62
+      );
+      tongue.position.y = expressionMode === "laugh" ? -0.12 : -0.16;
 
       whiskerBars.forEach((whisker, index) => {
         whisker.rotation.x = Math.sin(time * 0.002 + index * 0.4) * 0.02;
@@ -311,7 +399,21 @@ export function KioMascot() {
       mount.removeEventListener("click", onClick);
 
       renderer.dispose();
-      [ink, cream, cloth, pink, nose, white, pupil, browMarkMaterial, whiskerMaterial].forEach((material) => material.dispose());
+      [
+        ink,
+        cream,
+        cloth,
+        pink,
+        nose,
+        white,
+        pupil,
+        browMarkMaterial,
+        whiskerMaterial,
+        eyelidMaterial,
+        browMaterial,
+        noteMaterial,
+        openMouth.material as THREE.Material,
+      ].forEach((material) => material.dispose());
       scene.traverse((object) => {
         if (object instanceof THREE.Mesh) {
           object.geometry.dispose();
