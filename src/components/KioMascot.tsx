@@ -188,9 +188,9 @@ export function KioMascot() {
     mascot.add(leftCheekFur);
 
     [
-      { x: -0.06, y: 0.3, rotZ: 1.02, size: 0.34, len: 0.92 },
-      { x: 0.02, y: 0.04, rotZ: 1.24, size: 0.42, len: 1.08 },
-      { x: 0.12, y: -0.22, rotZ: 1.48, size: 0.34, len: 0.98 },
+      { x: -0.08, y: 0.32, rotZ: 1.02, size: 0.4, len: 1.08 },
+      { x: 0.04, y: 0.05, rotZ: 1.24, size: 0.5, len: 1.22 },
+      { x: 0.16, y: -0.24, rotZ: 1.48, size: 0.4, len: 1.1 },
     ].forEach(({ x, y, rotZ, size, len }) => {
       const tuft = new THREE.Mesh(new THREE.ConeGeometry(size, len, 3), furMaterial);
       tuft.position.set(x, y, 0);
