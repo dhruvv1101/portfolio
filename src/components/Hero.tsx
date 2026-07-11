@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { TypewriterBackdrop } from "./TypewriterBackdrop";
+import { KioMascot } from "./KioMascot";
 
 interface HeroProps {
   onNavigate: (id: string) => void;
@@ -108,6 +109,7 @@ export function Hero({ onNavigate }: HeroProps) {
 
           <div className="flex flex-col justify-between border-t border-border/80 pt-6 md:border-l md:border-t-0 md:pl-8 md:pt-0">
             <div className="space-y-5">
+              <KioMascot />
               <p className="folio-tag">Cover Notes</p>
               <div className="grid gap-4 text-sm text-muted-foreground">
                 {coverMeta.map((item, index) => (

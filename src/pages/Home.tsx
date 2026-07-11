@@ -8,7 +8,6 @@ import { Projects } from "@/components/Projects";
 import { Experience } from "@/components/Experience";
 import { Contact } from "@/components/Contact";
 import { CodingProfiles } from "@/components/CodingProfiles";
-import { AmbientStar } from "@/components/AmbientStar";
 import { useToast } from "@/hooks/use-toast";
 
 const sections = [
@@ -102,7 +101,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-background text-foreground paper-grain">
-      <AmbientStar />
       <Navigation links={sections} onNavigate={navigateToSection} />
 
       <AnimatePresence onExitComplete={handleRevealComplete}>
