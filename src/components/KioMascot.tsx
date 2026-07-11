@@ -24,6 +24,16 @@ const createFourPointStar = (outerRadius: number, innerRadius: number) => {
   return shape;
 };
 
+const createKidneyEyeShape = () => {
+  const shape = new THREE.Shape();
+  shape.moveTo(-0.42, 0);
+  shape.bezierCurveTo(-0.36, 0.2, -0.1, 0.28, 0.18, 0.2);
+  shape.bezierCurveTo(0.42, 0.14, 0.46, -0.04, 0.32, -0.12);
+  shape.bezierCurveTo(0.08, -0.24, -0.22, -0.24, -0.42, 0);
+  shape.closePath();
+  return shape;
+};
+
 export function KioMascot() {
   const mountRef = useRef<HTMLDivElement | null>(null);
 
@@ -137,11 +147,6 @@ export function KioMascot() {
     noseMesh.scale.set(1.05, 0.88, 1);
     muzzle.add(noseMesh);
 
-    const mouthLine = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, 0.34, 12), nose);
-    mouthLine.position.set(0, -0.12, 0.56);
-    mouthLine.rotation.z = Math.PI / 2;
-    muzzle.add(mouthLine);
-
     const mouthGroup = new THREE.Group();
     mouthGroup.position.set(0, -0.18, 0.52);
     muzzle.add(mouthGroup);
@@ -180,12 +185,12 @@ export function KioMascot() {
     mascot.add(leftCheekFur);
 
     [
-      { y: 0.26, rotZ: 1.05, size: 0.34 },
-      { y: 0.02, rotZ: 1.24, size: 0.38 },
-      { y: -0.24, rotZ: 1.44, size: 0.3 },
-    ].forEach(({ y, rotZ, size }) => {
-      const tuft = new THREE.Mesh(new THREE.ConeGeometry(size, 0.92, 3), furMaterial);
-      tuft.position.set(0, y, 0);
+      { x: -0.06, y: 0.3, rotZ: 1.02, size: 0.34, len: 0.92 },
+      { x: 0.02, y: 0.04, rotZ: 1.24, size: 0.42, len: 1.08 },
+      { x: 0.12, y: -0.22, rotZ: 1.48, size: 0.34, len: 0.98 },
+    ].forEach(({ x, y, rotZ, size, len }) => {
+      const tuft = new THREE.Mesh(new THREE.ConeGeometry(size, len, 3), furMaterial);
+      tuft.position.set(x, y, 0);
       tuft.rotation.z = rotZ;
       tuft.rotation.x = -0.28;
       leftCheekFur.add(tuft);
@@ -218,24 +223,30 @@ export function KioMascot() {
     eyeGroup.position.set(0, 0.48, 1.37);
     mascot.add(eyeGroup);
 
-    const leftEyeWhite = new THREE.Mesh(new THREE.SphereGeometry(0.28, 24, 20), white);
-    leftEyeWhite.position.set(-0.44, 0.02, 0);
-    leftEyeWhite.scale.set(1.5, 1.05, 0.42);
-    leftEyeWhite.rotation.z = -0.18;
+    const eyeWhiteGeometry = new THREE.ExtrudeGeometry(createKidneyEyeShape(), {
+      depth: 0.04,
+      bevelEnabled: false,
+    });
+    eyeWhiteGeometry.center();
+
+    const leftEyeWhite = new THREE.Mesh(eyeWhiteGeometry, white);
+    leftEyeWhite.position.set(-0.44, 0.03, 0);
+    leftEyeWhite.scale.set(0.94, 0.92, 0.34);
+    leftEyeWhite.rotation.z = -0.08;
     eyeGroup.add(leftEyeWhite);
 
     const rightEyeWhite = leftEyeWhite.clone();
     rightEyeWhite.position.x = 0.44;
-    rightEyeWhite.rotation.z = 0.18;
+    rightEyeWhite.rotation.z = 0.08;
     eyeGroup.add(rightEyeWhite);
 
     const leftPupil = new THREE.Mesh(new THREE.SphereGeometry(0.085, 18, 16), pupil);
-    leftPupil.position.set(-0.44, 0.02, 0.14);
-    leftPupil.scale.set(1, 1.48, 0.72);
+    leftPupil.position.set(-0.42, 0.01, 0.14);
+    leftPupil.scale.set(0.92, 1.3, 0.72);
     eyeGroup.add(leftPupil);
 
     const rightPupil = leftPupil.clone();
-    rightPupil.position.x = 0.44;
+    rightPupil.position.x = 0.42;
     eyeGroup.add(rightPupil);
 
     const foreheadMarkMaterial = new THREE.MeshStandardMaterial({ color: "#efe6cf", roughness: 0.72, metalness: 0.02 });
@@ -262,13 +273,13 @@ export function KioMascot() {
     mascot.add(tuftRight);
 
     const cape = new THREE.Mesh(new THREE.CylinderGeometry(1.08, 0.72, 1.74, 24, 1, true), cloth);
-    cape.position.set(0, -2.02, -0.18);
-    cape.scale.set(0.9, 1, 0.74);
+    cape.position.set(0, -2.04, -0.62);
+    cape.scale.set(0.88, 1, 0.34);
     mascot.add(cape);
 
     const body = new THREE.Mesh(new THREE.CylinderGeometry(0.74, 0.82, 1.48, 24), ink);
-    body.position.set(0, -2.08, 0.08);
-    body.scale.set(0.82, 1, 0.54);
+    body.position.set(0, -2.06, 0.18);
+    body.scale.set(0.86, 1, 0.58);
     mascot.add(body);
 
     const chest = new THREE.Mesh(new THREE.SphereGeometry(0.46, 20, 18), cream);
@@ -378,10 +389,10 @@ export function KioMascot() {
       leftPupil.scale.y = pupilHeight * blink;
       rightPupil.scale.y = pupilHeight * blink;
 
-      const pupilOffsetX = hover ? clamp(pointer.x * 0.06, -0.06, 0.06) : 0;
+      const pupilOffsetX = hover ? clamp(pointer.x * 0.05, -0.05, 0.05) : 0;
       const pupilOffsetY = hover ? clamp(pointer.y * 0.04, -0.04, 0.04) : 0;
-      leftPupil.position.x = -0.44 + pupilOffsetX;
-      rightPupil.position.x = 0.44 + pupilOffsetX;
+      leftPupil.position.x = -0.42 + pupilOffsetX;
+      rightPupil.position.x = 0.42 + pupilOffsetX;
       leftPupil.position.y = 0.02 + pupilOffsetY;
       rightPupil.position.y = 0.02 + pupilOffsetY;
 
