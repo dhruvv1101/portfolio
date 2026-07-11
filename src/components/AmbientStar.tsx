@@ -7,8 +7,8 @@ const SAFE_MARGIN_PX = 28;
 const CLICK_BOOST_MS = 1_250;
 const CLICK_BOOST_MULTIPLIER = 3.3;
 const CLICK_HEAT_STEP = 0.12;
-const DRIFT_MIN_INTERVAL_MS = 3_000;
-const DRIFT_MAX_INTERVAL_MS = 5_000;
+const DRIFT_MIN_INTERVAL_MS = 1_800;
+const DRIFT_MAX_INTERVAL_MS = 3_200;
 
 type Phase = "heating" | "bursting";
 
@@ -24,6 +24,12 @@ interface MotionState {
   vy: number;
   wobbleOffset: number;
   driftRetargetInMs: number;
+}
+
+interface ParticleState {
+  angle: number;
+  speed: number;
+  spin: number;
 }
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
@@ -95,13 +101,6 @@ export function AmbientStar() {
     const starGroup = new THREE.Group();
     root.add(starGroup);
 
-    const glowMaterial = new THREE.MeshBasicMaterial({
-      color: new THREE.Color("#7f3e21"),
-      transparent: true,
-      opacity: 0.16,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-    });
     const flashMaterial = new THREE.MeshBasicMaterial({
       color: new THREE.Color("#fff8ef"),
       transparent: true,
@@ -116,26 +115,27 @@ export function AmbientStar() {
       blending: THREE.AdditiveBlending,
       depthWrite: false,
     });
-    const starMaterial = new THREE.MeshStandardMaterial({
+    const starMaterial = new THREE.MeshPhysicalMaterial({
       color: new THREE.Color("#29130c"),
       emissive: new THREE.Color("#190a06"),
       emissiveIntensity: 0.2,
-      metalness: 0.38,
-      roughness: 0.24,
+      metalness: 0.14,
+      roughness: 0.18,
+      clearcoat: 1,
+      clearcoatRoughness: 0.1,
+      reflectivity: 0.8,
+      transparent: true,
+      opacity: 0.92,
     });
-
-    const glowMesh = new THREE.Mesh(new THREE.CircleGeometry(10, 40), glowMaterial);
-    glowMesh.renderOrder = 1;
-    starGroup.add(glowMesh);
 
     const starMesh = new THREE.Mesh(
       new THREE.ExtrudeGeometry(createStarShape(1, 0.44), {
-        depth: 0.62,
+        depth: 0.24,
         bevelEnabled: true,
-        bevelSegments: 3,
+        bevelSegments: 5,
         steps: 1,
-        bevelSize: 0.12,
-        bevelThickness: 0.11,
+        bevelSize: 0.16,
+        bevelThickness: 0.055,
       }),
       starMaterial
     );
@@ -143,16 +143,22 @@ export function AmbientStar() {
     starMesh.renderOrder = 3;
     starGroup.add(starMesh);
 
-    const flashMesh = new THREE.Mesh(new THREE.CircleGeometry(8, 32), flashMaterial);
+    const flashMesh = new THREE.Mesh(new THREE.CircleGeometry(6, 32), flashMaterial);
     flashMesh.renderOrder = 4;
     flashMesh.position.z = -1;
     starGroup.add(flashMesh);
 
-    const fragmentMeshes = Array.from({ length: 6 }, () => {
-      const mesh = new THREE.Mesh(new THREE.CircleGeometry(1.5, 24), fragmentMaterial);
+    const fragmentStates: ParticleState[] = [];
+    const fragmentMeshes = Array.from({ length: 12 }, (_, index) => {
+      const mesh = new THREE.Mesh(new THREE.CircleGeometry(1.3, 18), fragmentMaterial);
       mesh.renderOrder = 5;
       mesh.visible = false;
       starGroup.add(mesh);
+      fragmentStates.push({
+        angle: (Math.PI * 2 * index) / 12,
+        speed: randomBetween(2.8, 5.8),
+        spin: randomBetween(-0.12, 0.12),
+      });
       return mesh;
     });
 
@@ -181,7 +187,7 @@ export function AmbientStar() {
     };
 
     const randomVelocity = () => {
-      const speed = reduceMotion ? randomBetween(4, 8) : randomBetween(18, 28);
+      const speed = reduceMotion ? randomBetween(8, 14) : randomBetween(40, 68);
       const angle = randomBetween(0, Math.PI * 2);
       motion.vx = Math.cos(angle) * speed;
       motion.vy = Math.sin(angle) * speed;
@@ -191,15 +197,12 @@ export function AmbientStar() {
       baseSize = clamp(Math.min(viewport.width, viewport.height) * 0.014, 8, 14);
       hitTargetSize = clamp(baseSize * 3, 28, 42);
 
-      glowMesh.geometry.dispose();
-      glowMesh.geometry = new THREE.CircleGeometry(baseSize * 2.15, 40);
-
       flashMesh.geometry.dispose();
-      flashMesh.geometry = new THREE.CircleGeometry(baseSize * 0.9, 32);
+      flashMesh.geometry = new THREE.CircleGeometry(baseSize * 0.72, 32);
 
       fragmentMeshes.forEach((mesh) => {
         mesh.geometry.dispose();
-        mesh.geometry = new THREE.CircleGeometry(Math.max(1.2, baseSize * 0.18), 24);
+        mesh.geometry = new THREE.CircleGeometry(Math.max(1.1, baseSize * 0.16), 18);
       });
 
       starMesh.scale.setScalar(baseSize);
@@ -235,6 +238,7 @@ export function AmbientStar() {
         mesh.visible = false;
         mesh.position.set(0, 0, 0);
         mesh.scale.setScalar(1);
+        mesh.rotation.z = 0;
       });
 
       syncHitTarget();
@@ -261,7 +265,6 @@ export function AmbientStar() {
     const updateHeatingVisuals = (elapsedMs: number) => {
       const wobble = reduceMotion ? 0 : Math.sin(elapsedMs * 0.0014 + motion.wobbleOffset) * baseSize * 0.22;
       starGroup.position.set(motion.x + wobble, motion.y - wobble * 0.5, 0);
-      glowMesh.position.z = -8;
       flashMesh.position.z = -10;
       starLight.position.set(motion.x, motion.y, 90);
 
@@ -282,20 +285,17 @@ export function AmbientStar() {
       starMaterial.color.copy(coreColor);
       starMaterial.emissive.copy(emissiveColor);
       starMaterial.emissiveIntensity = 0.18 + heat * 1.35;
-      starMaterial.metalness = 0.3 + heat * 0.32;
-      starMaterial.roughness = 0.42 - heat * 0.26;
-
-      glowMaterial.color.copy(emberGlow.clone().lerp(hotWhite, heat * 0.88));
-      glowMaterial.opacity = 0.08 + heat * 0.28;
+      starMaterial.metalness = 0.08 + heat * 0.12;
+      starMaterial.roughness = 0.26 - heat * 0.08;
+      starMaterial.opacity = 0.84 + heat * 0.13;
       flashMaterial.opacity = 0;
 
       const pulse = heat > 0.72 ? 1 + Math.sin(elapsedMs * 0.012) * 0.05 * ((heat - 0.72) / 0.28) : 1;
       starMesh.scale.setScalar(baseSize * pulse);
-      glowMesh.scale.setScalar(1 + heat * 0.55);
 
       if (!reduceMotion) {
-        starGroup.rotation.x += 0.008 + heat * 0.004;
-        starGroup.rotation.y += 0.015 + heat * 0.007;
+        starGroup.rotation.x += 0.012 + heat * 0.006;
+        starGroup.rotation.y += 0.022 + heat * 0.01;
         starGroup.rotation.z += 0.005 + heat * 0.002;
       }
 
@@ -307,28 +307,29 @@ export function AmbientStar() {
       const progress = clamp(burstElapsed / BURST_DURATION_MS, 0, 1);
       const eased = 1 - (1 - progress) * (1 - progress);
 
-      glowMaterial.opacity = Math.max(0, 0.42 - progress * 0.4);
       flashMaterial.opacity = Math.max(0, 0.92 - progress * 1.05);
       flashMaterial.color.set("#fffdf8");
 
       starMaterial.color.set("#fffefb");
       starMaterial.emissive.set("#fff6e8");
       starMaterial.emissiveIntensity = 1.8 - progress * 1.2;
+      starMaterial.opacity = Math.max(0.18, 0.95 - progress * 0.82);
       starMesh.scale.setScalar(baseSize * (1 + eased * 0.72));
-      flashMesh.scale.setScalar(1 + eased * 4.6);
-      glowMesh.scale.setScalar(1.4 + eased * 2);
+      flashMesh.scale.setScalar(1 + eased * 3.6);
 
       starLight.intensity = 1.9 - progress * 0.8;
       starLight.distance = 260;
 
       fragmentMeshes.forEach((mesh, index) => {
-        const angle = (Math.PI * 2 * index) / fragmentMeshes.length + motion.wobbleOffset * 0.4;
-        const distance = eased * baseSize * 4.2;
+        const fragment = fragmentStates[index];
+        const angle = fragment.angle + motion.wobbleOffset * 0.4;
+        const distance = eased * baseSize * fragment.speed * 1.8;
 
         mesh.visible = true;
-        mesh.material.opacity = Math.max(0, 0.74 - progress * 0.92);
+        mesh.material.opacity = Math.max(0, 0.82 - progress * 0.96);
         mesh.position.set(Math.cos(angle) * distance, Math.sin(angle) * distance, 0);
-        mesh.scale.setScalar(1 + eased * 1.5);
+        mesh.scale.setScalar(1 + eased * 1.9);
+        mesh.rotation.z += fragment.spin;
       });
     };
 
@@ -346,8 +347,8 @@ export function AmbientStar() {
 
         motion.driftRetargetInMs -= deltaMs;
         if (motion.driftRetargetInMs <= 0) {
-          motion.vx *= randomSign() * randomBetween(0.72, 1.1);
-          motion.vy *= randomSign() * randomBetween(0.72, 1.1);
+          motion.vx *= randomSign() * randomBetween(0.8, 1.18);
+          motion.vy *= randomSign() * randomBetween(0.8, 1.18);
           motion.driftRetargetInMs = randomBetween(DRIFT_MIN_INTERVAL_MS, DRIFT_MAX_INTERVAL_MS);
         }
 
@@ -421,11 +422,9 @@ export function AmbientStar() {
       mediaQuery.removeEventListener("change", handleMotionPreference);
       hitTarget?.removeEventListener("click", handleClick);
 
-      glowMesh.geometry.dispose();
       starMesh.geometry.dispose();
       flashMesh.geometry.dispose();
       fragmentMeshes.forEach((mesh) => mesh.geometry.dispose());
-      glowMaterial.dispose();
       flashMaterial.dispose();
       fragmentMaterial.dispose();
       starMaterial.dispose();
