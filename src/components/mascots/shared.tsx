@@ -12,7 +12,8 @@ export type MascotRig = {
     pointer: THREE.Vector2,
     hover: boolean,
     expressionMode: ExpressionMode,
-    blink: number
+    blink: number,
+    specialProgress: number
   ) => void;
   dispose: () => void;
 };
@@ -28,6 +29,8 @@ export type MascotStageConfig = {
   idleBob: number;
   rotationZ: number;
   meowYOffset: number;
+  angryAction?: "meow" | "cartwheelPunch";
+  specialDurationMs?: number;
   createRig: (root: THREE.Group) => MascotRig;
 };
 
@@ -182,6 +185,7 @@ export function MascotStage({ config }: { config: MascotStageConfig }) {
     let expressionMode: ExpressionMode = "calm";
     let clickStreak = 0;
     let meowUntil = 0;
+    let specialUntil = 0;
     let frame = 0;
 
     const resize = () => {
@@ -212,14 +216,19 @@ export function MascotStage({ config }: { config: MascotStageConfig }) {
 
       if (clickStreak >= 3) {
         jumpUntil = 0;
-        meowUntil = performance.now() + 950;
-        meowGroup.visible = true;
-        meowGroup.scale.setScalar(0.18);
-        meowGroup.position.set(0, config.meowYOffset + 0.06, 1.8);
         expressionMode = "angry";
         expressionUntil = performance.now() + 3150;
         blinkUntil = performance.now() + 110;
         clickStreak = 0;
+
+        if (config.angryAction === "cartwheelPunch") {
+          specialUntil = performance.now() + (config.specialDurationMs ?? 1150);
+        } else {
+          meowUntil = performance.now() + 950;
+          meowGroup.visible = true;
+          meowGroup.scale.setScalar(0.18);
+          meowGroup.position.set(0, config.meowYOffset + 0.06, 1.8);
+        }
         return;
       }
 
@@ -233,6 +242,9 @@ export function MascotStage({ config }: { config: MascotStageConfig }) {
       const bob = Math.sin(time * 0.0018) * config.idleBob;
       const followX = hover ? clamp(pointer.y * 0.4, -0.28, 0.28) : config.idleFollowX;
       const followY = hover ? clamp(pointer.x * 0.55, -0.42, 0.42) : config.idleFollowY;
+      const specialActive = time < specialUntil;
+      const specialDurationMs = config.specialDurationMs ?? 1150;
+      const specialProgress = specialActive ? 1 - (specialUntil - time) / specialDurationMs : 0;
 
       rig.mascot.position.y = Math.sin(time * 0.0013) * 0.07 + bob;
       rig.mascot.position.z = 0;
@@ -240,8 +252,19 @@ export function MascotStage({ config }: { config: MascotStageConfig }) {
       rig.mascot.rotation.y += (followY - rig.mascot.rotation.y) * 0.08;
       rig.mascot.rotation.z = Math.sin(time * 0.001) * config.rotationZ;
 
+      if (specialActive && config.angryAction === "cartwheelPunch") {
+        const burst = Math.sin(specialProgress * Math.PI);
+        const forward = Math.sin(Math.min(specialProgress * 1.15, 1) * Math.PI);
+        rig.mascot.position.x += Math.sin(specialProgress * Math.PI * 2) * 0.34;
+        rig.mascot.position.y += burst * 0.5;
+        rig.mascot.position.z += forward * 1.5;
+        rig.mascot.rotation.z += specialProgress * Math.PI * 2.1;
+        rig.mascot.rotation.y += burst * 0.35;
+        rig.mascot.rotation.x -= burst * 0.22;
+      }
+
       const jumping = time < jumpUntil;
-      if (jumping) {
+      if (jumping && !specialActive) {
         const progress = 1 - (jumpUntil - time) / 900;
         rig.mascot.position.y += Math.sin(progress * Math.PI) * 0.95;
         rig.mascot.position.z += Math.sin(progress * Math.PI) * 0.78;
@@ -272,7 +295,7 @@ export function MascotStage({ config }: { config: MascotStageConfig }) {
       }
 
       const blink = time < blinkUntil ? 0.08 : 1;
-      rig.updateVisuals(time, pointer, hover, expressionMode, blink);
+      rig.updateVisuals(time, pointer, hover, expressionMode, blink, specialProgress);
 
       pointLight.intensity = hover ? 1.15 : 0.92;
       renderer.render(scene, camera);

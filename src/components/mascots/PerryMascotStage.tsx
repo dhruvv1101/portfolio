@@ -13,12 +13,12 @@ const createTailShape = () => {
 
 const createPerryBillShape = () => {
   const shape = new THREE.Shape();
-  shape.moveTo(-1.12, -0.2);
-  shape.quadraticCurveTo(-0.76, -0.48, 0.1, -0.44);
-  shape.quadraticCurveTo(0.76, -0.4, 1.18, -0.08);
-  shape.quadraticCurveTo(1.32, 0.08, 1.1, 0.24);
-  shape.quadraticCurveTo(0.45, 0.42, -0.32, 0.34);
-  shape.quadraticCurveTo(-0.92, 0.2, -1.12, -0.2);
+  shape.moveTo(-0.96, -0.12);
+  shape.quadraticCurveTo(-0.7, -0.34, -0.06, -0.3);
+  shape.quadraticCurveTo(0.58, -0.28, 0.96, -0.08);
+  shape.quadraticCurveTo(1.08, 0.04, 0.92, 0.16);
+  shape.quadraticCurveTo(0.36, 0.28, -0.2, 0.24);
+  shape.quadraticCurveTo(-0.76, 0.16, -0.96, -0.12);
   shape.closePath();
   return shape;
 };
@@ -67,7 +67,7 @@ const createPerryRig = (root: THREE.Group): MascotRig => {
   mascot.add(body);
 
   const bodyTop = new THREE.Mesh(new THREE.SphereGeometry(0.84, 26, 22), teal);
-  bodyTop.position.set(0, 1.22, 0.02);
+  bodyTop.position.set(0, 1.18, 0.06);
   bodyTop.scale.set(0.9, 0.74, 0.78);
   mascot.add(bodyTop);
 
@@ -88,9 +88,10 @@ const createPerryRig = (root: THREE.Group): MascotRig => {
     orange
   );
   bill.geometry.center();
-  bill.position.set(0.12, 0.7, 0.88);
-  bill.rotation.x = -0.02;
-  bill.scale.set(0.88, 0.6, 0.7);
+  bill.position.set(0.04, 0.48, 0.8);
+  bill.rotation.x = 0.08;
+  bill.rotation.z = -0.04;
+  bill.scale.set(0.74, 0.54, 0.58);
   mascot.add(bill);
 
   const tail = new THREE.Mesh(
@@ -122,21 +123,21 @@ const createPerryRig = (root: THREE.Group): MascotRig => {
   }
 
   const brim = new THREE.Mesh(new THREE.CylinderGeometry(1.42, 1.58, 0.12, 30), hatBrown);
-  brim.position.set(-0.06, 1.85, 0.18);
-  brim.rotation.set(-0.08, 0.06, -0.18);
-  brim.scale.set(1.02, 1, 0.82);
+  brim.position.set(-0.04, 1.7, 0.12);
+  brim.rotation.set(-0.06, 0.03, -0.16);
+  brim.scale.set(0.9, 1, 0.76);
   mascot.add(brim);
 
   const crown = new THREE.Mesh(new THREE.CylinderGeometry(0.74, 0.92, 0.82, 22), hatBrown);
-  crown.position.set(-0.14, 2.2, 0.14);
+  crown.position.set(-0.08, 2, 0.12);
   crown.rotation.copy(brim.rotation);
-  crown.scale.set(1, 1, 0.88);
+  crown.scale.set(0.86, 0.92, 0.8);
   mascot.add(crown);
 
   const band = new THREE.Mesh(new THREE.CylinderGeometry(0.82, 0.98, 0.16, 22), hatBand);
-  band.position.set(-0.11, 1.98, 0.16);
+  band.position.set(-0.07, 1.82, 0.13);
   band.rotation.copy(brim.rotation);
-  band.scale.set(1, 1, 0.9);
+  band.scale.set(0.87, 0.92, 0.82);
   mascot.add(band);
 
   const eyeGroup = new THREE.Group();
@@ -174,43 +175,34 @@ const createPerryRig = (root: THREE.Group): MascotRig => {
   eyeGroup.add(eyeBrowRight);
 
   const mouthGroup = new THREE.Group();
-  mouthGroup.position.set(0.08, 0.28, 0.94);
+  mouthGroup.position.set(0.02, 0.18, 0.72);
   mascot.add(mouthGroup);
 
   const smirk = new THREE.Mesh(new THREE.TubeGeometry(createSmileCurve(), 24, 0.028, 8, false), mouthMaterial);
-  smirk.scale.set(0.88, 0.5, 1);
-  smirk.rotation.z = -0.07;
+  smirk.scale.set(0.64, 0.32, 1);
+  smirk.rotation.z = -0.04;
   mouthGroup.add(smirk);
 
   const openMouth = new THREE.Mesh(new THREE.SphereGeometry(0.2, 16, 16), mouthInterior);
-  openMouth.position.set(-0.02, -0.06, -0.02);
-  openMouth.scale.set(1.54, 0.62, 0.4);
+  openMouth.position.set(0, -0.03, -0.02);
+  openMouth.scale.set(1.18, 0.42, 0.28);
   openMouth.visible = false;
   mouthGroup.add(openMouth);
 
   const angryMouth = new THREE.Mesh(new THREE.TubeGeometry(createFrownCurve(), 24, 0.03, 8, false), mouthMaterial);
-  angryMouth.scale.set(0.9, 0.54, 1);
+  angryMouth.scale.set(0.72, 0.4, 1);
   angryMouth.visible = false;
   mouthGroup.add(angryMouth);
 
   const leftArm = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 1.32, 12), teal);
-  leftArm.position.set(-0.74, -0.18, 0.08);
-  leftArm.rotation.z = 0.18;
+  leftArm.position.set(-0.66, -0.36, 0.06);
+  leftArm.rotation.z = 0.16;
   mascot.add(leftArm);
 
   const rightArm = leftArm.clone();
-  rightArm.position.x = 0.74;
+  rightArm.position.x = 0.66;
   rightArm.rotation.z = -0.18;
   mascot.add(rightArm);
-
-  const leftHand = new THREE.Mesh(new THREE.SphereGeometry(0.13, 16, 14), teal);
-  leftHand.position.set(-0.84, -0.82, 0.08);
-  leftHand.scale.set(0.88, 1.16, 0.72);
-  mascot.add(leftHand);
-
-  const rightHand = leftHand.clone();
-  rightHand.position.x = 0.84;
-  mascot.add(rightHand);
 
   const leftLeg = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.08, 0.76, 12), teal);
   leftLeg.position.set(-0.34, -2.1, 0.06);
@@ -240,7 +232,7 @@ const createPerryRig = (root: THREE.Group): MascotRig => {
 
   return {
     mascot,
-    updateVisuals: (time, pointer, hover, expressionMode, blink) => {
+    updateVisuals: (time, pointer, hover, expressionMode, blink, specialProgress) => {
       const eyeScaleY =
         expressionMode === "angry" ? 0.58 : expressionMode === "laugh" ? 0.66 : expressionMode === "mischief" ? 0.74 : 0.84;
       const pupilScaleY =
@@ -264,21 +256,27 @@ const createPerryRig = (root: THREE.Group): MascotRig => {
       leftPupil.position.y = 0.02 + pupilOffsetY;
       rightPupil.position.y = 0.02 + pupilOffsetY;
 
-      smirk.visible = expressionMode !== "laugh" && expressionMode !== "angry";
-      openMouth.visible = expressionMode === "laugh";
+      smirk.visible = false;
+      openMouth.visible = false;
       angryMouth.visible = expressionMode === "angry";
 
-      mouthGroup.position.y = expressionMode === "angry" ? 0.34 : expressionMode === "laugh" ? 0.25 : 0.28;
-      mouthGroup.rotation.z = expressionMode === "mischief" ? -0.16 : expressionMode === "angry" ? -0.08 : -0.05;
-      bill.rotation.z = expressionMode === "laugh" ? -0.06 : expressionMode === "angry" ? 0.03 : -0.01;
-      bill.rotation.x = expressionMode === "laugh" ? -0.06 : 0;
+      mouthGroup.position.y = 0.18;
+      mouthGroup.rotation.z = expressionMode === "angry" ? -0.06 : -0.02;
+      bill.rotation.z = expressionMode === "laugh" ? -0.08 : expressionMode === "angry" ? 0.01 : -0.04;
+      bill.rotation.x = expressionMode === "laugh" ? 0.12 : expressionMode === "angry" ? 0.06 : 0.08;
 
       tail.rotation.z = -0.24 + Math.sin(time * 0.0018) * 0.05;
-      leftArm.rotation.z = expressionMode === "laugh" ? 0.42 : 0.18;
-      rightArm.rotation.z = expressionMode === "laugh" ? -0.42 : -0.18;
-      brim.rotation.z = -0.18 + Math.sin(time * 0.0012) * 0.02;
+      const punch = specialProgress > 0 ? Math.sin(Math.min(specialProgress * 1.1, 1) * Math.PI) : 0;
+      leftArm.rotation.z = specialProgress > 0 ? 0.82 : expressionMode === "laugh" ? 0.34 : 0.16;
+      rightArm.rotation.z = specialProgress > 0 ? -0.16 + punch * 0.24 : expressionMode === "laugh" ? -0.34 : -0.16;
+      leftArm.position.x = specialProgress > 0 ? -0.48 + punch * 0.18 : -0.66;
+      leftArm.position.y = specialProgress > 0 ? -0.12 + punch * 0.28 : -0.36;
+      rightArm.position.x = 0.66;
+      rightArm.position.y = -0.36;
+      brim.rotation.z = -0.16 + Math.sin(time * 0.0012) * 0.02;
       crown.rotation.z = brim.rotation.z;
       band.rotation.z = brim.rotation.z;
+      bill.position.z = 0.8 + punch * 0.22;
     },
     dispose: () => {
       materials.forEach((material) => material.dispose());
@@ -297,6 +295,8 @@ const perryStageConfig: MascotStageConfig = {
   idleBob: 0.12,
   rotationZ: 0.02,
   meowYOffset: -0.2,
+  angryAction: "cartwheelPunch",
+  specialDurationMs: 1180,
   createRig: createPerryRig,
 };
 
