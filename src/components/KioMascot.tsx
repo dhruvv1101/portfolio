@@ -228,6 +228,25 @@ export function KioMascot() {
     tongue.visible = false;
     mouthGroup.add(tongue);
 
+    const angryMouth = new THREE.Group();
+    angryMouth.visible = false;
+    mouthGroup.add(angryMouth);
+
+    const angryTeeth = new THREE.Mesh(new THREE.BoxGeometry(0.82, 0.34, 0.1), white);
+    angryTeeth.position.set(0.02, -0.02, 0.02);
+    angryMouth.add(angryTeeth);
+
+    for (let index = -2; index <= 2; index += 1) {
+      const toothLine = new THREE.Mesh(new THREE.BoxGeometry(0.016, 0.34, 0.03), nose);
+      toothLine.position.set(index * 0.16, -0.02, 0.08);
+      angryMouth.add(toothLine);
+    }
+
+    const angryLip = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.015, 0.92, 12), nose);
+    angryLip.position.set(0.02, -0.18, 0.08);
+    angryLip.rotation.z = Math.PI / 2;
+    angryMouth.add(angryLip);
+
     const whiskerMaterial = new THREE.MeshStandardMaterial({ color: "#f4efe2", roughness: 0.9, metalness: 0 });
     const furMaterial = new THREE.MeshStandardMaterial({ color: "#2f2a2d", roughness: 0.72, metalness: 0.02 });
 
@@ -469,6 +488,8 @@ export function KioMascot() {
 
       leftEyeWhite.scale.y = eyeHeight * blink;
       rightEyeWhite.scale.y = eyeHeight * blink;
+      leftEyeWhite.rotation.z = expressionMode === "angry" ? -0.26 : expressionMode === "mischief" ? -0.12 : -0.08;
+      rightEyeWhite.rotation.z = expressionMode === "angry" ? 0.26 : expressionMode === "mischief" ? 0.12 : 0.08;
       leftPupil.scale.y = pupilHeight * blink;
       rightPupil.scale.y = pupilHeight * blink;
 
@@ -482,6 +503,7 @@ export function KioMascot() {
       smileMouth.visible = expressionMode !== "laugh" && expressionMode !== "angry";
       openMouth.visible = expressionMode === "laugh";
       tongue.visible = expressionMode === "laugh";
+      angryMouth.visible = expressionMode === "angry";
       mouthGroup.scale.y = expressionMode === "laugh" ? 1.08 : expressionMode === "mischief" ? 0.84 : expressionMode === "angry" ? 0.72 : 1;
       mouthGroup.scale.x = expressionMode === "mischief" ? 0.88 : expressionMode === "angry" ? 0.82 : 0.96;
       mouthGroup.position.y = expressionMode === "mischief" ? -0.16 : expressionMode === "angry" ? -0.12 : -0.18;
