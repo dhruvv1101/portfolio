@@ -421,7 +421,7 @@ export function KioMascot() {
         meowGroup.scale.setScalar(0.18);
         meowGroup.position.set(0, -0.12, 1.8);
         expressionMode = "angry";
-        expressionUntil = performance.now() + 850;
+        expressionUntil = performance.now() + 3150;
         blinkUntil = performance.now() + 110;
         clickStreak = 0;
         return;
