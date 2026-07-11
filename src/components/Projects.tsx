@@ -65,9 +65,9 @@ export function Projects() {
       folio="Features"
       backgroundText="projects / chessflow / study buddy / intentlens / kaggle / analysis / extension / machine learning"
     >
-      <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-start">
-        <article className="editorial-card self-start grid gap-8 px-6 py-7 md:grid-cols-[0.8fr_1.2fr]">
-          <div className="space-y-5 border-b border-border/70 pb-6 md:border-b-0 md:border-r md:pb-0 md:pr-6">
+      <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-start lg:gap-8">
+        <article className="editorial-card self-start grid gap-6 px-5 py-6 sm:px-6 sm:py-7 md:grid-cols-[0.8fr_1.2fr] md:gap-8">
+          <div className="space-y-4 border-b border-border/70 pb-5 md:border-b-0 md:border-r md:pb-0 md:pr-6">
             <p className="folio-tag">Feature Story</p>
             <div className="flex items-center gap-3">
               {activeProject.logo && (
@@ -75,13 +75,13 @@ export function Projects() {
                   <img src={activeProject.logo} alt="" className="h-full w-full object-contain" />
                 </span>
               )}
-              <h3 className="text-4xl font-semibold md:text-5xl">{activeProject.title}</h3>
+              <h3 className="fluid-feature-title font-semibold">{activeProject.title}</h3>
             </div>
-            <p className="text-sm uppercase tracking-[0.25em] text-primary/80">{activeProject.deck}</p>
+            <p className="text-[0.8rem] uppercase tracking-[0.18em] text-primary/80 md:text-sm md:tracking-[0.25em]">{activeProject.deck}</p>
           </div>
 
           <div className="space-y-6">
-            <p className="text-lg leading-relaxed text-muted-foreground">{activeProject.description}</p>
+            <p className="fluid-body text-muted-foreground">{activeProject.description}</p>
             <div className="flex flex-wrap gap-2">
               {activeProject.tags.map((tag) => (
                 <span key={tag} className="border border-border/80 px-3 py-2 text-sm text-foreground/85">
@@ -104,7 +104,7 @@ export function Projects() {
           </div>
         </article>
 
-        <div className="grid gap-6">
+        <div className="grid gap-5 md:gap-6">
           {projects.map((project, index) => {
             if (index === activeIndex) return null;
 
@@ -113,7 +113,7 @@ export function Projects() {
               key={project.id}
               type="button"
               onClick={() => setActiveIndex(index)}
-              className="editorial-card px-6 py-7 text-left transition hover:-translate-y-1 hover:border-primary/40"
+              className="editorial-card px-5 py-6 text-left transition hover:-translate-y-1 hover:border-primary/40 sm:px-6 sm:py-7"
             >
               <div className="mb-5 flex items-center justify-between border-b border-border/70 pb-4">
                 <p className="folio-tag">{(index + 3).toString().padStart(2, "0")} / Supporting</p>
@@ -125,9 +125,9 @@ export function Projects() {
                     <img src={project.logo} alt="" className="h-full w-full object-contain" />
                   </span>
                 )}
-                <h3 className="text-3xl font-semibold">{project.title}</h3>
+                <h3 className="fluid-card-title font-semibold">{project.title}</h3>
               </div>
-              <p className="mt-4 leading-relaxed text-muted-foreground">{project.description}</p>
+              <p className="fluid-body mt-4 text-muted-foreground">{project.description}</p>
               <div className="mt-5 flex flex-wrap gap-2">
                 {project.tags.map((tag) => (
                   <span key={tag} className="text-sm text-foreground/80">

@@ -36,7 +36,7 @@ export function Hero({ onNavigate }: HeroProps) {
   }, []);
 
   return (
-    <section ref={heroRef} className={`aging-paper relative overflow-hidden px-4 pb-16 pt-28 md:pb-24 md:pt-32 ${isReading ? "is-reading" : ""}`}>
+    <section ref={heroRef} className={`aging-paper relative overflow-hidden px-4 pb-14 pt-24 md:pb-24 md:pt-32 ${isReading ? "is-reading" : ""}`}>
       <TypewriterBackdrop text={backgroundText} />
 
       <div className="pointer-events-none absolute inset-0">
@@ -65,27 +65,27 @@ export function Hero({ onNavigate }: HeroProps) {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="editorial-card cover-shadow grid gap-12 overflow-hidden px-6 py-8 md:grid-cols-[1.15fr_0.85fr] md:px-10 md:py-12"
+          className="editorial-card cover-shadow grid gap-10 overflow-hidden px-5 py-6 sm:px-6 sm:py-8 md:grid-cols-[1.15fr_0.85fr] md:gap-12 md:px-10 md:py-12"
         >
-          <div className="flex flex-col justify-between gap-10">
-            <div className="space-y-6">
+          <div className="flex flex-col justify-between gap-8 md:gap-10">
+            <div className="space-y-5 md:space-y-6">
               <div className="flex flex-wrap items-center gap-3">
-                <span className="border border-border/80 px-3 py-2 font-mono text-[0.68rem] uppercase tracking-[0.3em] text-muted-foreground">
+                <span className="border border-border/80 px-3 py-2 font-mono text-[0.62rem] uppercase tracking-[0.24em] text-muted-foreground md:text-[0.68rem] md:tracking-[0.3em]">
                   Dhruv Verma
                 </span>
                 <span className="section-rule hidden flex-1 md:block" />
               </div>
 
               <div className="space-y-4">
-                <p className="max-w-lg text-sm uppercase tracking-[0.38em] text-primary/85">
+                <p className="max-w-lg text-[0.78rem] uppercase tracking-[0.2em] text-primary/85 sm:text-sm sm:tracking-[0.3em] md:tracking-[0.38em]">
                   Showcase portfolio / work so far / systems, product, and engineering notes.
                 </p>
-                <h1 className="max-w-4xl text-6xl font-semibold leading-[0.92] md:text-8xl">
+                <h1 className="fluid-hero-title max-w-4xl font-semibold">
                   I use this portfolio as a running record of the work, projects, and technical ground I’ve covered so far.
                 </h1>
               </div>
 
-              <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
+              <p className="fluid-lead max-w-2xl text-muted-foreground">
                 I use this showcase to bring together what I have built, explored, and improved so far across VLSI,
                 machine learning, backend systems, browser tooling, and competition work.
               </p>
@@ -94,7 +94,7 @@ export function Hero({ onNavigate }: HeroProps) {
             <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
               <button
                 onClick={() => onNavigate("projects")}
-                className="inline-flex items-center gap-3 border border-foreground bg-foreground px-6 py-4 text-sm uppercase tracking-[0.25em] text-background transition hover:bg-primary hover:text-primary-foreground"
+                className="inline-flex w-full items-center justify-center gap-3 border border-foreground bg-foreground px-5 py-3 text-[0.75rem] uppercase tracking-[0.22em] text-background transition hover:bg-primary hover:text-primary-foreground sm:w-auto sm:px-6 sm:py-4 sm:text-sm sm:tracking-[0.25em]"
               >
                 Open Selected Work
                 <ArrowRight className="h-4 w-4" />
@@ -123,7 +123,7 @@ export function Hero({ onNavigate }: HeroProps) {
               </div>
             </div>
 
-            <blockquote className="mt-10 border-l border-primary/50 pl-5 text-2xl font-display italic leading-tight text-foreground md:text-3xl">
+            <blockquote className="mt-8 border-l border-primary/50 pl-4 text-[1.45rem] font-display italic leading-tight text-foreground sm:text-[1.65rem] md:mt-10 md:pl-5 md:text-3xl">
               “I’m most interested in the part where research taste and production reality finally meet.”
             </blockquote>
           </div>

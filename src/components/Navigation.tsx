@@ -59,13 +59,13 @@ export function Navigation({ links, onNavigate }: NavigationProps) {
             : "bg-transparent"
         }`}
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-6">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-6 md:py-4">
           <button
             onClick={() => handleNavigate("about")}
-            className="text-left text-3xl font-display font-semibold leading-none text-foreground transition-colors hover:text-primary"
+            className="text-left text-[1.7rem] font-display font-semibold leading-none text-foreground transition-colors hover:text-primary sm:text-3xl"
           >
             DV.
-            <span className="mt-1 block font-mono text-[0.62rem] uppercase tracking-[0.34em] text-muted-foreground">
+            <span className="mt-1 block font-mono text-[0.55rem] uppercase tracking-[0.28em] text-muted-foreground sm:text-[0.62rem] sm:tracking-[0.34em]">
               personal issue
             </span>
           </button>
@@ -99,7 +99,7 @@ export function Navigation({ links, onNavigate }: NavigationProps) {
             })}
           </div>
 
-          <button className="text-foreground md:hidden" onClick={() => setMobileMenuOpen((open) => !open)}>
+          <button className="rounded-full border border-border/70 p-2 text-foreground md:hidden" onClick={() => setMobileMenuOpen((open) => !open)}>
             {mobileMenuOpen ? <X /> : <Menu />}
           </button>
         </div>
@@ -111,7 +111,7 @@ export function Navigation({ links, onNavigate }: NavigationProps) {
             initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
-            className="fixed inset-x-4 top-24 z-40 border border-border/80 bg-card/95 p-6 shadow-[0_20px_40px_rgba(40,32,24,0.12)] md:hidden"
+            className="fixed inset-x-4 top-20 z-40 border border-border/80 bg-card/95 p-5 shadow-[0_20px_40px_rgba(40,32,24,0.12)] md:hidden"
           >
             <div className="flex flex-col gap-3">
               {links.map((link, index) => (
@@ -120,7 +120,7 @@ export function Navigation({ links, onNavigate }: NavigationProps) {
                   onClick={() => handleNavigate(link.id)}
                   className="flex items-center justify-between border-b border-border/70 pb-3 text-left last:border-b-0 last:pb-0"
                 >
-                  <span className="text-lg text-foreground">{link.name}</span>
+                  <span className="text-base text-foreground">{link.name}</span>
                   <span className="folio-tag">{(index + 1).toString().padStart(2, "0")}</span>
                 </button>
               ))}

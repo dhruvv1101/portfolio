@@ -55,7 +55,7 @@ export function Section({
       ref={sectionRef}
       id={id} 
       className={cn(
-        "aging-paper relative overflow-hidden border-t border-border/80 px-4 py-20 md:py-28",
+        "aging-paper relative overflow-hidden border-t border-border/80 px-4 py-16 md:py-28",
         isReading && "is-reading",
         variant === "muted" && "bg-muted/40",
         className
@@ -70,31 +70,31 @@ export function Section({
         className={cn("mx-auto max-w-7xl", contentClassName)}
       >
         {(label || title || kicker || intro || folio) && (
-          <div className="mb-12 grid gap-5 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
+          <div className="mb-10 grid gap-4 md:mb-12 md:gap-5 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
             <div className="max-w-3xl">
               {label && (
-                <p className="mb-3 font-mono text-[0.7rem] uppercase tracking-[0.35em] text-muted-foreground">
+                <p className="fluid-label mb-3 font-mono uppercase text-muted-foreground">
                   {label}
                 </p>
               )}
               {title && (
-                <h2 className="max-w-3xl text-4xl font-semibold leading-none text-foreground md:text-6xl">
+                <h2 className="fluid-section-title max-w-3xl font-semibold text-foreground">
                   {title}
                 </h2>
               )}
               {kicker && (
-                <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
+                <p className="fluid-lead mt-4 max-w-2xl text-muted-foreground md:mt-5">
                   {kicker}
                 </p>
               )}
               {intro && (
-                <p className="mt-4 max-w-2xl text-sm uppercase tracking-[0.22em] text-primary/80">
+                <p className="mt-4 max-w-2xl text-[0.78rem] uppercase tracking-[0.18em] text-primary/80 md:text-sm md:tracking-[0.22em]">
                   {intro}
                 </p>
               )}
             </div>
             {folio && (
-              <div className="justify-self-start border border-border/80 px-3 py-2 font-mono text-[0.68rem] uppercase tracking-[0.3em] text-muted-foreground md:justify-self-end">
+              <div className="justify-self-start border border-border/80 px-3 py-2 font-mono text-[0.62rem] uppercase tracking-[0.24em] text-muted-foreground md:justify-self-end md:text-[0.68rem] md:tracking-[0.3em]">
                 {folio}
               </div>
             )}
