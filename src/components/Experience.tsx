@@ -71,11 +71,11 @@ export function Experience() {
         {experiences.map((experience, index) => (
           <article
             key={`${experience.org}-${experience.role}`}
-            className="editorial-card grid gap-6 px-6 py-7 md:grid-cols-[0.8fr_1.2fr]"
+            className="editorial-card grid gap-6 px-5 py-6 sm:px-6 sm:py-7 md:grid-cols-[0.8fr_1.2fr]"
           >
             <div className="border-b border-border/70 pb-6 md:border-b-0 md:border-r md:pb-0 md:pr-6">
               <p className="folio-tag mb-4">{(index + 1).toString().padStart(2, "0")} / Entry</p>
-              <h3 className="text-3xl font-semibold md:text-4xl">{experience.role}</h3>
+              <h3 className="fluid-card-title font-semibold">{experience.role}</h3>
               <p className="mt-3 flex items-center gap-2 text-primary">
                 {experience.logo && (
                   <span className="flex h-9 w-9 items-center justify-center border border-border/80 bg-background/80 p-1">
@@ -91,7 +91,7 @@ export function Experience() {
             </div>
 
             <div className="space-y-5">
-              <p className="text-lg leading-relaxed text-muted-foreground">{experience.summary}</p>
+              <p className="fluid-body text-muted-foreground">{experience.summary}</p>
 
               <ul className="space-y-3 text-muted-foreground">
                 {experience.bullets.map((bullet) => (

@@ -56,8 +56,8 @@ export function Contact() {
       folio="Close"
       backgroundText="contact / collaboration / internships / research / backend systems / product builds / opportunities"
     >
-      <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="editorial-card px-6 py-7">
+      <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:gap-8">
+        <div className="editorial-card px-5 py-6 sm:px-6 sm:py-7">
           <p className="folio-tag mb-6">Channels</p>
           <div className="space-y-5">
             {channels.map((channel) => (
@@ -71,14 +71,14 @@ export function Contact() {
                 <channel.icon className="mt-1 h-5 w-5 text-primary" />
                 <div>
                   <p className="text-sm uppercase tracking-[0.24em] text-muted-foreground">{channel.label}</p>
-                  <p className="mt-2 text-lg text-foreground">{channel.value}</p>
-                </div>
-              </a>
-            ))}
+                    <p className="fluid-body mt-2 text-foreground">{channel.value}</p>
+                  </div>
+                </a>
+              ))}
           </div>
         </div>
 
-        <div className="editorial-card px-6 py-7">
+        <div className="editorial-card px-5 py-6 sm:px-6 sm:py-7">
           <Form {...form}>
             <form
               name="contact"
@@ -157,7 +157,7 @@ export function Contact() {
 
               <button
                 type="submit"
-                className="inline-flex w-full items-center justify-center gap-3 border border-foreground bg-foreground px-6 py-4 text-sm uppercase tracking-[0.25em] text-background transition hover:bg-primary hover:text-primary-foreground"
+                className="inline-flex w-full items-center justify-center gap-3 border border-foreground bg-foreground px-5 py-3 text-[0.78rem] uppercase tracking-[0.2em] text-background transition hover:bg-primary hover:text-primary-foreground sm:px-6 sm:py-4 sm:text-sm sm:tracking-[0.25em]"
               >
                 <Send className="h-4 w-4" />
                 Send Message

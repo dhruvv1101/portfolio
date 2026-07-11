@@ -28,8 +28,8 @@ export function Skills() {
       folio="Toolkit"
       backgroundText="stack / python / java / typescript / verilog / ml / systems / shopify / uniware / limechat"
     >
-      <div className="grid gap-8 lg:grid-cols-[1fr_0.8fr]">
-        <div className="grid gap-6 md:grid-cols-3">
+      <div className="grid gap-6 lg:grid-cols-[1fr_0.8fr] lg:gap-8">
+        <div className="grid gap-5 md:grid-cols-3 md:gap-6">
           {craftAreas.map((group, index) => (
             <article key={group.title} className="editorial-card px-5 py-6">
               <p className="folio-tag mb-4">{(index + 1).toString().padStart(2, "0")} / {group.title}</p>
@@ -44,10 +44,10 @@ export function Skills() {
           ))}
         </div>
 
-        <article className="editorial-card px-6 py-7">
+        <article className="editorial-card px-5 py-6 sm:px-6 sm:py-7">
           <div className="mb-6 border-b border-border/70 pb-4">
             <p className="folio-tag">Platforms I've Worked Around</p>
-            <h3 className="mt-3 text-3xl font-semibold">The tools behind the actual work.</h3>
+            <h3 className="fluid-card-title mt-3 font-semibold">The tools behind the actual work.</h3>
           </div>
 
           <div className="flex flex-wrap gap-3">
@@ -58,7 +58,7 @@ export function Skills() {
             ))}
           </div>
 
-          <p className="mt-6 leading-relaxed text-muted-foreground">
+          <p className="fluid-body mt-6 text-muted-foreground">
             This is the layer where product systems and engineering habits meet. Not glamorous, but it is where a lot
             of useful work actually happens.
           </p>

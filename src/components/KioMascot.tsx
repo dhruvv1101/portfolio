@@ -569,9 +569,9 @@ export function KioMascot() {
         <span className="font-mono text-[0.62rem] uppercase tracking-[0.24em] text-primary/80">Kio</span>
       </div>
       <div className="relative overflow-hidden border border-border/80 bg-[radial-gradient(circle_at_top,_rgba(255,244,219,0.85),_rgba(221,194,160,0.48)_44%,_rgba(117,67,39,0.18)_100%)]">
-        <div ref={mountRef} className="aspect-[4/3] w-full cursor-pointer" />
+        <div ref={mountRef} className="aspect-[5/4] w-full cursor-pointer sm:aspect-[4/3]" />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 border-t border-border/60 bg-card/80 px-4 py-3 backdrop-blur-[2px]">
-          <p className="text-xs uppercase tracking-[0.26em] text-muted-foreground">
+          <p className="text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground sm:text-xs sm:tracking-[0.26em]">
             Hover to tilt / click to make Kio hop
           </p>
         </div>

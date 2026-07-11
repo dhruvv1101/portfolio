@@ -18,8 +18,8 @@ export function About() {
       variant="muted"
       backgroundText="about / circuits / systems / machine learning / backend / product thinking / abv iiitm / final year"
     >
-      <div className="grid gap-10 md:grid-cols-[1.05fr_0.95fr]">
-        <div className="space-y-6 text-lg leading-relaxed text-muted-foreground">
+      <div className="grid gap-8 md:grid-cols-[1.05fr_0.95fr] md:gap-10">
+        <div className="fluid-body space-y-5 text-muted-foreground md:space-y-6">
           <p>
             I’m a final year student at <span className="text-foreground">ABV-IIITM Gwalior</span>. My lane
             started with circuits and systems, but it widened fast into machine learning, backend logic, and the kind
@@ -35,7 +35,7 @@ export function About() {
           </p>
         </div>
 
-        <div className="editorial-card grid gap-6 px-6 py-7">
+        <div className="editorial-card grid gap-5 px-5 py-6 sm:px-6 sm:py-7 md:gap-6">
           <div className="flex items-center justify-between border-b border-border/80 pb-4">
             <p className="folio-tag">Currently Into</p>
             <span className="text-sm text-muted-foreground">a.k.a. what keeps stealing my tabs</span>
@@ -47,7 +47,7 @@ export function About() {
                 <span className="font-mono text-[0.68rem] uppercase tracking-[0.28em] text-primary/80">
                   {(index + 1).toString().padStart(2, "0")}
                 </span>
-                <p className="text-lg text-foreground">{item}</p>
+                <p className="fluid-body text-foreground">{item}</p>
               </div>
             ))}
           </div>
