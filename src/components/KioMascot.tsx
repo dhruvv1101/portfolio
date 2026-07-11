@@ -146,10 +146,10 @@ export function KioMascot() {
     const white = new THREE.MeshStandardMaterial({ color: "#ffffff", roughness: 0.72, metalness: 0.01 });
     const pupil = new THREE.MeshStandardMaterial({ color: "#1f1518", roughness: 0.62, metalness: 0.02 });
     const meowMaterial = new THREE.MeshPhysicalMaterial({
-      color: "#fff6ea",
-      emissive: "#c23c4d",
-      emissiveIntensity: 0.22,
-      roughness: 0.34,
+      color: "#7b4127",
+      emissive: "#4f2413",
+      emissiveIntensity: 0.16,
+      roughness: 0.42,
       metalness: 0.06,
       clearcoat: 0.18,
       clearcoatRoughness: 0.2,
