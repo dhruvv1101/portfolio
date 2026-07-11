@@ -33,6 +33,55 @@ const createSmileCurve = () =>
     new THREE.Vector3(0.34, 0.02, 0),
   ]);
 
+const addStroke = (group: THREE.Group, material: THREE.Material, x: number, y: number, width: number, height: number) => {
+  const stroke = new THREE.Mesh(new THREE.BoxGeometry(width, height, 0.16), material);
+  stroke.position.set(x, y, 0);
+  group.add(stroke);
+};
+
+const createMeowText = (material: THREE.Material) => {
+  const textGroup = new THREE.Group();
+  const letterWidth = 0.9;
+  const spacing = 1.08;
+
+  const createLetterGroup = (offsetX: number) => {
+    const letter = new THREE.Group();
+    letter.position.x = offsetX;
+    textGroup.add(letter);
+    return letter;
+  };
+
+  const m = createLetterGroup(-spacing * 1.5);
+  addStroke(m, material, -0.28, 0, 0.16, 0.9);
+  addStroke(m, material, 0.28, 0, 0.16, 0.9);
+  addStroke(m, material, -0.1, 0.1, 0.16, 0.66);
+  addStroke(m, material, 0.1, 0.1, 0.16, 0.66);
+  m.children[2].rotation.z = 0.42;
+  m.children[3].rotation.z = -0.42;
+
+  const e = createLetterGroup(-spacing * 0.5);
+  addStroke(e, material, -0.28, 0, 0.16, 0.9);
+  addStroke(e, material, 0, 0.36, letterWidth * 0.74, 0.14);
+  addStroke(e, material, -0.04, 0, letterWidth * 0.64, 0.14);
+  addStroke(e, material, 0, -0.36, letterWidth * 0.74, 0.14);
+
+  const o = createLetterGroup(spacing * 0.5);
+  addStroke(o, material, -0.28, 0, 0.16, 0.9);
+  addStroke(o, material, 0.28, 0, 0.16, 0.9);
+  addStroke(o, material, 0, 0.36, letterWidth * 0.74, 0.14);
+  addStroke(o, material, 0, -0.36, letterWidth * 0.74, 0.14);
+
+  const w = createLetterGroup(spacing * 1.5);
+  addStroke(w, material, -0.3, 0, 0.16, 0.9);
+  addStroke(w, material, 0.3, 0, 0.16, 0.9);
+  addStroke(w, material, -0.1, -0.1, 0.16, 0.66);
+  addStroke(w, material, 0.1, -0.1, 0.16, 0.66);
+  w.children[2].rotation.z = -0.42;
+  w.children[3].rotation.z = 0.42;
+
+  return textGroup;
+};
+
 export function KioMascot() {
   const mountRef = useRef<HTMLDivElement | null>(null);
 
@@ -96,6 +145,15 @@ export function KioMascot() {
     const nose = new THREE.MeshStandardMaterial({ color: "#8c2f2a", roughness: 0.45, metalness: 0.05 });
     const white = new THREE.MeshStandardMaterial({ color: "#ffffff", roughness: 0.72, metalness: 0.01 });
     const pupil = new THREE.MeshStandardMaterial({ color: "#1f1518", roughness: 0.62, metalness: 0.02 });
+    const meowMaterial = new THREE.MeshPhysicalMaterial({
+      color: "#fff6ea",
+      emissive: "#c23c4d",
+      emissiveIntensity: 0.22,
+      roughness: 0.34,
+      metalness: 0.06,
+      clearcoat: 0.18,
+      clearcoatRoughness: 0.2,
+    });
 
     const head = new THREE.Mesh(new THREE.SphereGeometry(1.55, 40, 34), ink);
     head.scale.set(1.04, 1, 1);
@@ -294,6 +352,12 @@ export function KioMascot() {
     note.position.set(0, -2.78, -0.1);
     root.add(note);
 
+    const meowGroup = createMeowText(meowMaterial);
+    meowGroup.position.set(0, -0.18, 2.2);
+    meowGroup.scale.setScalar(0.01);
+    meowGroup.visible = false;
+    root.add(meowGroup);
+
     const pointer = new THREE.Vector2(0, 0);
     let hover = false;
     let jumpUntil = 0;
@@ -301,6 +365,8 @@ export function KioMascot() {
     let nextBlinkAt = performance.now() + 1700;
     let expressionUntil = 0;
     let expressionMode: "calm" | "mischief" | "laugh" = "calm";
+    let clickStreak = 0;
+    let meowUntil = 0;
     let frame = 0;
 
     const resize = () => {
@@ -327,6 +393,21 @@ export function KioMascot() {
     };
 
     const onClick = () => {
+      clickStreak += 1;
+
+      if (clickStreak >= 3) {
+        jumpUntil = 0;
+        meowUntil = performance.now() + 950;
+        meowGroup.visible = true;
+        meowGroup.scale.setScalar(0.18);
+        meowGroup.position.set(0, -0.12, 1.8);
+        expressionMode = "laugh";
+        expressionUntil = performance.now() + 850;
+        blinkUntil = performance.now() + 110;
+        clickStreak = 0;
+        return;
+      }
+
       jumpUntil = performance.now() + 900;
       blinkUntil = performance.now() + 180;
       expressionMode = "laugh";
@@ -350,6 +431,19 @@ export function KioMascot() {
         mascot.position.y += Math.sin(progress * Math.PI) * 0.95;
         mascot.position.z += Math.sin(progress * Math.PI) * 0.78;
         mascot.rotation.x -= Math.sin(progress * Math.PI) * 0.12;
+      }
+
+      const meowing = time < meowUntil;
+      if (meowing) {
+        const progress = 1 - (meowUntil - time) / 950;
+        const eased = 1 - (1 - progress) * (1 - progress);
+        meowGroup.visible = true;
+        meowGroup.position.set(0, -0.05 + progress * 0.2, 1.8 + eased * 5.2);
+        meowGroup.scale.setScalar(0.18 + eased * 1.05);
+        meowGroup.rotation.x = -0.08 + progress * 0.08;
+      } else if (meowGroup.visible) {
+        meowGroup.visible = false;
+        meowGroup.scale.setScalar(0.01);
       }
 
       if (time >= nextBlinkAt) {
@@ -428,6 +522,7 @@ export function KioMascot() {
         nose,
         white,
         pupil,
+        meowMaterial,
         foreheadMarkMaterial,
         whiskerMaterial,
         furMaterial,
