@@ -254,13 +254,14 @@ export function MascotStage({ config }: { config: MascotStageConfig }) {
 
       if (specialActive && config.angryAction === "cartwheelPunch") {
         const burst = Math.sin(specialProgress * Math.PI);
-        const forward = Math.sin(Math.min(specialProgress * 1.15, 1) * Math.PI);
-        rig.mascot.position.x += Math.sin(specialProgress * Math.PI * 2) * 0.34;
-        rig.mascot.position.y += burst * 0.5;
-        rig.mascot.position.z += forward * 1.5;
-        rig.mascot.rotation.z += specialProgress * Math.PI * 2.1;
-        rig.mascot.rotation.y += burst * 0.35;
-        rig.mascot.rotation.x -= burst * 0.22;
+        const sweep = Math.sin(specialProgress * Math.PI * 2);
+        const forward = Math.sin(Math.min(specialProgress * 1.2, 1) * Math.PI);
+        rig.mascot.position.x += sweep * 0.62;
+        rig.mascot.position.y += burst * 0.72;
+        rig.mascot.position.z += forward * 2.6;
+        rig.mascot.rotation.z += specialProgress * Math.PI * 3.6;
+        rig.mascot.rotation.y += burst * 0.58;
+        rig.mascot.rotation.x -= burst * 0.42;
       }
 
       const jumping = time < jumpUntil;
