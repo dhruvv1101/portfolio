@@ -163,7 +163,7 @@ export function KioMascot() {
     });
 
     const eyeGroup = new THREE.Group();
-    eyeGroup.position.set(0, 0.52, 1.43);
+    eyeGroup.position.set(0, 0.48, 1.37);
     mascot.add(eyeGroup);
 
     const leftEyeWhite = new THREE.Mesh(new THREE.SphereGeometry(0.28, 24, 20), white);
@@ -209,27 +209,29 @@ export function KioMascot() {
     rightLowerLid.rotation.z = 0.12;
     eyeGroup.add(rightLowerLid);
 
-    const browMaterial = new THREE.MeshStandardMaterial({ color: "#f7edd7", roughness: 0.8, metalness: 0.01 });
-    const leftBrow = new THREE.Mesh(new THREE.CapsuleGeometry(0.05, 0.42, 4, 12), browMaterial);
-    leftBrow.position.set(-0.42, 0.38, 0.02);
-    leftBrow.rotation.z = -0.52;
-    eyeGroup.add(leftBrow);
+    const foreheadMarkMaterial = new THREE.MeshStandardMaterial({ color: "#efe6cf", roughness: 0.72, metalness: 0.02 });
+    const foreheadMark = new THREE.Group();
+    foreheadMark.position.set(0, 0.95, 1.28);
+    mascot.add(foreheadMark);
 
-    const rightBrow = leftBrow.clone();
-    rightBrow.position.x = 0.42;
-    rightBrow.rotation.z = 0.52;
-    eyeGroup.add(rightBrow);
+    const starVertical = new THREE.Mesh(new THREE.CapsuleGeometry(0.03, 0.16, 3, 10), foreheadMarkMaterial);
+    starVertical.position.set(0, 0.14, 0);
+    foreheadMark.add(starVertical);
 
-    const browMarkMaterial = new THREE.MeshStandardMaterial({ color: "#efe6cf", roughness: 0.72, metalness: 0.02 });
-    const browMark = new THREE.Mesh(new THREE.TorusGeometry(0.17, 0.04, 8, 20, Math.PI), browMarkMaterial);
-    browMark.position.set(0, 1.04, 1.02);
-    browMark.rotation.z = Math.PI;
-    mascot.add(browMark);
+    const starHorizontal = new THREE.Mesh(new THREE.CapsuleGeometry(0.03, 0.14, 3, 10), foreheadMarkMaterial);
+    starHorizontal.position.set(0, 0.14, 0);
+    starHorizontal.rotation.z = Math.PI / 2;
+    foreheadMark.add(starHorizontal);
 
-    const browStem = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.34, 0.05), browMarkMaterial);
-    browStem.position.set(0, 0.89, 1.05);
-    browStem.rotation.z = 0.1;
-    mascot.add(browStem);
+    const lowerMarkLeft = new THREE.Mesh(new THREE.CapsuleGeometry(0.04, 0.2, 3, 10), foreheadMarkMaterial);
+    lowerMarkLeft.position.set(-0.07, -0.02, 0);
+    lowerMarkLeft.rotation.z = -0.52;
+    foreheadMark.add(lowerMarkLeft);
+
+    const lowerMarkRight = lowerMarkLeft.clone();
+    lowerMarkRight.position.x = 0.07;
+    lowerMarkRight.rotation.z = 0.52;
+    foreheadMark.add(lowerMarkRight);
 
     const tuftLeft = new THREE.Mesh(new THREE.ConeGeometry(0.28, 0.84, 4), ink);
     tuftLeft.position.set(-1.22, -0.24, 0.55);
@@ -268,7 +270,7 @@ export function KioMascot() {
     let blinkUntil = 0;
     let nextBlinkAt = performance.now() + 1700;
     let expressionUntil = 0;
-    let expressionMode: "calm" | "mischief" | "laugh" | "surprised" = "calm";
+    let expressionMode: "calm" | "mischief" | "laugh" = "calm";
     let frame = 0;
 
     const resize = () => {
@@ -304,9 +306,10 @@ export function KioMascot() {
     const animate = (time: number) => {
       const bob = Math.sin(time * 0.0018) * 0.14;
       const followX = hover ? clamp(pointer.y * 0.4, -0.28, 0.28) : 0.04;
-      const followY = hover ? clamp(pointer.x * 0.8, -0.55, 0.55) : 0.28;
+      const followY = hover ? clamp(pointer.x * 0.55, -0.42, 0.42) : 0.18;
 
       mascot.position.y = Math.sin(time * 0.0013) * 0.07 + bob;
+      mascot.position.z = 0;
       mascot.rotation.x += (followX - mascot.rotation.x) * 0.08;
       mascot.rotation.y += (followY - mascot.rotation.y) * 0.08;
       mascot.rotation.z = Math.sin(time * 0.001) * 0.03;
@@ -315,7 +318,8 @@ export function KioMascot() {
       if (jumping) {
         const progress = 1 - (jumpUntil - time) / 900;
         mascot.position.y += Math.sin(progress * Math.PI) * 0.95;
-        mascot.rotation.y += 0.12;
+        mascot.position.z += Math.sin(progress * Math.PI) * 0.78;
+        mascot.rotation.x -= Math.sin(progress * Math.PI) * 0.12;
       }
 
       if (time >= nextBlinkAt) {
@@ -328,15 +332,14 @@ export function KioMascot() {
           expressionMode = "mischief";
           expressionUntil = time + 300;
         } else {
-          const phase = Math.floor(time / 2600) % 3;
-          expressionMode = phase === 0 ? "calm" : phase === 1 ? "surprised" : "calm";
+          expressionMode = "calm";
           expressionUntil = time + 300;
         }
       }
 
       const blink = time < blinkUntil ? 0.08 : 1;
-      const eyeHeight = expressionMode === "laugh" ? 0.34 : expressionMode === "mischief" ? 0.76 : expressionMode === "surprised" ? 1.18 : 0.95;
-      const pupilHeight = expressionMode === "laugh" ? 0.2 : expressionMode === "surprised" ? 1.72 : expressionMode === "mischief" ? 1.2 : 1.48;
+      const eyeHeight = expressionMode === "laugh" ? 0.46 : expressionMode === "mischief" ? 0.78 : 0.95;
+      const pupilHeight = expressionMode === "laugh" ? 0.56 : expressionMode === "mischief" ? 1.18 : 1.48;
 
       leftEyeWhite.scale.y = eyeHeight * blink;
       rightEyeWhite.scale.y = eyeHeight * blink;
@@ -347,29 +350,21 @@ export function KioMascot() {
       const pupilOffsetY = hover ? clamp(pointer.y * 0.04, -0.04, 0.04) : 0;
       leftPupil.position.x = -0.44 + pupilOffsetX;
       rightPupil.position.x = 0.44 + pupilOffsetX;
-      leftPupil.position.y = 0.02 + pupilOffsetY + (expressionMode === "surprised" ? -0.02 : 0);
-      rightPupil.position.y = 0.02 + pupilOffsetY + (expressionMode === "surprised" ? -0.02 : 0);
+      leftPupil.position.y = 0.02 + pupilOffsetY;
+      rightPupil.position.y = 0.02 + pupilOffsetY;
 
-      leftUpperLid.position.y = expressionMode === "mischief" ? 0.1 : expressionMode === "laugh" ? 0.05 : 0.14;
+      leftUpperLid.position.y = expressionMode === "mischief" ? 0.1 : expressionMode === "laugh" ? 0.07 : 0.14;
       rightUpperLid.position.y = leftUpperLid.position.y;
-      leftUpperLid.rotation.z = expressionMode === "surprised" ? -0.08 : expressionMode === "mischief" ? -0.32 : -0.2;
-      rightUpperLid.rotation.z = expressionMode === "surprised" ? 0.08 : expressionMode === "mischief" ? 0.32 : 0.2;
-      leftBrow.position.y = expressionMode === "surprised" ? 0.48 : expressionMode === "laugh" ? 0.32 : 0.38;
-      rightBrow.position.y = leftBrow.position.y;
-      leftBrow.rotation.z = expressionMode === "mischief" ? -0.72 : expressionMode === "surprised" ? -0.28 : -0.52;
-      rightBrow.rotation.z = expressionMode === "mischief" ? 0.72 : expressionMode === "surprised" ? 0.28 : 0.52;
+      leftUpperLid.rotation.z = expressionMode === "mischief" ? -0.32 : expressionMode === "laugh" ? -0.12 : -0.2;
+      rightUpperLid.rotation.z = expressionMode === "mischief" ? 0.32 : expressionMode === "laugh" ? 0.12 : 0.2;
 
-      smileMouth.visible = expressionMode !== "laugh" && expressionMode !== "surprised";
-      openMouth.visible = expressionMode === "laugh" || expressionMode === "surprised";
+      smileMouth.visible = expressionMode !== "laugh";
+      openMouth.visible = expressionMode === "laugh";
       tongue.visible = expressionMode === "laugh";
-      mouthGroup.scale.y = expressionMode === "surprised" ? 1.55 : expressionMode === "laugh" ? 1.2 : expressionMode === "mischief" ? 0.84 : 1;
+      mouthGroup.scale.y = expressionMode === "laugh" ? 1.08 : expressionMode === "mischief" ? 0.84 : 1;
       mouthGroup.scale.x = expressionMode === "mischief" ? 0.92 : 1;
-      mouthGroup.position.y = expressionMode === "surprised" ? -0.22 : -0.18;
-      openMouth.scale.set(
-        expressionMode === "surprised" ? 1.2 : 1.4,
-        expressionMode === "surprised" ? 1.5 : 1.1,
-        0.62
-      );
+      mouthGroup.position.y = -0.18;
+      openMouth.scale.set(1.18, 0.86, 0.52);
       tongue.position.y = expressionMode === "laugh" ? -0.12 : -0.16;
 
       whiskerBars.forEach((whisker, index) => {
@@ -407,10 +402,9 @@ export function KioMascot() {
         nose,
         white,
         pupil,
-        browMarkMaterial,
+        foreheadMarkMaterial,
         whiskerMaterial,
         eyelidMaterial,
-        browMaterial,
         noteMaterial,
         openMouth.material as THREE.Material,
       ].forEach((material) => material.dispose());
