@@ -339,11 +339,6 @@ export function MascotStage({ config }: { config: MascotStageConfig }) {
         <span className="font-mono text-[0.62rem] uppercase tracking-[0.2em] text-primary/80">independent</span>
       </div>
       <div ref={mountRef} className="aspect-[5/4] w-full cursor-pointer sm:aspect-[4/3]" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 border-t border-border/60 bg-card/80 px-4 py-3 backdrop-blur-[2px]">
-        <p className="text-[0.68rem] uppercase tracking-[0.18em] text-muted-foreground sm:text-xs sm:tracking-[0.26em]">
-          Hover to tilt / click to make {config.label} hop
-        </p>
-      </div>
     </div>
   );
 }

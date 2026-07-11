@@ -59,7 +59,6 @@ const createPerryRig = (root: THREE.Group): MascotRig => {
   const white = register(new THREE.MeshStandardMaterial({ color: "#fff8ed", roughness: 0.72, metalness: 0.01 }));
   const pupil = register(new THREE.MeshStandardMaterial({ color: "#5f3340", roughness: 0.62, metalness: 0.02 }));
   const mouthMaterial = register(new THREE.MeshStandardMaterial({ color: "#734448", roughness: 0.74, metalness: 0.02 }));
-  const mouthInterior = register(new THREE.MeshStandardMaterial({ color: "#612126", roughness: 0.76, metalness: 0.01 }));
 
   const body = new THREE.Mesh(new THREE.CylinderGeometry(0.58, 0.82, 3.4, 24), teal);
   body.position.set(0, -0.32, 0.02);
@@ -183,17 +182,6 @@ const createPerryRig = (root: THREE.Group): MascotRig => {
   smirk.rotation.z = -0.04;
   mouthGroup.add(smirk);
 
-  const openMouth = new THREE.Mesh(new THREE.SphereGeometry(0.2, 16, 16), mouthInterior);
-  openMouth.position.set(0, -0.03, -0.02);
-  openMouth.scale.set(1.18, 0.42, 0.28);
-  openMouth.visible = false;
-  mouthGroup.add(openMouth);
-
-  const angryMouth = new THREE.Mesh(new THREE.TubeGeometry(createFrownCurve(), 24, 0.03, 8, false), mouthMaterial);
-  angryMouth.scale.set(0.72, 0.4, 1);
-  angryMouth.visible = false;
-  mouthGroup.add(angryMouth);
-
   const leftArm = new THREE.Mesh(new THREE.CylinderGeometry(0.075, 0.07, 1.44, 12), teal);
   leftArm.position.set(-0.72, -0.28, 0.08);
   leftArm.rotation.z = 0.12;
@@ -267,8 +255,6 @@ const createPerryRig = (root: THREE.Group): MascotRig => {
       rightPupil.position.y = -0.02 + pupilOffsetY - (expressionMode === "angry" ? 0.01 : 0);
 
       smirk.visible = false;
-      openMouth.visible = false;
-      angryMouth.visible = expressionMode === "angry";
 
       mouthGroup.position.y = 0.18;
       mouthGroup.rotation.z = expressionMode === "angry" ? -0.08 : -0.02;
@@ -287,17 +273,15 @@ const createPerryRig = (root: THREE.Group): MascotRig => {
       rightArm.position.x = specialProgress > 0 ? 0.58 + punch * 0.3 : 0.72;
       rightArm.position.y = specialProgress > 0 ? -0.3 + punch * 0.5 : -0.28;
       rightArm.position.z = specialProgress > 0 ? 0.1 + punch * 0.95 : 0.08;
-      leftFist.position.x = specialProgress > 0 ? -1.02 - punch * 0.14 : -0.94;
-      leftFist.position.y = specialProgress > 0 ? -0.72 + punch * 0.08 : -0.96;
-      leftFist.position.z = specialProgress > 0 ? 0.12 - punch * 0.08 : 0.1;
-      rightFist.position.x = specialProgress > 0 ? 0.94 + punch * 0.68 : 0.94;
-      rightFist.position.y = specialProgress > 0 ? -0.76 + punch * 0.78 : -0.96;
-      rightFist.position.z = specialProgress > 0 ? 0.14 + punch * 1.9 : 0.1;
-      rightFist.scale.set(
-        specialProgress > 0 ? 1.08 + punch * 0.34 : 1.08,
-        specialProgress > 0 ? 0.96 + punch * 0.2 : 0.96,
-        specialProgress > 0 ? 0.92 + punch * 0.42 : 0.92
-      );
+      leftFist.visible = specialProgress > 0.02;
+      rightFist.visible = specialProgress > 0.02;
+      leftFist.position.x = -1.02 - punch * 0.14;
+      leftFist.position.y = -0.72 + punch * 0.08;
+      leftFist.position.z = 0.12 - punch * 0.08;
+      rightFist.position.x = 0.94 + punch * 0.68;
+      rightFist.position.y = -0.76 + punch * 0.78;
+      rightFist.position.z = 0.14 + punch * 1.9;
+      rightFist.scale.set(1.08 + punch * 0.34, 0.96 + punch * 0.2, 0.92 + punch * 0.42);
       leftFist.scale.set(1.08, 0.96, 0.92);
       brim.rotation.z = -0.16 + Math.sin(time * 0.0012) * 0.02;
       crown.rotation.z = brim.rotation.z;
