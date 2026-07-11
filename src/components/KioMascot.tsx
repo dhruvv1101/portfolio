@@ -364,7 +364,7 @@ export function KioMascot() {
     let blinkUntil = 0;
     let nextBlinkAt = performance.now() + 1700;
     let expressionUntil = 0;
-    let expressionMode: "calm" | "mischief" | "laugh" = "calm";
+    let expressionMode: "calm" | "mischief" | "laugh" | "angry" = "calm";
     let clickStreak = 0;
     let meowUntil = 0;
     let frame = 0;
@@ -401,7 +401,7 @@ export function KioMascot() {
         meowGroup.visible = true;
         meowGroup.scale.setScalar(0.18);
         meowGroup.position.set(0, -0.12, 1.8);
-        expressionMode = "laugh";
+        expressionMode = "angry";
         expressionUntil = performance.now() + 850;
         blinkUntil = performance.now() + 110;
         clickStreak = 0;
@@ -462,8 +462,10 @@ export function KioMascot() {
       }
 
       const blink = time < blinkUntil ? 0.08 : 1;
-      const eyeHeight = expressionMode === "laugh" ? 0.62 : expressionMode === "mischief" ? 0.88 : 1.02;
-      const pupilHeight = expressionMode === "laugh" ? 0.82 : expressionMode === "mischief" ? 1.26 : 1.48;
+      const eyeHeight =
+        expressionMode === "angry" ? 0.72 : expressionMode === "laugh" ? 0.62 : expressionMode === "mischief" ? 0.88 : 1.02;
+      const pupilHeight =
+        expressionMode === "angry" ? 1.1 : expressionMode === "laugh" ? 0.82 : expressionMode === "mischief" ? 1.26 : 1.48;
 
       leftEyeWhite.scale.y = eyeHeight * blink;
       rightEyeWhite.scale.y = eyeHeight * blink;
@@ -477,13 +479,13 @@ export function KioMascot() {
       leftPupil.position.y = 0.02 + pupilOffsetY;
       rightPupil.position.y = 0.02 + pupilOffsetY;
 
-      smileMouth.visible = expressionMode !== "laugh";
+      smileMouth.visible = expressionMode !== "laugh" && expressionMode !== "angry";
       openMouth.visible = expressionMode === "laugh";
       tongue.visible = expressionMode === "laugh";
-      mouthGroup.scale.y = expressionMode === "laugh" ? 1.08 : expressionMode === "mischief" ? 0.84 : 1;
-      mouthGroup.scale.x = expressionMode === "mischief" ? 0.88 : 0.96;
-      mouthGroup.position.y = expressionMode === "mischief" ? -0.16 : -0.18;
-      mouthGroup.rotation.z = expressionMode === "mischief" ? -0.08 : -0.03;
+      mouthGroup.scale.y = expressionMode === "laugh" ? 1.08 : expressionMode === "mischief" ? 0.84 : expressionMode === "angry" ? 0.72 : 1;
+      mouthGroup.scale.x = expressionMode === "mischief" ? 0.88 : expressionMode === "angry" ? 0.82 : 0.96;
+      mouthGroup.position.y = expressionMode === "mischief" ? -0.16 : expressionMode === "angry" ? -0.12 : -0.18;
+      mouthGroup.rotation.z = expressionMode === "mischief" ? -0.08 : expressionMode === "angry" ? -0.02 : -0.03;
       openMouth.scale.set(1.18, 0.86, 0.52);
       tongue.position.y = expressionMode === "laugh" ? -0.12 : -0.16;
 
