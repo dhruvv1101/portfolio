@@ -26,13 +26,22 @@ const createFourPointStar = (outerRadius: number, innerRadius: number) => {
 
 const createKidneyEyeShape = () => {
   const shape = new THREE.Shape();
-  shape.moveTo(-0.42, 0);
-  shape.bezierCurveTo(-0.36, 0.2, -0.1, 0.28, 0.18, 0.2);
-  shape.bezierCurveTo(0.42, 0.14, 0.46, -0.04, 0.32, -0.12);
-  shape.bezierCurveTo(0.08, -0.24, -0.22, -0.24, -0.42, 0);
+  shape.moveTo(-0.36, -0.02);
+  shape.bezierCurveTo(-0.28, 0.16, -0.04, 0.22, 0.22, 0.16);
+  shape.bezierCurveTo(0.38, 0.1, 0.42, -0.02, 0.34, -0.12);
+  shape.bezierCurveTo(0.12, -0.18, -0.16, -0.17, -0.36, -0.02);
   shape.closePath();
   return shape;
 };
+
+const createSmileCurve = () =>
+  new THREE.CatmullRomCurve3([
+    new THREE.Vector3(-0.42, 0.12, 0),
+    new THREE.Vector3(-0.24, -0.22, 0),
+    new THREE.Vector3(0.02, -0.28, 0),
+    new THREE.Vector3(0.18, -0.18, 0),
+    new THREE.Vector3(0.34, 0.02, 0),
+  ]);
 
 export function KioMascot() {
   const mountRef = useRef<HTMLDivElement | null>(null);
@@ -151,15 +160,9 @@ export function KioMascot() {
     mouthGroup.position.set(0, -0.18, 0.52);
     muzzle.add(mouthGroup);
 
-    const smileMouth = new THREE.Mesh(new THREE.TorusGeometry(0.36, 0.048, 10, 28, Math.PI * 0.82), nose);
-    smileMouth.rotation.z = Math.PI + 0.18;
-    smileMouth.position.set(0.05, -0.01, 0.02);
+    const smileMouth = new THREE.Mesh(new THREE.TubeGeometry(createSmileCurve(), 28, 0.042, 10, false), nose);
+    smileMouth.position.set(0.02, -0.02, 0.04);
     mouthGroup.add(smileMouth);
-
-    const smirkTick = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.018, 0.13, 10), nose);
-    smirkTick.position.set(0.34, 0.02, 0.02);
-    smirkTick.rotation.z = -0.8;
-    mouthGroup.add(smirkTick);
 
     const openMouth = new THREE.Mesh(
       new THREE.SphereGeometry(0.3, 18, 16, 0, Math.PI * 2, 0, Math.PI),
@@ -230,19 +233,19 @@ export function KioMascot() {
     eyeWhiteGeometry.center();
 
     const leftEyeWhite = new THREE.Mesh(eyeWhiteGeometry, white);
-    leftEyeWhite.position.set(-0.44, 0.03, 0);
-    leftEyeWhite.scale.set(0.94, 0.92, 0.34);
-    leftEyeWhite.rotation.z = -0.08;
+    leftEyeWhite.position.set(-0.44, 0.04, 0);
+    leftEyeWhite.scale.set(1.02, 1.02, 0.34);
+    leftEyeWhite.rotation.z = -0.03;
     eyeGroup.add(leftEyeWhite);
 
     const rightEyeWhite = leftEyeWhite.clone();
     rightEyeWhite.position.x = 0.44;
-    rightEyeWhite.rotation.z = 0.08;
+    rightEyeWhite.rotation.z = 0.03;
     eyeGroup.add(rightEyeWhite);
 
     const leftPupil = new THREE.Mesh(new THREE.SphereGeometry(0.085, 18, 16), pupil);
-    leftPupil.position.set(-0.42, 0.01, 0.14);
-    leftPupil.scale.set(0.92, 1.3, 0.72);
+    leftPupil.position.set(-0.42, 0.03, 0.14);
+    leftPupil.scale.set(0.9, 1.2, 0.72);
     eyeGroup.add(leftPupil);
 
     const rightPupil = leftPupil.clone();
@@ -397,7 +400,6 @@ export function KioMascot() {
       rightPupil.position.y = 0.02 + pupilOffsetY;
 
       smileMouth.visible = expressionMode !== "laugh";
-      smirkTick.visible = expressionMode !== "laugh";
       openMouth.visible = expressionMode === "laugh";
       tongue.visible = expressionMode === "laugh";
       mouthGroup.scale.y = expressionMode === "laugh" ? 1.08 : expressionMode === "mischief" ? 0.84 : 1;
