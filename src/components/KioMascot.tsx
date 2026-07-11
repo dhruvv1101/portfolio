@@ -146,9 +146,15 @@ export function KioMascot() {
     mouthGroup.position.set(0, -0.18, 0.52);
     muzzle.add(mouthGroup);
 
-    const smileMouth = new THREE.Mesh(new THREE.TorusGeometry(0.48, 0.05, 10, 28, Math.PI), nose);
-    smileMouth.rotation.z = Math.PI;
+    const smileMouth = new THREE.Mesh(new THREE.TorusGeometry(0.36, 0.048, 10, 28, Math.PI * 0.82), nose);
+    smileMouth.rotation.z = Math.PI + 0.18;
+    smileMouth.position.set(0.05, -0.01, 0.02);
     mouthGroup.add(smileMouth);
+
+    const smirkTick = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.018, 0.13, 10), nose);
+    smirkTick.position.set(0.34, 0.02, 0.02);
+    smirkTick.rotation.z = -0.8;
+    mouthGroup.add(smirkTick);
 
     const openMouth = new THREE.Mesh(
       new THREE.SphereGeometry(0.3, 18, 16, 0, Math.PI * 2, 0, Math.PI),
@@ -260,7 +266,7 @@ export function KioMascot() {
     cape.scale.set(0.9, 1, 0.74);
     mascot.add(cape);
 
-    const body = new THREE.Mesh(new THREE.CylinderGeometry(0.74, 0.82, 1.48, 24), cloth);
+    const body = new THREE.Mesh(new THREE.CylinderGeometry(0.74, 0.82, 1.48, 24), ink);
     body.position.set(0, -2.08, 0.08);
     body.scale.set(0.82, 1, 0.54);
     mascot.add(body);
@@ -380,11 +386,13 @@ export function KioMascot() {
       rightPupil.position.y = 0.02 + pupilOffsetY;
 
       smileMouth.visible = expressionMode !== "laugh";
+      smirkTick.visible = expressionMode !== "laugh";
       openMouth.visible = expressionMode === "laugh";
       tongue.visible = expressionMode === "laugh";
       mouthGroup.scale.y = expressionMode === "laugh" ? 1.08 : expressionMode === "mischief" ? 0.84 : 1;
-      mouthGroup.scale.x = expressionMode === "mischief" ? 0.92 : 1;
-      mouthGroup.position.y = -0.18;
+      mouthGroup.scale.x = expressionMode === "mischief" ? 0.88 : 0.96;
+      mouthGroup.position.y = expressionMode === "mischief" ? -0.16 : -0.18;
+      mouthGroup.rotation.z = expressionMode === "mischief" ? -0.08 : -0.03;
       openMouth.scale.set(1.18, 0.86, 0.52);
       tongue.position.y = expressionMode === "laugh" ? -0.12 : -0.16;
 
