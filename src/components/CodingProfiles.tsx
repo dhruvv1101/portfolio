@@ -31,8 +31,8 @@ export function CodingProfiles() {
     <Section
       id="coding"
       label="05 / On the Internet"
-      title="Competitive coding, side tabs, and public trails."
-      kicker="The kind of links that say something about how I think when nobody is dressing the work up."
+      title="Competitive programming and the public trail behind it."
+      kicker="“There is no secret ingredient. It’s just you.” Practice is still the part that no shortcut replaces."
       intro="profiles / practice / public signal"
       folio="Links"
       variant="muted"

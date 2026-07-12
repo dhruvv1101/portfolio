@@ -12,9 +12,6 @@ export function KioMascot() {
       <div className="flex flex-col gap-3 border-b border-border/70 pb-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="folio-tag">Interactive Mascot</p>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Choose Kio, Perry, or both. Each mascot stays isolated in its own file for future edits.
-          </p>
         </div>
         <div className="w-full sm:w-[13rem]">
           <Select value={selection} onValueChange={(value) => setSelection(value as MascotSelection)}>

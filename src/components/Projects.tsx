@@ -59,8 +59,8 @@ export function Projects() {
     <Section
       id="projects"
       label="02 / Selected Work"
-      title="A few things I’ve made, tuned, or thought through properly."
-      kicker="Click a project and it takes over the main spread. The layout stays magazine-like, but now it actually reacts."
+      title="Projects that were worth building carefully."
+      kicker="Each project opens like a case file: what it was, why it mattered, and how I approached the work."
       intro="projects / experiments / systems"
       folio="Features"
       backgroundText="projects / chessflow / study buddy / intentlens / kaggle / analysis / extension / machine learning"

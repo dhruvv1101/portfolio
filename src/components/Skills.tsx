@@ -22,8 +22,8 @@ export function Skills() {
     <Section
       id="skills"
       label="04 / What I Work With"
-      title="The stack is mixed on purpose."
-      kicker="Some of it is model tooling. Some of it is core electronics. Some of it is just the backend plumbing you need when real systems touch each other."
+      title="A toolkit shaped by the problems I keep choosing."
+      kicker="The stack is intentionally mixed: some of it comes from electronics, some from modeling, and some from the backend work that keeps real systems dependable."
       intro="craft / stack / platforms"
       folio="Toolkit"
       backgroundText="stack / python / java / typescript / verilog / ml / systems / shopify / uniware / limechat"
@@ -59,8 +59,8 @@ export function Skills() {
           </div>
 
           <p className="fluid-body mt-6 text-muted-foreground">
-            This is the layer where product systems and engineering habits meet. Not glamorous, but it is where a lot
-            of useful work actually happens.
+            This is the practical layer of the work: the tools, platforms, and habits that quietly make larger systems
+            easier to build, reason about, and maintain.
           </p>
         </article>
       </div>

@@ -78,16 +78,16 @@ export function Hero({ onNavigate }: HeroProps) {
 
               <div className="space-y-4">
                 <p className="max-w-lg text-[0.78rem] uppercase tracking-[0.2em] text-primary/85 sm:text-sm sm:tracking-[0.3em] md:tracking-[0.38em]">
-                  Showcase portfolio / work so far / systems, product, and engineering notes.
+                  Selected work / systems thinking / product and engineering notes.
                 </p>
                 <h1 className="fluid-hero-title max-w-4xl font-semibold">
-                  I use this portfolio as a running record of the work, projects, and technical ground I’ve covered so far.
+                  “Be water, my friend.”
                 </h1>
               </div>
 
               <p className="fluid-lead max-w-2xl text-muted-foreground">
-                I use this showcase to bring together what I have built, explored, and improved so far across VLSI,
-                machine learning, backend systems, browser tooling, and competition work.
+                This portfolio brings together the work that has shaped how I think so far across VLSI, machine
+                learning, backend systems, browser tooling, and competitive problem solving.
               </p>
             </div>
 
@@ -101,8 +101,8 @@ export function Hero({ onNavigate }: HeroProps) {
               </button>
 
               <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
-                I wanted this to feel thoughtful, tactile, and personal, with enough structure to show how I think about
-                systems, design, and engineering work.
+                I wanted the experience to feel deliberate and personal, while still reading clearly as a serious record
+                of technical work, decisions, and progress.
               </p>
             </div>
           </div>
@@ -124,7 +124,8 @@ export function Hero({ onNavigate }: HeroProps) {
             </div>
 
             <blockquote className="mt-8 border-l border-primary/50 pl-4 text-[1.45rem] font-display italic leading-tight text-foreground sm:text-[1.65rem] md:mt-10 md:pl-5 md:text-3xl">
-              “I’m most interested in the part where research taste and production reality finally meet.”
+              I care most about the point where curiosity becomes execution and ideas are forced to survive contact
+              with reality.
             </blockquote>
           </div>
         </motion.div>
