@@ -59,8 +59,8 @@ export function Experience() {
     <Section
       id="experience"
       label="03 / Things I've Built"
-      title="Proof that I like work with actual moving parts."
-      kicker="The common thread here is not one domain. It is the habit of following a system all the way through."
+      title="Work that had to hold up beyond the first draft."
+      kicker="What connects these roles is not one domain, but a preference for systems that need to work outside the slide deck."
       intro="backend / systems / product reality"
       folio="Timeline"
       variant="muted"
