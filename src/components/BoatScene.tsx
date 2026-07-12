@@ -19,27 +19,36 @@ export function BoatScene() {
     const root = new THREE.Group();
     scene.add(root);
 
-    const sun = new THREE.Mesh(
-      new THREE.CircleGeometry(0.34, 32),
-      new THREE.MeshBasicMaterial({ color: "#d6b07e", transparent: true, opacity: 0.7 })
-    );
-    sun.position.set(3.9, 1.55, 0);
-    root.add(sun);
+    const cloudMaterial = new THREE.MeshBasicMaterial({ color: "#bfae97", transparent: true, opacity: 0.48 });
+    const cloudPuffs = [
+      { x: -3.8, y: 1.76, sx: 1.6, sy: 0.54 },
+      { x: -2.6, y: 1.54, sx: 1.2, sy: 0.46 },
+      { x: -0.8, y: 1.82, sx: 1.8, sy: 0.58 },
+      { x: 0.6, y: 1.52, sx: 1.24, sy: 0.44 },
+      { x: 2.8, y: 1.74, sx: 1.74, sy: 0.56 },
+      { x: 4.2, y: 1.48, sx: 1.16, sy: 0.42 },
+    ].map(({ x, y, sx, sy }) => {
+      const puff = new THREE.Mesh(new THREE.CircleGeometry(0.9, 32), cloudMaterial.clone());
+      puff.position.set(x, y, 0);
+      puff.scale.set(sx, sy, 1);
+      root.add(puff);
+      return puff;
+    });
 
-    const waterMaterial = new THREE.MeshBasicMaterial({ color: "#d8c2a2", transparent: true, opacity: 0.8 });
-    const waterLines = Array.from({ length: 4 }, (_, index) => {
-      const line = new THREE.Mesh(new THREE.PlaneGeometry(9.8 - index * 1.1, 0.14), waterMaterial.clone());
-      line.position.set(0, -1.24 - index * 0.34, 0);
+    const waterMaterial = new THREE.MeshBasicMaterial({ color: "#ccb291", transparent: true, opacity: 0.88 });
+    const waterLines = Array.from({ length: 5 }, (_, index) => {
+      const line = new THREE.Mesh(new THREE.PlaneGeometry(11.6 - index * 0.95, 0.18 + index * 0.015), waterMaterial.clone());
+      line.position.set(0, -1.1 - index * 0.33, 0);
       root.add(line);
       return line;
     });
 
-    const wakeLines = Array.from({ length: 3 }, (_, index) => {
+    const wakeLines = Array.from({ length: 4 }, (_, index) => {
       const wake = new THREE.Mesh(
-        new THREE.PlaneGeometry(1.1 - index * 0.18, 0.06),
-        new THREE.MeshBasicMaterial({ color: "#eadcc4", transparent: true, opacity: 0.75 - index * 0.15 })
+        new THREE.PlaneGeometry(1.5 - index * 0.2, 0.08),
+        new THREE.MeshBasicMaterial({ color: "#eadcc4", transparent: true, opacity: 0.7 - index * 0.12 })
       );
-      wake.position.set(-1.7 - index * 0.35, -1.18 - index * 0.08, 0);
+      wake.position.set(-2.1 - index * 0.42, -1.02 - index * 0.1, 0);
       root.add(wake);
       return wake;
     });
@@ -86,8 +95,9 @@ export function BoatScene() {
     flag.position.set(0.3, 1.42, 0);
     boat.add(flag);
 
-    boat.position.set(-1.15, -0.9, 0);
-    boat.rotation.z = -0.04;
+    boat.scale.setScalar(1.36);
+    boat.position.set(-1.3, -0.74, 0);
+    boat.rotation.z = -0.08;
 
     const resize = () => {
       const width = mount.clientWidth;
@@ -105,20 +115,30 @@ export function BoatScene() {
 
     let frame = 0;
     const animate = (time: number) => {
-      const drift = Math.sin(time * 0.00028) * 1.45;
-      boat.position.x = -1.15 + drift;
-      boat.position.y = -0.9 + Math.sin(time * 0.0018) * 0.08;
-      boat.rotation.z = -0.04 + Math.sin(time * 0.0015) * 0.045;
-      sail.rotation.z = Math.sin(time * 0.0011) * 0.03;
-      flag.scale.y = 1 + Math.sin(time * 0.0042) * 0.12;
+      const drift = Math.sin(time * 0.00042) * 2.3;
+      const swell = Math.sin(time * 0.0026) * 0.22;
+      boat.position.x = -1.3 + drift;
+      boat.position.y = -0.74 + swell;
+      boat.rotation.z = -0.08 + Math.sin(time * 0.0022) * 0.16;
+      boat.rotation.x = Math.sin(time * 0.0018) * 0.04;
+      sail.rotation.z = Math.sin(time * 0.003) * 0.1;
+      flag.scale.y = 1 + Math.sin(time * 0.007) * 0.24;
 
       waterLines.forEach((line, index) => {
-        line.position.x = Math.sin(time * 0.0006 + index) * (0.18 + index * 0.04);
+        line.position.x = Math.sin(time * 0.0011 + index * 0.9) * (0.42 + index * 0.06);
+        line.position.y = -1.1 - index * 0.33 + Math.sin(time * 0.0018 + index) * 0.06;
+        line.rotation.z = Math.sin(time * 0.001 + index) * 0.015;
       });
 
       wakeLines.forEach((wake, index) => {
-        wake.position.x = boat.position.x - 1.55 - index * 0.34 + Math.sin(time * 0.0014 + index) * 0.04;
-        wake.position.y = boat.position.y - 0.18 - index * 0.08;
+        wake.position.x = boat.position.x - 2.05 - index * 0.44 + Math.sin(time * 0.0034 + index) * 0.1;
+        wake.position.y = boat.position.y - 0.08 - index * 0.1 + Math.sin(time * 0.0022 + index) * 0.05;
+        wake.rotation.z = Math.sin(time * 0.0028 + index) * 0.08;
+      });
+
+      cloudPuffs.forEach((puff, index) => {
+        puff.position.x += Math.sin(time * 0.00018 + index) * 0.0022;
+        puff.position.y += Math.sin(time * 0.00035 + index) * 0.0008;
       });
 
       renderer.render(scene, camera);
@@ -150,5 +170,5 @@ export function BoatScene() {
     };
   }, []);
 
-  return <div ref={mountRef} className="h-44 w-full overflow-hidden border-t border-border/60 md:h-52" aria-hidden="true" />;
+  return <div ref={mountRef} className="h-56 w-full overflow-hidden border-t border-border/60 md:h-72" aria-hidden="true" />;
 }
