@@ -97,7 +97,7 @@ export function BoatScene() {
     );
     boat.add(hull);
 
-    const mast = new THREE.Mesh(new THREE.BoxGeometry(0.14, 1.22, 0.02), new THREE.MeshBasicMaterial({ color: "#4d3929" }));
+    const mast = new THREE.Mesh(new THREE.BoxGeometry(0.14, 1.22, 0.02), new THREE.MeshBasicMaterial({ color: "#8b6a4f" }));
     mast.position.set(0.05, 0.64, 0);
     boat.add(mast);
 
@@ -113,13 +113,6 @@ export function BoatScene() {
     );
     sail.position.set(0.08, 0.04, 0);
     boat.add(sail);
-
-    const flag = new THREE.Mesh(
-      new THREE.PlaneGeometry(0.32, 0.12),
-      new THREE.MeshBasicMaterial({ color: "#9d5e4c" })
-    );
-    flag.position.set(0.3, 1.08, 0);
-    boat.add(flag);
 
     boat.scale.setScalar(1.62);
     boat.position.set(-1.34, -0.58, 0);
@@ -148,7 +141,6 @@ export function BoatScene() {
       boat.rotation.z = -0.08 + Math.sin(time * 0.0022) * 0.16;
       boat.rotation.x = Math.sin(time * 0.0018) * 0.04;
       sail.rotation.z = Math.sin(time * 0.003) * 0.1;
-      flag.scale.y = 1 + Math.sin(time * 0.007) * 0.24;
 
       waterLines.forEach(({ line, amplitude }, index) => {
         line.position.x = Math.sin(time * 0.0011 + index * 0.9) * (0.42 + index * 0.06);
