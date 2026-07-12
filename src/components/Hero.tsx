@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { TypewriterBackdrop } from "./TypewriterBackdrop";
 import { KioMascot } from "./KioMascot";
+import { BoatScene } from "./BoatScene";
 
 interface HeroProps {
   onNavigate: (id: string) => void;
@@ -81,7 +82,7 @@ export function Hero({ onNavigate }: HeroProps) {
                   Selected work / systems thinking / product and engineering notes.
                 </p>
                 <h1 className="fluid-hero-title max-w-4xl font-semibold">
-                  “Be water, my friend.”
+                  Work worth keeping should stay in motion.
                 </h1>
               </div>
 
@@ -101,10 +102,12 @@ export function Hero({ onNavigate }: HeroProps) {
               </button>
 
               <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
-                I wanted the experience to feel deliberate and personal, while still reading clearly as a serious record
-                of technical work, decisions, and progress.
+                I wanted this to read like field notes from an engineer in progress: personal enough to feel lived-in,
+                but structured enough to make the work legible.
               </p>
             </div>
+
+            <BoatScene />
           </div>
 
           <div className="flex flex-col justify-between border-t border-border/80 pt-6 md:border-l md:border-t-0 md:pl-8 md:pt-0">
