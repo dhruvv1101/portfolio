@@ -18,8 +18,8 @@ export function BoatScene() {
 
     const root = new THREE.Group();
     scene.add(root);
-    root.scale.setScalar(1.28);
-    root.position.y = -0.14;
+    root.scale.setScalar(1.12);
+    root.position.y = -0.1;
 
     const cloudMaterial = new THREE.MeshBasicMaterial({ color: "#bfae97", transparent: true, opacity: 0.48 });
     const cloudPuffs = [
@@ -97,10 +97,7 @@ export function BoatScene() {
     );
     boat.add(hull);
 
-    const mast = new THREE.Mesh(
-      new THREE.PlaneGeometry(0.08, 1.18),
-      new THREE.MeshBasicMaterial({ color: "#5f4a36" })
-    );
+    const mast = new THREE.Mesh(new THREE.BoxGeometry(0.14, 1.22, 0.02), new THREE.MeshBasicMaterial({ color: "#4d3929" }));
     mast.position.set(0.05, 0.64, 0);
     boat.add(mast);
 
@@ -124,8 +121,8 @@ export function BoatScene() {
     flag.position.set(0.3, 1.08, 0);
     boat.add(flag);
 
-    boat.scale.setScalar(1.82);
-    boat.position.set(-1.46, -0.68, 0);
+    boat.scale.setScalar(1.62);
+    boat.position.set(-1.34, -0.58, 0);
     boat.rotation.z = -0.08;
 
     const resize = () => {
@@ -144,10 +141,10 @@ export function BoatScene() {
 
     let frame = 0;
     const animate = (time: number) => {
-      const drift = Math.sin(time * 0.00042) * 2.3;
+      const drift = Math.sin(time * 0.00042) * 2.05;
       const swell = Math.sin(time * 0.0026) * 0.22;
-      boat.position.x = -1.46 + drift;
-      boat.position.y = -0.68 + swell;
+      boat.position.x = -1.34 + drift;
+      boat.position.y = -0.58 + swell;
       boat.rotation.z = -0.08 + Math.sin(time * 0.0022) * 0.16;
       boat.rotation.x = Math.sin(time * 0.0018) * 0.04;
       sail.rotation.z = Math.sin(time * 0.003) * 0.1;
