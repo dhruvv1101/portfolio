@@ -109,7 +109,7 @@ export function BoatScene() {
 
     const sail = new THREE.Mesh(
       new THREE.ShapeGeometry(sailShape),
-      new THREE.MeshBasicMaterial({ color: "#f6efe0" })
+      new THREE.MeshBasicMaterial({ color: "#c7a07b" })
     );
     sail.position.set(0.08, 0.04, 0);
     boat.add(sail);
