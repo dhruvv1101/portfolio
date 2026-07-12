@@ -98,10 +98,10 @@ export function BoatScene() {
     boat.add(hull);
 
     const mast = new THREE.Mesh(
-      new THREE.PlaneGeometry(0.07, 1.48),
-      new THREE.MeshBasicMaterial({ color: "#7c6349" })
+      new THREE.PlaneGeometry(0.08, 1.18),
+      new THREE.MeshBasicMaterial({ color: "#5f4a36" })
     );
-    mast.position.set(0.05, 0.78, 0);
+    mast.position.set(0.05, 0.64, 0);
     boat.add(mast);
 
     const sailShape = new THREE.Shape();
@@ -121,7 +121,7 @@ export function BoatScene() {
       new THREE.PlaneGeometry(0.32, 0.12),
       new THREE.MeshBasicMaterial({ color: "#9d5e4c" })
     );
-    flag.position.set(0.3, 1.42, 0);
+    flag.position.set(0.3, 1.08, 0);
     boat.add(flag);
 
     boat.scale.setScalar(1.82);
@@ -204,5 +204,5 @@ export function BoatScene() {
     };
   }, []);
 
-  return <div ref={mountRef} className="h-72 w-full overflow-hidden border-t border-border/60 md:h-[28rem]" aria-hidden="true" />;
+  return <div ref={mountRef} className="h-80 w-full overflow-hidden border-t border-border/60 md:h-[34rem]" aria-hidden="true" />;
 }
