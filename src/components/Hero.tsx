@@ -3,7 +3,6 @@ import { ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { TypewriterBackdrop } from "./TypewriterBackdrop";
 import { KioMascot } from "./KioMascot";
-import { BoatScene } from "./BoatScene";
 
 interface HeroProps {
   onNavigate: (id: string) => void;
@@ -107,7 +106,6 @@ export function Hero({ onNavigate }: HeroProps) {
               </p>
             </div>
 
-            <BoatScene />
           </div>
 
           <div className="flex flex-col justify-between border-t border-border/80 pt-6 md:border-l md:border-t-0 md:pl-8 md:pt-0">

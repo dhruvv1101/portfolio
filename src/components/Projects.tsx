@@ -1,6 +1,7 @@
 import { Github } from "lucide-react";
 import { useState } from "react";
 import { Section } from "./Section";
+import { BoatScene } from "./BoatScene";
 import chessflowBishop from "@/assets/logos/chessflow-bishop.png";
 import intentlensLogo from "@/assets/logos/intentlens-logo.png";
 import kaggleLogo from "@/assets/logos/kaggle-logo.png";
@@ -66,43 +67,49 @@ export function Projects() {
       backgroundText="projects / chessflow / study buddy / intentlens / kaggle / analysis / extension / machine learning"
     >
       <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-start lg:gap-8">
-        <article className="editorial-card self-start grid gap-6 px-5 py-6 sm:px-6 sm:py-7 md:grid-cols-[0.8fr_1.2fr] md:gap-8">
-          <div className="space-y-4 border-b border-border/70 pb-5 md:border-b-0 md:border-r md:pb-0 md:pr-6">
-            <p className="folio-tag">Feature Story</p>
-            <div className="flex items-center gap-3">
-              {activeProject.logo && (
-                <span className="flex h-12 w-12 items-center justify-center border border-border/80 bg-background/80 p-1.5">
-                  <img src={activeProject.logo} alt="" className="h-full w-full object-contain" />
-                </span>
-              )}
-              <h3 className="fluid-feature-title font-semibold">{activeProject.title}</h3>
+        <div className="space-y-6">
+          <article className="editorial-card self-start grid gap-6 px-5 py-6 sm:px-6 sm:py-7 md:grid-cols-[0.8fr_1.2fr] md:gap-8">
+            <div className="space-y-4 border-b border-border/70 pb-5 md:border-b-0 md:border-r md:pb-0 md:pr-6">
+              <p className="folio-tag">Feature Story</p>
+              <div className="flex items-center gap-3">
+                {activeProject.logo && (
+                  <span className="flex h-12 w-12 items-center justify-center border border-border/80 bg-background/80 p-1.5">
+                    <img src={activeProject.logo} alt="" className="h-full w-full object-contain" />
+                  </span>
+                )}
+                <h3 className="fluid-feature-title font-semibold">{activeProject.title}</h3>
+              </div>
+              <p className="text-[0.8rem] uppercase tracking-[0.18em] text-primary/80 md:text-sm md:tracking-[0.25em]">{activeProject.deck}</p>
             </div>
-            <p className="text-[0.8rem] uppercase tracking-[0.18em] text-primary/80 md:text-sm md:tracking-[0.25em]">{activeProject.deck}</p>
-          </div>
 
-          <div className="space-y-6">
-            <p className="fluid-body text-muted-foreground">{activeProject.description}</p>
-            <div className="flex flex-wrap gap-2">
-              {activeProject.tags.map((tag) => (
-                <span key={tag} className="border border-border/80 px-3 py-2 text-sm text-foreground/85">
-                  {tag}
-                </span>
-              ))}
+            <div className="space-y-6">
+              <p className="fluid-body text-muted-foreground">{activeProject.description}</p>
+              <div className="flex flex-wrap gap-2">
+                {activeProject.tags.map((tag) => (
+                  <span key={tag} className="border border-border/80 px-3 py-2 text-sm text-foreground/85">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <div className="flex flex-wrap gap-5 text-sm uppercase tracking-[0.22em] text-muted-foreground">
+                <a
+                  href={activeProject.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 transition hover:text-foreground"
+                >
+                  <Github className="h-4 w-4" />
+                  View Code
+                </a>
+                <span>{activeProject.category}</span>
+              </div>
             </div>
-            <div className="flex flex-wrap gap-5 text-sm uppercase tracking-[0.22em] text-muted-foreground">
-              <a
-                href={activeProject.github}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 transition hover:text-foreground"
-              >
-                <Github className="h-4 w-4" />
-                View Code
-              </a>
-              <span>{activeProject.category}</span>
-            </div>
+          </article>
+
+          <div className="editorial-card overflow-hidden">
+            <BoatScene />
           </div>
-        </article>
+        </div>
 
         <div className="grid gap-5 md:gap-6">
           {projects.map((project, index) => {
