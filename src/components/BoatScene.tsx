@@ -18,6 +18,8 @@ export function BoatScene() {
 
     const root = new THREE.Group();
     scene.add(root);
+    root.scale.setScalar(1.28);
+    root.position.y = -0.14;
 
     const cloudMaterial = new THREE.MeshBasicMaterial({ color: "#bfae97", transparent: true, opacity: 0.48 });
     const cloudPuffs = [
@@ -35,12 +37,39 @@ export function BoatScene() {
       return puff;
     });
 
+    const lightning = new THREE.Mesh(
+      new THREE.PlaneGeometry(0.16, 1.36),
+      new THREE.MeshBasicMaterial({ color: "#f6efe0", transparent: true, opacity: 0 })
+    );
+    lightning.position.set(0.24, 0.98, 0);
+    lightning.rotation.z = 0.18;
+    root.add(lightning);
+
     const waterMaterial = new THREE.MeshBasicMaterial({ color: "#ccb291", transparent: true, opacity: 0.88 });
     const waterLines = Array.from({ length: 5 }, (_, index) => {
-      const line = new THREE.Mesh(new THREE.PlaneGeometry(11.6 - index * 0.95, 0.18 + index * 0.015), waterMaterial.clone());
-      line.position.set(0, -1.1 - index * 0.33, 0);
+      const waveShape = new THREE.Shape();
+      const width = 5.4 - index * 0.38;
+      const amplitude = 0.18 + index * 0.012;
+      const thickness = 0.14 + index * 0.015;
+      const steps = 10;
+
+      waveShape.moveTo(-width, 0);
+      for (let step = 1; step <= steps; step += 1) {
+        const x = -width + (step / steps) * width * 2;
+        const y = Math.sin((step / steps) * Math.PI * 2) * amplitude;
+        waveShape.lineTo(x, y);
+      }
+      for (let step = steps; step >= 0; step -= 1) {
+        const x = -width + (step / steps) * width * 2;
+        const y = Math.sin((step / steps) * Math.PI * 2) * amplitude - thickness;
+        waveShape.lineTo(x, y);
+      }
+      waveShape.closePath();
+
+      const line = new THREE.Mesh(new THREE.ShapeGeometry(waveShape), waterMaterial.clone());
+      line.position.set(0, -0.96 - index * 0.34, 0);
       root.add(line);
-      return line;
+      return { line, amplitude };
     });
 
     const wakeLines = Array.from({ length: 4 }, (_, index) => {
@@ -95,8 +124,8 @@ export function BoatScene() {
     flag.position.set(0.3, 1.42, 0);
     boat.add(flag);
 
-    boat.scale.setScalar(1.36);
-    boat.position.set(-1.3, -0.74, 0);
+    boat.scale.setScalar(1.82);
+    boat.position.set(-1.46, -0.68, 0);
     boat.rotation.z = -0.08;
 
     const resize = () => {
@@ -117,17 +146,18 @@ export function BoatScene() {
     const animate = (time: number) => {
       const drift = Math.sin(time * 0.00042) * 2.3;
       const swell = Math.sin(time * 0.0026) * 0.22;
-      boat.position.x = -1.3 + drift;
-      boat.position.y = -0.74 + swell;
+      boat.position.x = -1.46 + drift;
+      boat.position.y = -0.68 + swell;
       boat.rotation.z = -0.08 + Math.sin(time * 0.0022) * 0.16;
       boat.rotation.x = Math.sin(time * 0.0018) * 0.04;
       sail.rotation.z = Math.sin(time * 0.003) * 0.1;
       flag.scale.y = 1 + Math.sin(time * 0.007) * 0.24;
 
-      waterLines.forEach((line, index) => {
+      waterLines.forEach(({ line, amplitude }, index) => {
         line.position.x = Math.sin(time * 0.0011 + index * 0.9) * (0.42 + index * 0.06);
-        line.position.y = -1.1 - index * 0.33 + Math.sin(time * 0.0018 + index) * 0.06;
-        line.rotation.z = Math.sin(time * 0.001 + index) * 0.015;
+        line.position.y = -0.96 - index * 0.34 + Math.sin(time * 0.0018 + index) * 0.08;
+        line.rotation.z = Math.sin(time * 0.001 + index) * 0.02;
+        line.scale.y = 1 + Math.sin(time * 0.0024 + index) * (amplitude * 0.9);
       });
 
       wakeLines.forEach((wake, index) => {
@@ -140,6 +170,10 @@ export function BoatScene() {
         puff.position.x += Math.sin(time * 0.00018 + index) * 0.0022;
         puff.position.y += Math.sin(time * 0.00035 + index) * 0.0008;
       });
+
+      const flashGate = Math.sin(time * 0.0017);
+      lightning.material.opacity = flashGate > 0.992 ? 0.82 : flashGate > 0.975 ? 0.38 : 0;
+      lightning.scale.y = 1 + Math.sin(time * 0.008) * 0.08;
 
       renderer.render(scene, camera);
       frame = window.requestAnimationFrame(animate);
