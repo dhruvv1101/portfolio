@@ -204,5 +204,5 @@ export function BoatScene() {
     };
   }, []);
 
-  return <div ref={mountRef} className="h-56 w-full overflow-hidden border-t border-border/60 md:h-72" aria-hidden="true" />;
+  return <div ref={mountRef} className="h-72 w-full overflow-hidden border-t border-border/60 md:h-[28rem]" aria-hidden="true" />;
 }
